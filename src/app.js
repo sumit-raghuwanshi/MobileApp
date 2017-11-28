@@ -13,14 +13,16 @@ import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import configureStore from './store/configure-store';
 import { load } from './reducers/initial-state';
-import SignIn from './components/sign-in/sign-in';
-import Dashboard from './components/dashboard/dashboard';
+import { registerScreens } from './components';
+import KeyboardManager from 'react-native-keyboard-manager'
+
+KeyboardManager.setToolbarPreviousNextButtonEnable(true);
+KeyboardManager.setShouldResignOnTouchOutside(true);
 
 load((initialState) => {
-  const store = configureStore(initialState);
+  const store = configureStore(initialState)
+  registerScreens(store, Provider)
   global.store = store
-  Navigation.registerComponent('roof_gravy.login_screen', () => SignIn, store, Provider);
-  Navigation.registerComponent('roof_gravy.dashboard', () => Dashboard, store, Provider);
 
   if (initialState.user)
     Navigation.startSingleScreenApp({

@@ -5,17 +5,24 @@ import {
   Image,
   Text,
   SafeAreaView,
-  AsyncStorage
+  AsyncStorage,
+  StatusBar
 } from 'react-native';
 import COLOR from '../../constants/colors';
 import Touchable from '../common/touchable';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as AuthenticationActions from '../../actions/authentication';
+import * as Actions from '../../actions';
 
 class Dashboard extends Component {
   static navigatorStyle = {
     navBarHidden: true
+  }
+
+  _navigateToLeadsCreateScreen = () => {
+    this.props.navigator.push({
+      screen: 'roof_gravy.lead_create'
+    })
   }
 
   render() {
@@ -23,14 +30,13 @@ class Dashboard extends Component {
 
     return (
       <View style={styles.container}>
+        <StatusBar barStyle="light-content"/>
         <View style={styles.background}>
           <Image
             resizeMode="stretch"
             style={{
               flex: 1,
-              width: undefined,
-              // height: undefined,
-              // backgroundColor: 'blue'
+              width: undefined
             }}
             source={require('../../../img/dashboard/bg.png')} />
 
@@ -89,7 +95,7 @@ class Dashboard extends Component {
         <View style={styles.bottomButtonContainer}>
           <View style={styles.bottomButtonRow}>
 
-            <Touchable onPress={() => {}}>
+            <Touchable onPress={this._navigateToLeadsCreateScreen}>
               <Image source={require('../../../img/dashboard/lead.png')}/>
             </Touchable>
 
@@ -171,9 +177,7 @@ const styles = StyleSheet.create({
   },
   bottomButtonContainer: {
     flex: 1,
-    justifyContent: 'center',
-    // paddingTop: 20,
-    // paddingBottom: 45
+    justifyContent: 'center'
   },
   bottomButtonRow: {
     flexDirection: 'row',
@@ -190,7 +194,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(AuthenticationActions, dispatch)
+    actions: bindActionCreators(Actions, dispatch)
   };
 }
 

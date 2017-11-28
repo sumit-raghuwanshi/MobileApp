@@ -28,5 +28,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)'
   }
 });
-
+export { Loader }
 export default Loader

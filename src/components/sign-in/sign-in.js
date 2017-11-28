@@ -12,7 +12,7 @@ import {
 import Loader from '../common/loader';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as AuthenticationActions from '../../actions/authentication';
+import * as Actions from '../../actions';
 
 class SignIn extends Component {
   static navigatorStyle = {
@@ -177,7 +177,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(AuthenticationActions, dispatch)
+    actions: bindActionCreators(Actions, dispatch)
   };
 }
 

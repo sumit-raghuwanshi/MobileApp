@@ -1,5 +1,7 @@
 import { AsyncStorage } from 'react-native';
 export default {
+  user: null,
+  users: []
 };
 
 export async function load(success) {

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as types from '../constants/action-types';
 import { SERVER_URL, LOGIN } from '../constants/api';
+import { API } from '../helpers';
 import { AsyncStorage } from 'react-native';
 // LOGIN_USER
 export function loginSuccess(res) {
@@ -12,7 +13,7 @@ export function loginSuccess(res) {
 
 export function loginUser(user) {
   return function (dispatch) {
-    return axios({
+    return API.fetch({
       method: 'post',
       url: `${SERVER_URL}${LOGIN}`,
       data: user,

@@ -16,4 +16,5 @@ class Touchable extends Component {
   }
 }
 
+export { Touchable }
 export default Touchable
