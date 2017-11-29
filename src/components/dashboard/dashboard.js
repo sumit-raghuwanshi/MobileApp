@@ -31,6 +31,12 @@ class Dashboard extends Component {
     })
   }
 
+  _navigateToMessagesScreen = () => {
+    this.props.navigator.push({
+      screen: "roof_gravy.messages"
+    })
+  }
+
   render() {
     var user = this.props.user
 
@@ -69,7 +75,7 @@ class Dashboard extends Component {
                     bottom: 20,
                     left: -10
                   }}
-                  onPress={() => {}}>
+                  onPress={this._navigateToMessagesScreen}>
                   <Image source={require('../../../img/dashboard/message.png')}/>
                 </Touchable>
                 <Touchable
