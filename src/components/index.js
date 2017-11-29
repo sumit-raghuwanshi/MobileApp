@@ -7,6 +7,7 @@ import AppointmentCreate from './appointments/appointment-create/appointment-cre
 import Messages from './messages/messages';
 import Message from './message/message';
 import MessageCreate from './message-create/message-create';
+import Tasks from './tasks/tasks';
 import { ErrorView } from './common';
 
 export function registerScreens(store, Provider) {
@@ -18,5 +19,6 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.messages', () => Messages, store, Provider);
   Navigation.registerComponent('roof_gravy.message', () => Message, store, Provider);
   Navigation.registerComponent('roof_gravy.message_create', () => MessageCreate, store, Provider);
+  Navigation.registerComponent('roof_gravy.tasks', () => Tasks, store, Provider);
   Navigation.registerComponent('roof_gravy.error_view', () => ErrorView, store, Provider);
 }

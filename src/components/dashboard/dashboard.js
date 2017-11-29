@@ -37,6 +37,12 @@ class Dashboard extends Component {
     })
   }
 
+  _navigateToTasksScreen = () => {
+    this.props.navigator.push({
+      screen: "roof_gravy.tasks"
+    })
+  }
+
   render() {
     var user = this.props.user
 
@@ -93,7 +99,7 @@ class Dashboard extends Component {
                     bottom: 20,
                     right: -10
                   }}
-                  onPress={() => {}}>
+                  onPress={this._navigateToTasksScreen}>
                   <Image source={require('../../../img/dashboard/checkbox.png')}/>
                 </Touchable>
               </View>
@@ -175,7 +181,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   circleContainer: {
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 22
   },
   userNameContainer: {
     flex: 1,
