@@ -20,7 +20,9 @@ class Messages extends Component {
   }
 
   _onItemPress = (item) => {
-
+    this.props.navigator.push({
+      screen: 'roof_gravy.message'
+    })
   }
 
   render() {

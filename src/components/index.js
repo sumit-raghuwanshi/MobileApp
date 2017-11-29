@@ -5,6 +5,7 @@ import Calendar from './calendar/calendar';
 import LeadCreate from './leads/lead-create/lead-create';
 import AppointmentCreate from './appointments/appointment-create/appointment-create';
 import Messages from './messages/messages';
+import Message from './message/message';
 import { ErrorView } from './common';
 
 export function registerScreens(store, Provider) {
@@ -14,5 +15,6 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.lead_create', () => LeadCreate, store, Provider);
   Navigation.registerComponent('roof_gravy.appointment_create', () => AppointmentCreate, store, Provider);
   Navigation.registerComponent('roof_gravy.messages', () => Messages, store, Provider);
+  Navigation.registerComponent('roof_gravy.message', () => Message, store, Provider);
   Navigation.registerComponent('roof_gravy.error_view', () => ErrorView, store, Provider);
 }
