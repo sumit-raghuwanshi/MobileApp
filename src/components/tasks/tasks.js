@@ -20,7 +20,13 @@ class Tasks extends Component {
   }
 
   _onItemPress = (item) => {
-    
+
+  }
+
+  _navigateToTaskCreateScreen = () => {
+    this.props.navigator.push({
+      screen: 'roof_gravy.task_create'
+    })
   }
 
   render() {
@@ -44,7 +50,7 @@ class Tasks extends Component {
         <View style={styles.body}>
           <View style={styles.topButtonContainer}>
             <View style={styles.spaceFlex}></View>
-            <Touchable style={styles.newButton} onPress={() => {}}>
+            <Touchable style={styles.newButton} onPress={this._navigateToTaskCreateScreen}>
               <View style={styles.buttonContent}>
                 <Image source={require('../../../img/icons/add.png')}/>
                 <Text style={styles.buttonText}>NEW TASK</Text>
