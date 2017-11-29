@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Touchable, Picker, DateTimePicker } from '../common';
 
-class TaskCreate extends Component {
+class TaskEdit extends Component {
   static navigatorStyle = {
     navBarHidden: true
   }
@@ -64,9 +64,7 @@ class TaskCreate extends Component {
               </Touchable>
             </View>
             <View style={{flex: 1, alignItems: 'flex-end'}}>
-              <Touchable onPress={() => {}}>
-                  <Image source={require('../../../img/icons/save.png')}/>
-              </Touchable>
+
             </View>
           </View>
 
@@ -84,7 +82,7 @@ class TaskCreate extends Component {
                 mode={"time"}
                 is24Hour={false}
                 style={styles.picker}
-                placeholder="Due"
+                placeholder="Select Date/Time"
                 textStyle={styles.pickerText}
                 format={'MMM DD, YYYY       h:mma'}
                 value={this.state.checkinTime}
@@ -115,7 +113,18 @@ class TaskCreate extends Component {
           </View>
 
           <View style={styles.footer}>
-
+            <Touchable onPress={() => {}}>
+              <View style={{ alignItems: 'center' }}>
+                <Image source={require('../../../img/icons/checkbox_checked.png')}/>
+                <Text style={{ fontSize: 14, fontWeight: '500', color: '#999999', marginTop: 5 }}>Task Completed</Text>
+              </View>
+            </Touchable>
+            <Touchable onPress={() => {}}>
+              <View style={{ alignItems: 'center' }}>
+                <Image source={require('../../../img/icons/bin.png')}/>
+                <Text style={{ fontSize: 14, fontWeight: '500', color: '#999999', marginTop: 5 }}>Delete Task</Text>
+              </View>
+            </Touchable>
           </View>
 
         </View>
@@ -196,4 +205,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TaskCreate
+export default TaskEdit

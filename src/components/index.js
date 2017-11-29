@@ -9,6 +9,7 @@ import Message from './message/message';
 import MessageCreate from './message-create/message-create';
 import Tasks from './tasks/tasks';
 import TaskCreate from './task-create/task-create';
+import TaskEdit from './task-edit/task-edit';
 import { ErrorView } from './common';
 
 export function registerScreens(store, Provider) {
@@ -22,5 +23,6 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.message_create', () => MessageCreate, store, Provider);
   Navigation.registerComponent('roof_gravy.tasks', () => Tasks, store, Provider);
   Navigation.registerComponent('roof_gravy.task_create', () => TaskCreate, store, Provider);
+  Navigation.registerComponent('roof_gravy.task_edit', () => TaskEdit, store, Provider);
   Navigation.registerComponent('roof_gravy.error_view', () => ErrorView, store, Provider);
 }

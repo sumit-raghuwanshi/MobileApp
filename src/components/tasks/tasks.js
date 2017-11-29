@@ -19,13 +19,15 @@ class Tasks extends Component {
     this.props.navigator.popToRoot()
   }
 
-  _onItemPress = (item) => {
-
-  }
-
   _navigateToTaskCreateScreen = () => {
     this.props.navigator.push({
       screen: 'roof_gravy.task_create'
+    })
+  }
+
+  _onItemPress = (item) => {
+    this.props.navigator.push({
+      screen: 'roof_gravy.task_edit'
     })
   }
 
