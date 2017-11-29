@@ -20,11 +20,15 @@ class Jobs extends Component {
   }
 
   _navigateToJobCreateScreen = () => {
-
+    this.props.navigator.push({
+      screen: "roof_gravy.job_create"
+    })
   }
 
   _onItemPress = (item) => {
-    
+    this.props.navigator.push({
+      screen: "roof_gravy.job"
+    })
   }
 
   render() {
@@ -38,7 +42,7 @@ class Jobs extends Component {
           </Touchable>
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>JOBS</Text>
-            <Image style={{ marginTop: 10 }} source={require('../../../img/icons/messages.png')}/>
+            <Image style={{ marginTop: 10 }} source={require('../../../img/icons/jobs.png')}/>
           </View>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
             <View></View>
