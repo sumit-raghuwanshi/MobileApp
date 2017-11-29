@@ -25,6 +25,12 @@ class Dashboard extends Component {
     })
   }
 
+  _navigateToCalendarScreen = () => {
+    this.props.navigator.push({
+      screen: "roof_gravy.calendar"
+    })
+  }
+
   render() {
     var user = this.props.user
 
@@ -72,7 +78,7 @@ class Dashboard extends Component {
                     alignSelf: 'center',
                     bottom: -22
                   }}
-                  onPress={() => {}}>
+                  onPress={this._navigateToCalendarScreen}>
                   <Image source={require('../../../img/dashboard/calendar.png')}/>
                 </Touchable>
                 <Touchable

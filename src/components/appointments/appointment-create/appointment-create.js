@@ -26,6 +26,10 @@ class AppointmentCreate extends Component {
     }
   }
 
+  _navigateToDashboard = () => {
+    this.props.navigator.popToRoot()
+  }
+
   _navigateToPreviousScreen = () => {
     this.props.navigator.pop()
   }
