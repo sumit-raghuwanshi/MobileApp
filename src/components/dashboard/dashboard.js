@@ -55,6 +55,12 @@ class Dashboard extends Component {
     })
   }
 
+  _navigateToSettingsScreen = () => {
+    this.props.navigator.push({
+      screen: "roof_gravy.settings"
+    })
+  }
+
   render() {
     var user = this.props.user
 
@@ -151,14 +157,7 @@ class Dashboard extends Component {
               <Image source={require('../../../img/dashboard/job.png')}/>
             </Touchable>
 
-            <Touchable onPress={() => {
-              AsyncStorage.clear(() => {
-                this.props.navigator.resetTo({
-                  screen: 'roof_gravy.login_screen'
-                })
-              })
-
-            }}>
+            <Touchable onPress={this._navigateToSettingsScreen}>
               <Image source={require('../../../img/dashboard/settings.png')}/>
             </Touchable>
 

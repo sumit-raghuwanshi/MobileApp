@@ -14,6 +14,7 @@ import Payments from './payments/payments';
 import Jobs from './jobs/jobs';
 import Job from './job/job';
 import JobCreate from './job-create/job-create';
+import Settings from './settings/settings';
 import { ErrorView } from './common';
 
 export function registerScreens(store, Provider) {
@@ -32,5 +33,6 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.jobs', () => Jobs, store, Provider);
   Navigation.registerComponent('roof_gravy.job', () => Job, store, Provider);
   Navigation.registerComponent('roof_gravy.job_create', () => JobCreate, store, Provider);
+  Navigation.registerComponent('roof_gravy.settings', () => Settings, store, Provider);
   Navigation.registerComponent('roof_gravy.error_view', () => ErrorView, store, Provider);
 }
