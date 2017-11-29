@@ -17,6 +17,7 @@ import { bindActionCreators } from 'redux';
 import * as Actions from '../../../actions';
 // import * as UserActions from '../../../actions/users';
 import _ from 'lodash';
+import ImagePicker from 'react-native-image-picker';
 
 class LeadCreate extends Component {
   static navigatorStyle = {
@@ -52,6 +53,30 @@ class LeadCreate extends Component {
     this.props.navigator.popToRoot()
   }
 
+  _navigateToAppointmentCreate = () => {
+    this.props.navigator.push({
+      screen: 'roof_gravy.appointment_create'
+    })
+  }
+
+  _cameraPressHandler = () => {
+    var options = {
+      title: 'Take Picture',
+      cameraType: 'front'
+    };
+
+    ImagePicker.launchCamera(options, (response)  => {
+      if (response.error) {
+        alert(response.error)
+      }
+      else if (!response.didCancel) {
+        this.setState({
+          image_attach: response
+        })
+      }
+    });
+  }
+
   render() {
     var user = this.props.user
 
@@ -59,11 +84,18 @@ class LeadCreate extends Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
 
-        <View style={styles.header}>
-          <Touchable onPress={this._navigateToDashboard}>
+        <SafeAreaView style={styles.header}>
+          <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }} onPress={this._navigateToDashboard}>
             <Image source={require('../../../../img/icons/home.png')} />
           </Touchable>
-        </View>
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>LEAD</Text>
+            <Image style={{ marginTop: 10 }} source={require('../../../../img/leads/leads.png')}/>
+          </View>
+          <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
+            <View></View>
+          </Touchable>
+        </SafeAreaView>
 
         <ScrollView style={styles.body}>
           <View style={styles.buttonContainer}>
@@ -79,7 +111,7 @@ class LeadCreate extends Component {
           <View style={{ flexDirection: 'row', marginBottom: 12 }}>
 
             <View style={{ justifyContent: 'center', paddingHorizontal: 20 }}>
-              <Touchable onPress={() => {}}>
+              <Touchable onPress={this._cameraPressHandler}>
                 <View style={{height: 65, width: 65, backgroundColor: '#354052', justifyContent: 'center', alignItems: 'center', borderRadius: 2}}>
                   <Image source={require('../../../../img/icons/camera-upload.png')} />
                 </View>
@@ -206,6 +238,15 @@ class LeadCreate extends Component {
             </View>
           </View>
 
+          <View style={{ marginVertical: 12, alignItems: 'center' }}>
+            <Touchable onPress={this._navigateToAppointmentCreate}>
+              <View style={{ alignItems: 'center' }}>
+                <Image source={require('../../../../img/icons/add.png')}/>
+                <Text style={{ fontSize: 12, fontWeight: '500', color: '#999999', marginTop: 5 }}>NEW APPOINTMENT</Text>
+              </View>
+            </Touchable>
+          </View>
+
         </ScrollView>
         <Loader loading={this.state.loading}/>
       </View>
@@ -222,9 +263,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 66,
     backgroundColor: '#354052',
-    paddingHorizontal: 13,
-    alignItems: 'flex-end',
-    paddingVertical: 12
+    zIndex: 1
   },
   body: {
     flex: 1

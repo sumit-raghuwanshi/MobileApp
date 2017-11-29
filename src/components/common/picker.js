@@ -76,7 +76,7 @@ class Picker extends Component {
       <Touchable style={this.props.style} onPress={this.showPicker}>
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <Text style={[this.props.textStyle, selectedItem ? null : { color: this.props.placeholderTextColor}]}>{selectedValue}</Text>
-          <Image source={require('../../../img/icons/chevron-small.png')}/>
+          <Image source={require('../../../img/icons/chevron.png')}/>
           <Modal
             animationType="slide"
             transparent={true}

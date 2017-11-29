@@ -7,6 +7,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.imagepicker.ImagePickerPackage;
 import com.reactnativenavigation.NavigationApplication;
 
 import java.util.Arrays;
@@ -20,7 +21,7 @@ public class MainApplication extends NavigationApplication {
 
   protected List<ReactPackage> getPackages() {
     return Arrays.<ReactPackage>asList(
-      
+      new ImagePickerPackage()
     );
   }
 

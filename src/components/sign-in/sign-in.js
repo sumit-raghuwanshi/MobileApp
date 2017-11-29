@@ -24,7 +24,7 @@ class SignIn extends Component {
 
     this.state = {
       user: {
-        email:    'admin@roof-gravy.com',
+        email:    'admin_1@roof-gravy.com',
         password: '12345678'
       },
       loading: false
