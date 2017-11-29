@@ -19,6 +19,12 @@ class Messages extends Component {
     this.props.navigator.popToRoot()
   }
 
+  _navigateToMessageCreateScreen = () => {
+    this.props.navigator.push({
+      screen: 'roof_gravy.message_create'
+    })
+  }
+
   _onItemPress = (item) => {
     this.props.navigator.push({
       screen: 'roof_gravy.message'
@@ -46,7 +52,7 @@ class Messages extends Component {
         <View style={styles.body}>
           <View style={styles.topButtonContainer}>
             <View style={styles.spaceFlex}></View>
-            <Touchable style={styles.newButton} onPress={() => {}}>
+            <Touchable style={styles.newButton} onPress={this._navigateToMessageCreateScreen}>
               <View style={styles.buttonContent}>
                 <Image source={require('../../../img/icons/add.png')}/>
                 <Text style={styles.buttonText}>NEW</Text>

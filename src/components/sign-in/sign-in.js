@@ -76,7 +76,7 @@ class SignIn extends Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
 
-        <Image style={styles.background} source={require("../../../img/login/login-bg.png")} />
+        <Image resizeMode={"stretch"} style={styles.background} source={require("../../../img/login/login-bg.png")} />
         <View style={styles.formContainer}>
 
           <View style={styles.imageContainer}>
@@ -125,7 +125,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   background: {
-    position: "absolute"
+    position: "absolute",
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    width: undefined,
+    height: undefined
   },
   formContainer: {
     height: 345.6,
