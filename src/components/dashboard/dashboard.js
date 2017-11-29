@@ -43,6 +43,12 @@ class Dashboard extends Component {
     })
   }
 
+  _navigateToPaymentsScreen = () => {
+    this.props.navigator.push({
+      screen: "roof_gravy.payments"
+    })
+  }
+
   render() {
     var user = this.props.user
 
@@ -131,7 +137,7 @@ class Dashboard extends Component {
 
           <View style={styles.bottomButtonRow}>
 
-            <Touchable onPress={() => {}}>
+            <Touchable onPress={this._navigateToPaymentsScreen}>
               <Image source={require('../../../img/dashboard/payment.png')}/>
             </Touchable>
 

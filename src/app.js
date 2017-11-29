@@ -27,7 +27,7 @@ load((initialState) => {
   if (initialState.user)
     Navigation.startSingleScreenApp({
       screen: {
-        screen: 'roof_gravy.dashboard',
+        screen: 'roof_gravy.payments',
         title: 'Welcome',
         navigatorStyle: {},
         navigatorButtons: {}

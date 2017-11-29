@@ -93,7 +93,7 @@ class TaskCreate extends Component {
             </View>
           </View>
 
-          <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15, marginTop: 26, }}>
+          <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15, marginTop: 26 }}>
             <Picker
               placeholder="Assign to"
               placeholderTextColor="#BFBFBF"
