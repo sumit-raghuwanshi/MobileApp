@@ -11,6 +11,7 @@ import Tasks from './tasks/tasks';
 import TaskCreate from './task-create/task-create';
 import TaskEdit from './task-edit/task-edit';
 import Payments from './payments/payments';
+import Jobs from './jobs/jobs';
 import { ErrorView } from './common';
 
 export function registerScreens(store, Provider) {
@@ -26,5 +27,6 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.task_create', () => TaskCreate, store, Provider);
   Navigation.registerComponent('roof_gravy.task_edit', () => TaskEdit, store, Provider);
   Navigation.registerComponent('roof_gravy.payments', () => Payments, store, Provider);
+  Navigation.registerComponent('roof_gravy.jobs', () => Jobs, store, Provider);
   Navigation.registerComponent('roof_gravy.error_view', () => ErrorView, store, Provider);
 }

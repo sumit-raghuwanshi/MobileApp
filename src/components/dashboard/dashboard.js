@@ -49,6 +49,12 @@ class Dashboard extends Component {
     })
   }
 
+  _navigateToJobsScreen = () => {
+    this.props.navigator.push({
+      screen: "roof_gravy.jobs"
+    })
+  }
+
   render() {
     var user = this.props.user
 
@@ -141,7 +147,7 @@ class Dashboard extends Component {
               <Image source={require('../../../img/dashboard/payment.png')}/>
             </Touchable>
 
-            <Touchable onPress={() => {}}>
+            <Touchable onPress={this._navigateToJobsScreen}>
               <Image source={require('../../../img/dashboard/job.png')}/>
             </Touchable>
 
