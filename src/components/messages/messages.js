@@ -36,7 +36,7 @@ class Messages extends Component {
           </Touchable>
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>MESSAGES</Text>
-            <Image style={{ marginTop: 10 }} source={require('../../../img/icons/calendar.png')}/>
+            <Image style={{ marginTop: 10 }} source={require('../../../img/icons/messages.png')}/>
           </View>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
             <View></View>
