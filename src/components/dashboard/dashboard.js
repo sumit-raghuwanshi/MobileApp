@@ -31,36 +31,6 @@ class Dashboard extends Component {
     })
   }
 
-  _navigateToMessagesScreen = () => {
-    this.props.navigator.push({
-      screen: "roof_gravy.messages"
-    })
-  }
-
-  _navigateToTasksScreen = () => {
-    this.props.navigator.push({
-      screen: "roof_gravy.tasks"
-    })
-  }
-
-  _navigateToPaymentsScreen = () => {
-    this.props.navigator.push({
-      screen: "roof_gravy.payments"
-    })
-  }
-
-  _navigateToJobsScreen = () => {
-    this.props.navigator.push({
-      screen: "roof_gravy.jobs"
-    })
-  }
-
-  _navigateToSettingsScreen = () => {
-    this.props.navigator.push({
-      screen: "roof_gravy.settings"
-    })
-  }
-
   render() {
     var user = this.props.user
 
@@ -99,7 +69,7 @@ class Dashboard extends Component {
                     bottom: 20,
                     left: -10
                   }}
-                  onPress={this._navigateToMessagesScreen}>
+                  onPress={() => {}}>
                   <Image source={require('../../../img/dashboard/message.png')}/>
                 </Touchable>
                 <Touchable
@@ -117,7 +87,7 @@ class Dashboard extends Component {
                     bottom: 20,
                     right: -10
                   }}
-                  onPress={this._navigateToTasksScreen}>
+                  onPress={() => {}}>
                   <Image source={require('../../../img/dashboard/checkbox.png')}/>
                 </Touchable>
               </View>
@@ -149,15 +119,22 @@ class Dashboard extends Component {
 
           <View style={styles.bottomButtonRow}>
 
-            <Touchable onPress={this._navigateToPaymentsScreen}>
+            <Touchable onPress={() => {}}>
               <Image source={require('../../../img/dashboard/payment.png')}/>
             </Touchable>
 
-            <Touchable onPress={this._navigateToJobsScreen}>
+            <Touchable onPress={() => {}}>
               <Image source={require('../../../img/dashboard/job.png')}/>
             </Touchable>
 
-            <Touchable onPress={this._navigateToSettingsScreen}>
+            <Touchable onPress={() => {
+              AsyncStorage.clear(() => {
+                this.props.navigator.resetTo({
+                  screen: 'roof_gravy.login_screen'
+                })
+              })
+
+            }}>
               <Image source={require('../../../img/dashboard/settings.png')}/>
             </Touchable>
 
@@ -192,8 +169,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   circleContainer: {
-    justifyContent: 'center',
-    marginBottom: 22
+    justifyContent: 'center'
   },
   userNameContainer: {
     flex: 1,
