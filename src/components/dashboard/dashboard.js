@@ -37,6 +37,12 @@ class Dashboard extends Component {
     })
   }
 
+  _navigateToSettings = () => {
+    this.props.navigator.push({
+      screen: 'roof_gravy.settings'
+    })
+  }
+
   render() {
     var user = this.props.user
 
@@ -54,7 +60,18 @@ class Dashboard extends Component {
 
           <SafeAreaView style={styles.backgroundContentContainer}>
             <View style={styles.logoContainer}>
+              <View style={{width:40}}/>
               <Image source={require('../../../img/dashboard/logo.png')}/>
+
+              <Touchable onPress={() => {
+                AsyncStorage.clear(() => {
+                  this.props.navigator.resetTo({
+                    screen: 'roof_gravy.login_screen'
+                  })
+                })}
+              }>
+                <Image source={require('../../../img/logout.png')} style={{height:40, width:40}}/>
+              </Touchable>
             </View>
 
             <View style={{height: 15}}></View>
@@ -133,16 +150,18 @@ class Dashboard extends Component {
               <Image source={require('../../../img/dashboard/job.png')}/>
             </Touchable>
 
-            <Touchable onPress={() => {
+            <Touchable onPress={this._navigateToSettings}>
+              <Image source={require('../../../img/dashboard/settings.png')}/>
+            </Touchable>
+
+            {/* <Touchable onPress={() => {
               AsyncStorage.clear(() => {
                 this.props.navigator.resetTo({
                   screen: 'roof_gravy.login_screen'
                 })
               })
 
-            }}>
-              <Image source={require('../../../img/dashboard/settings.png')}/>
-            </Touchable>
+            }}> */}
 
           </View>
         </View>
@@ -169,7 +188,10 @@ const styles = StyleSheet.create({
     left: 0
   },
   logoContainer: {
-    alignItems: 'center'
+    paddingHorizontal:20,
+    alignItems: 'center',
+    flexDirection:'row',
+    justifyContent:'space-between'
   },
   imageContainer: {
     alignItems: 'center'

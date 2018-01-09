@@ -16,8 +16,8 @@ import { load } from './reducers/initial-state';
 import { registerScreens } from './components';
 import KeyboardManager from 'react-native-keyboard-manager'
 
-KeyboardManager.setToolbarPreviousNextButtonEnable(true);
-KeyboardManager.setShouldResignOnTouchOutside(true);
+// KeyboardManager.setToolbarPreviousNextButtonEnable(true);
+// KeyboardManager.setShouldResignOnTouchOutside(true);
 
 load((initialState) => {
   const store = configureStore(initialState)
