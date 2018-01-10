@@ -7,7 +7,11 @@ import AppointmentCreate from './appointments/appointment-create/appointment-cre
 import Messages from './messages/messages';
 import Message from './message/message';
 import Settings from './settings/settings';
+import Measurements from './measurements/measurements';
+import MeasurementInner from './measurements/measurementInner/measurement-inner';
+import uploadXml from './measurements/measurementInner/upload-xml';
 import { ErrorView } from './common';
+
 
 export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.login_screen', () => SignIn, store, Provider);
@@ -19,4 +23,7 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.message', () => Message, store, Provider);
   Navigation.registerComponent('roof_gravy.error_view', () => ErrorView, store, Provider);
   Navigation.registerComponent('roof_gravy.settings', () => Settings, store, Provider);
+  Navigation.registerComponent('roof_gravy.measurements', () => Measurements, store, Provider);
+  Navigation.registerComponent('roof_gravy.measurement_inner', () => MeasurementInner, store, Provider);
+  Navigation.registerComponent('roof_gravy.upload_xml', () => uploadXml, store, Provider);
 }
