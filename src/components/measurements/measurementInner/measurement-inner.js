@@ -64,19 +64,19 @@ class MeasurementInner extends Component {
             </View>
 
 
-                <View style={{justifyContent:'space-between', top:10, flexDirection:'row', alignItems:'center'}}>
+                <View style={{justifyContent:'space-between', top:70, position:'absolute', flexDirection:'row', alignItems:'center', let:0, width:screenWidth }}>
                     <Touchable style={{padding:10}} onPress={this._navigateToPreviousScreen}>
                         <Image source={require('../../../../img/icons/cross.png')}/>
                     </Touchable>
                     <Touchable style={{padding:10}} onPress={this._handleEdit}>
-                        <View style={{height:30, width:50, borderColor:'gray', backgroundColor:'white', borderWidth:1, justifyContent:'center', alignItems:'center', borderRadius:4}}>
-                            <Text>UPLOAD XML</Text>
+                        <View style={{height:30, width:85, borderColor:'gray', backgroundColor:'white', borderWidth:1, justifyContent:'center', alignItems:'center', borderRadius:4}}>
+                            <Text style={{fontSize:12}}>UPLOAD XML</Text>
                         </View>
                     </Touchable>
                 </View>
 
 
-                <View style={{marginTop:10, marginBottom:20}}>
+                <View style={{marginTop:20, marginBottom:20}}>
                     <Touchable style={{backgroundColor:'white', height:40, width:screenWidth, marginBottom:1, justifyContent:'center', paddingLeft:10}}>
                         <Text style={{fontWeight:'500'}}>Measurement Type</Text>
                     </Touchable>
@@ -90,12 +90,6 @@ class MeasurementInner extends Component {
                         onItemPress={this._onItemPress}
                         messages={[{}, {}, {}]}
                 />
-
-                
-
-
-
-            
 
         </View>
         )
