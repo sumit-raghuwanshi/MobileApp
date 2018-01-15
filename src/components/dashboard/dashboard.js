@@ -49,6 +49,12 @@ class Dashboard extends Component {
     })
   }
 
+  _navigateToTasks = () => {
+    this.props.navigator.push({
+      screen: 'roof_gravy.tasks'
+    })
+  }
+
   render() {
     var user = this.props.user
 
@@ -116,7 +122,7 @@ class Dashboard extends Component {
                     bottom: 20,
                     right: -10
                   }}
-                  onPress={() => {}}>
+                  onPress={this._navigateToTasks}>
                   <Image source={require('../../../img/dashboard/checkbox.png')}/>
                 </Touchable>
               </View>

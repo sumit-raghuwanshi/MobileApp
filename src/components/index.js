@@ -11,6 +11,10 @@ import Measurements from './measurements/measurements';
 import MeasurementInner from './measurements/measurementInner/measurement-inner';
 import uploadXml from './measurements/measurementInner/upload-xml';
 import { ErrorView } from './common';
+import Tasks from './tasks/tasks';
+import NewTask from './tasks/new-task';
+import completedTask from './tasks/completed-task/completed-task';
+import currentTask from './tasks/current-task';
 
 
 export function registerScreens(store, Provider) {
@@ -26,4 +30,8 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.measurements', () => Measurements, store, Provider);
   Navigation.registerComponent('roof_gravy.measurement_inner', () => MeasurementInner, store, Provider);
   Navigation.registerComponent('roof_gravy.upload_xml', () => uploadXml, store, Provider);
+  Navigation.registerComponent('roof_gravy.tasks', () => Tasks, store, Provider);
+  Navigation.registerComponent('roof_gravy.new_task', () => NewTask, store, Provider);
+  Navigation.registerComponent('roof_gravy.completed_task', () => completedTask, store, Provider);
+  Navigation.registerComponent('roof_gravy.current_task', () => currentTask, store, Provider);
 }
