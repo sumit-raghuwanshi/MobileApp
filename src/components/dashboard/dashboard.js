@@ -55,6 +55,12 @@ class Dashboard extends Component {
     })
   }
 
+  _navigateToEstimate = () => {
+    this.props.navigator.push({
+      screen: 'roof_gravy.estimate'
+    })
+  }
+
   render() {
     var user = this.props.user
 
@@ -144,7 +150,7 @@ class Dashboard extends Component {
               <Image source={require('../../../img/dashboard/measurement.png')}/>
             </Touchable>
 
-            <Touchable onPress={() => {}}>
+            <Touchable onPress={this._navigateToEstimate}>
               <Image source={require('../../../img/dashboard/estimate.png')}/>
             </Touchable>
 

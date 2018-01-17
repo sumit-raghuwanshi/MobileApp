@@ -15,6 +15,8 @@ import Tasks from './tasks/tasks';
 import NewTask from './tasks/new-task';
 import completedTask from './tasks/completed-task/completed-task';
 import currentTask from './tasks/current-task';
+import Estimate from './estimate/estimate';
+import EstimateInternal from './estimate/estimate-internal';
 
 
 export function registerScreens(store, Provider) {
@@ -34,4 +36,6 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.new_task', () => NewTask, store, Provider);
   Navigation.registerComponent('roof_gravy.completed_task', () => completedTask, store, Provider);
   Navigation.registerComponent('roof_gravy.current_task', () => currentTask, store, Provider);
+  Navigation.registerComponent('roof_gravy.estimate', () => Estimate, store, Provider);
+  Navigation.registerComponent('roof_gravy.estimate_internal', () => EstimateInternal, store, Provider);
 }
