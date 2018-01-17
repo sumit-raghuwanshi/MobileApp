@@ -7,21 +7,50 @@ import {
   StatusBar,
   Image
 } from 'react-native';
-import { Touchable } from '../common';
+import { Touchable, Loader } from '../common';
 import MessageList from './message-list';
+import {getMessages} from '../../actions';
+import {connect} from 'react-redux';
 
 class Messages extends Component {
   static navigatorStyle = {
     navBarHidden: true
   }
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      loading: true
+    }
+  }
+
+  componentDidMount() {
+    this.props.getMessages()
+    .then((response) => {
+      this.setState({loading: false})
+    })
+    .catch((error) => {
+      this.setState({loading: false})
+    })
+  }
+
   _navigateToDashboard = () => {
     this.props.navigator.popToRoot()
   }
 
-  _onItemPress = (item) => {
+  _navigateToMessageCreateScreen = () => {
     this.props.navigator.push({
-      screen: 'roof_gravy.message'
+      screen: 'roof_gravy.message_create'
+    })
+  }
+
+  _onItemPress = (message) => {
+    this.props.navigator.push({
+      screen: 'roof_gravy.message',
+      passProps: {
+        message
+      }
     })
   }
 
@@ -30,23 +59,25 @@ class Messages extends Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
 
-        <SafeAreaView style={styles.header}>
+        <SafeAreaView style={styles.headerContainer}>
+          <View style={styles.header}>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }} onPress={this._navigateToDashboard}>
             <Image source={require('../../../img/icons/home.png')} />
           </Touchable>
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>MESSAGES</Text>
-            <Image style={{ marginTop: 10 }} source={require('../../../img/icons/calendar.png')}/>
+            <Image style={{ marginTop: 10 }} source={require('../../../img/icons/messages.png')}/>
           </View>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
             <View></View>
           </Touchable>
+          </View>
         </SafeAreaView>
 
         <View style={styles.body}>
           <View style={styles.topButtonContainer}>
             <View style={styles.spaceFlex}></View>
-            <Touchable style={styles.newButton} onPress={() => {}}>
+            <Touchable style={styles.newButton} onPress={this._navigateToMessageCreateScreen}>
               <View style={styles.buttonContent}>
                 <Image source={require('../../../img/icons/add.png')}/>
                 <Text style={styles.buttonText}>NEW</Text>
@@ -55,10 +86,10 @@ class Messages extends Component {
           </View>
           <MessageList
             onItemPress={this._onItemPress}
-            messages={[{}, {}, {}]}
+            messages={this.props.messages}
             />
         </View>
-
+        <Loader loading={this.state.loading} />
       </View>
     );
   }
@@ -69,10 +100,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgba(194, 185, 165, 0.31)'
   },
+  headerContainer: {
+    backgroundColor: '#354052'
+  },
   header: {
     flexDirection: 'row',
     height: 66,
-    backgroundColor: '#354052',
     zIndex: 1
   },
   body: {
@@ -100,4 +133,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Messages
+function mapStateToProps(state) {
+  return {
+    messages: state.messages
+  }
+}
+
+export default connect(mapStateToProps, {getMessages})(Messages)

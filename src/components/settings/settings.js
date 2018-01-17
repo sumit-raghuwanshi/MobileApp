@@ -1,185 +1,167 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  Image,
-  Text,
-  SafeAreaView,
-  AsyncStorage,
-  StatusBar,
   ScrollView,
-  Dimensions
+  Text,
+  TextInput,
+  SafeAreaView,
+  StatusBar,
+  Image,
+  AsyncStorage
 } from 'react-native';
-import COLOR from '../../constants/colors';
-import Touchable from '../common/touchable';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as Actions from '../../actions';
+import { Touchable, Picker, TouchableField } from '../common';
 
 class Settings extends Component {
+  static navigatorStyle = {
+    navBarHidden: true
+  }
 
-    static navigatorStyle = {
-        navBarHidden: true
+  constructor(props) {
+    super(props)
+
+    this.state = {
+
     }
+  }
 
-    _navigateToDashboard = () => {
-        this.props.navigator.popToRoot()
-      }
+  _navigateToDashboard = () => {
+    this.props.navigator.popToRoot()
+  }
 
-    render(){
-        return(
-        <View style={styles.container}>
-            <StatusBar barStyle="light-content"/>
+  _navigateToPreviousScreen = () => {
+    this.props.navigator.pop()
+  }
 
-            <SafeAreaView style={styles.header}>
-                <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }} onPress={this._navigateToDashboard}>
-                    <Image source={require('../../../img/icons/home.png')} />
-                </Touchable>
-                <View style={{ flex: 1, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>Settings</Text>
-                    <Image style={{ marginTop: 10 }} source={require('../../../img/dashboard/settings.png')}/>
-                </View>
-                <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
-                    <View></View>
-                </Touchable>
-            </SafeAreaView>
+  _onItemPress = (item) => {
 
-            <ScrollView style={styles.body}>
-                <Touchable style={styles.viewContainer}>
-                    <View style={styles.contentContainer}>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.viewText}>{"Image Upload Quality"}</Text>
-                    </View>
-                    <View style={{ alignItems: 'flex-end' }}>
-                        <View style={{flex: 1, justifyContent: 'center', flexDirection:'row', alignItems:'center'}}>
-                        <Text style={styles.viewText}>Large</Text>
-                        <Image source={require('../../../img/icons/chevron.png')}/>
-                        </View>
-                    </View>
-                    </View>
-                </Touchable>
+  }
 
-                <Touchable style={styles.viewContainer}>
-                    <View style={styles.contentContainer}>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.viewText}>{"Location Settings"}</Text>
-                    </View>
-                    <View style={{ alignItems: 'flex-end' }}>
-                        <View style={{flex: 1, justifyContent: 'center', flexDirection:'row', alignItems:'center'}}>
-                        <Text style={styles.viewText}></Text>
-                        <Image source={require('../../../img/icons/chevron.png')}/>
-                        </View>
-                    </View>
-                    </View>
-                </Touchable>
+  _navigateToMyInfoScreen = () => {
+    this.props.navigator.push({
+      screen: "roof_gravy.my_info"
+    })
+  }
 
-                <Touchable style={styles.viewContainer}>
-                    <View style={styles.contentContainer}>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.viewText}>{"Edit My Info"}</Text>
-                    </View>
-                    <View style={{ alignItems: 'flex-end' }}>
-                        <View style={{flex: 1, justifyContent: 'center', flexDirection:'row', alignItems:'center'}}>
-                        <Text style={styles.viewText}></Text>
-                        <Image source={require('../../../img/icons/chevron.png')}/>
-                        </View>
-                    </View>
-                    </View>
-                </Touchable>
+  render() {
+    return (
+      <View style={styles.container}>
+        <StatusBar barStyle="light-content"/>
 
-                <Touchable style={styles.viewContainer}>
-                    <View style={styles.contentContainer}>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.viewText}>{"Create/Connect Stripe Account"}</Text>
-                    </View>
-                    <View style={{ alignItems: 'flex-end' }}>
-                        <View style={{flex: 1, justifyContent: 'center', flexDirection:'row', alignItems:'center'}}>
-                        <Text style={styles.viewText}></Text>
-                        <Image source={require('../../../img/icons/chevron.png')}/>
-                        </View>
-                    </View>
-                    </View>
-                </Touchable>
-            </ScrollView>
+        <SafeAreaView style={styles.header}>
+          <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }} onPress={this._navigateToDashboard}>
+            <Image source={require('../../../img/icons/home.png')} />
+          </Touchable>
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>Settings</Text>
+            <Image style={{ marginTop: 10 }} source={require('../../../img/icons/settings.png')}/>
+          </View>
+          <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
+            <View></View>
+          </Touchable>
+        </SafeAreaView>
 
-        </View>
-        )
-    }
+        <ScrollView style={styles.body}>
+          <View style={styles.topButtonContainer}></View>
 
+          <View>
+
+            <View style={{backgroundColor: '#FFFFFF', paddingLeft: 15}}>
+              <Picker
+                placeholder="Image Upload Quality"
+                placeholderTextColor="#BFBFBF"
+                style={styles.picker}
+                textStyle={styles.pickerText}
+                selectedValue={this.state.imageUploadQuality}
+                onValueChange={(imageUploadQuality) => this.setState({imageUploadQuality})}
+                items={[{label: 'Image Upload Quality', value: 'Image Upload Quality'}]}
+                />
+            </View>
+          </View>
+
+          <View style={{marginTop: 12}}>
+
+            <View style={{backgroundColor: '#FFFFFF', paddingLeft: 15}}>
+              <Picker
+                placeholder="Location Settings"
+                placeholderTextColor="#BFBFBF"
+                style={styles.picker}
+                textStyle={styles.pickerText}
+                selectedValue={this.state.locationSettings}
+                onValueChange={(locationSettings) => this.setState({locationSettings})}
+                items={[{label: 'Location Settings', value: 'Location Settings'}]}
+                />
+            </View>
+          </View>
+
+          <View style={{marginTop: 12}}>
+            <TouchableField
+              onPress={this._navigateToMyInfoScreen}
+              selectedValue="Edit My Info"
+              />
+          </View>
+
+          <View style={{marginTop: 12}}>
+            <Touchable
+              style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}
+              onPress={() => {
+                AsyncStorage.clear(() => {
+                  this.props.navigator.resetTo({
+                    screen: 'roof_gravy.login_screen'
+                  })
+                })
+              }}>
+              <View style={{ flex: 1, justifyContent: 'center', borderBottomWidth: 1, borderBottomColor: 'rgba(0, 0, 0, 0.2)'}}>
+                <Text style={styles.textField}>{'Logout'}</Text>
+              </View>
+            </Touchable>
+
+          </View>
+
+        </ScrollView>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: 'rgba(194, 185, 165, 0.31)'
-    },
-    header: {
-      flexDirection: 'row',
-      height: 66,
-      backgroundColor: '#354052',
-      zIndex: 1
-    },body: {
-        flex: 1,
-        marginTop:20
-    },
-    oneView:{
-        backgroundColor:'white',
-        height:60, 
-        width:Dimensions.get('window').width -10,
-        marginLeft:5,
-        marginRight:5,
-        flexDirection:'row',
-        justifyContent:'space-between',
-        alignItems:'center'
-    },
-    viewText: {
-        marginRight:5,
-        fontWeight:'600',
-        fontSize:16
-    },
-    viewContainer: {
-        height: 60,
-        backgroundColor: 'white',
-        marginTop:10,
-        marginLeft:5,
-        marginRight:5
-      },
-      contentContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        marginHorizontal: 10,
-        paddingVertical: 15
-      },
-      title: {
-        color: 'rgba(0, 0, 0, 0.6)',
-        fontSize: 17
-      },
-      subject: {
-        color: 'rgba(0, 0, 0, 0.6)',
-        fontSize: 11
-      },
-      preview: {
-        color: 'rgba(0, 0, 0, 0.6)',
-        fontSize: 11,
-        marginLeft: 10
-      },
-      textContainer: {
-          justifyContent:'center',
-        flex: 1,
-        paddingRight: 50
-      }
+  container: {
+    flex: 1,
+    backgroundColor: 'rgba(194, 185, 165, 0.31)'
+  },
+  header: {
+    flexDirection: 'row',
+    height: 66,
+    backgroundColor: '#354052',
+    zIndex: 1
+  },
+  body: {
+    flex: 1
+  },
+  topButtonContainer: {
+    flexDirection: 'row',
+    height: 80,
+    paddingLeft: 25,
+    paddingRight: 10,
+    paddingTop: 20,
+    paddingBottom: 10
+  },
+  textField: {
+    backgroundColor: '#FFFFFF',
+    fontSize: 17,
+    color: 'rgba(0, 0, 0, 0.73)',
+  },
+  picker: {
+    height: 44,
+    backgroundColor: '#FFFFFF',
+    paddingRight: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, 0.2)'
+  },
+  pickerText: {
+    fontSize: 17,
+    color: 'rgba(0, 0, 0, 0.73)'
+  }
 });
 
-function mapStateToProps(state, ownProps) {
-    return {
-      user: state.user
-    };
-  };
-  
-  function mapDispatchToProps(dispatch) {
-    return {
-      actions: bindActionCreators(Actions, dispatch)
-    };
-  }
-
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default Settings

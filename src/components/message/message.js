@@ -8,7 +8,9 @@ import {
   StatusBar,
   Image
 } from 'react-native';
-import { Touchable } from '../common';
+import { Touchable, Loader } from '../common';
+import { Format } from '../../helpers';
+import OpenFile from 'react-native-doc-viewer';
 
 class Message extends Component {
   static navigatorStyle = {
@@ -23,11 +25,27 @@ class Message extends Component {
     this.props.navigator.pop()
   }
 
-  _onItemPress = (item) => {
+  _openAttachment = () => {
+    var message = this.props.message
+    var documentUrl = Format.imageUrl(message["data_url"])
 
+    OpenFile.openDoc([{
+      url: documentUrl,
+      fileName:"sample"
+    }], (error, url) => {
+      this.setState({
+        loading: false
+      })
+
+      if (error) {
+        alert(JSON.stringify(error))
+      }
+    })
   }
 
   render() {
+    var message = this.props.message
+
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
@@ -38,7 +56,7 @@ class Message extends Component {
           </Touchable>
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>MESSAGES</Text>
-            <Image style={{ marginTop: 10 }} source={require('../../../img/icons/calendar.png')}/>
+            <Image style={{ marginTop: 10 }} source={require('../../../img/icons/messages.png')}/>
           </View>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
             <View></View>
@@ -68,25 +86,25 @@ class Message extends Component {
           <View style={styles.messageHeaders}>
             <View style={styles.messageHeaderItem}>
               <Text style={styles.messageHeaderItemText}>
-                Mary Smith
+                {message["sender_name"]}
               </Text>
             </View>
             <View style={styles.messageHeaderSeperator}></View>
             <View style={styles.messageHeaderItem}>
               <Text style={styles.messageHeaderItemText}>
-                Folow Up
+                {message["subject"] ? message["subject"] : "No subject"}
               </Text>
             </View>
           </View>
 
           <ScrollView style={styles.messageBody}>
             <Text style={styles.messageBodyText}>
-              {"Just wanted to make sure you have everything you need for today's presentation. Please let me know if there is anything I can do to help out.\n\n Mary Smith"}
+              {message["content"]}
             </Text>
           </ScrollView>
 
           <View style={styles.footer}>
-            <Touchable onPress={() => {}}>
+            <Touchable onPress={this._openAttachment}>
               <View style={{ alignItems: 'center' }}>
                 <Image source={require('../../../img/icons/folder.png')}/>
                 <Text style={{ fontSize: 14, fontWeight: '500', color: '#999999', marginTop: 5 }}>View Attachment</Text>

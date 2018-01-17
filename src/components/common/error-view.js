@@ -27,8 +27,9 @@ const styles = StyleSheet.create({
     width: width,
     backgroundColor: 'red',
     flex: 1,
-    paddingVertical: 5,
-    alignItems: 'center',
+    paddingTop: 20,
+    paddingBottom: 5,
+    paddingHorizontal: 20,
     justifyContent: 'center',
     minHeight: 80
   },

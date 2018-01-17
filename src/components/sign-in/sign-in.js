@@ -7,8 +7,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  StatusBar,
-  Dimensions
+  StatusBar
 } from 'react-native';
 import Loader from '../common/loader';
 import { bindActionCreators } from 'redux';
@@ -77,7 +76,7 @@ class SignIn extends Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
 
-        <Image style={styles.background} source={require("../../../img/login/login-bg.png")}  resizeMode="stretch"/>
+        <Image resizeMode={"stretch"} style={styles.background} source={require("../../../img/login/login-bg.png")} />
         <View style={styles.formContainer}>
 
           <View style={styles.imageContainer}>
@@ -127,8 +126,12 @@ const styles = StyleSheet.create({
   },
   background: {
     position: "absolute",
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    width: undefined,
+    height: undefined
   },
   formContainer: {
     height: 345.6,

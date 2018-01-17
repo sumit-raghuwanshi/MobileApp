@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'react';
-import { Touchable, Picker, DateTimePicker } from '../common';
+import {getAppointments} from '../../actions';
+import { Touchable, Picker, DateTimePicker, Loader } from '../common';
 
 class CalendarScreen extends Component {
   static navigatorStyle = {
@@ -23,6 +23,20 @@ class CalendarScreen extends Component {
     super(props);
     this.state = {};
     this._onDayPress = this._onDayPress.bind(this);
+
+    this.state = {
+      loading: true
+    }
+  }
+
+  componentDidMount() {
+    this.props.getAppointments()
+    .then((response) => {
+      this.setState({loading: false})
+    })
+    .catch((error) => {
+      this.setState({loading: false})
+    })
   }
 
   _navigateToDashboard = () => {
@@ -44,7 +58,7 @@ class CalendarScreen extends Component {
   render() {
     var markedDates = {}
 
-    markedDates['2017-11-26'] = { selected: true }
+    markedDates['2017-11-26'] = { selected: true, marked: true,dotColor: 'red' }
 
     return (
       <View style={styles.container}>
@@ -68,7 +82,7 @@ class CalendarScreen extends Component {
             onDayPress={this._onDayPress}
             style={styles.calendar}
             hideExtraDays
-            markedDates={{[this.state.selected]: {selected: true}}}
+            markedDates={{[this.state.selected]: {selected: true, marked: true}}}
             theme={{
               backgroundColor: '#ffffff',
               calendarBackground: '#f4f5f5',
@@ -96,6 +110,8 @@ class CalendarScreen extends Component {
             </View>
           </Touchable>
         </View>
+
+        <Loader loading={this.state.loading}/>
       </View>
     );
   }
@@ -118,7 +134,9 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return {}
+  return {
+    appointments: state.appointments
+  }
 }
 
-export default connect(mapStateToProps)(CalendarScreen);
+export default connect(mapStateToProps, {getAppointments})(CalendarScreen);

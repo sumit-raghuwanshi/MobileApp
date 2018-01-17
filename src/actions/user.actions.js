@@ -12,16 +12,11 @@ export function getUserListSuccess(data) {
   };
 }
 
-export function getUserList(user) {
+export function getUserList() {
   return function (dispatch) {
     return API.fetch({
       method: 'get',
-      url: `${SERVER_URL}${USERS}`,
-      data: user,
-      headers: {
-        'Content-Type': 'application/json',
-        'ACCESS_TOKEN': '72d2d63c293fa2fba53627dea33b3311'
-      },
+      url: `${SERVER_URL}${USERS}`
     })
     .then((response) => {
       return dispatch(getUserListSuccess(response.data));
