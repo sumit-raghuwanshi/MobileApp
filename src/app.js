@@ -12,17 +12,21 @@ import {
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import configureStore from './store/configure-store';
-import { load } from './reducers/initial-state';
 import { registerScreens } from './components';
 import KeyboardManager from 'react-native-keyboard-manager'
+import { persistStore } from 'redux-persist';
 
-// KeyboardManager.setToolbarPreviousNextButtonEnable(true);
-// KeyboardManager.setShouldResignOnTouchOutside(true);
+if (Platform.OS == 'ios') {
+  KeyboardManager.setToolbarPreviousNextButtonEnable(true);
+  KeyboardManager.setShouldResignOnTouchOutside(true);
+}
 
-load((initialState) => {
-  const store = configureStore(initialState)
-  registerScreens(store, Provider)
-  global.store = store
+const store = configureStore()
+global.AppStore = store
+registerScreens(store, Provider)
+
+let persistor = persistStore(store, null, () => {
+  var initialState = store.getState()
 
   if (initialState.user)
     Navigation.startSingleScreenApp({

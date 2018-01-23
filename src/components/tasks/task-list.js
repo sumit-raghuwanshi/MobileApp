@@ -17,14 +17,14 @@ class TaskList extends Component {
   }
 
   render() {
-    var dataSource = this.ds.cloneWithRows(this.props.messages)
+    var dataSource = this.ds.cloneWithRows(this.props.tasks)
 
     return (
       <ListView
         style={styles.container}
         dataSource={dataSource}
         renderRow={(item) => (
-          <TaskListItem message={item} onPress={this.props.onItemPress}/>
+          <TaskListItem task={item} onPress={this.props.onItemPress}/>
         )} />
     )
   }
@@ -32,7 +32,8 @@ class TaskList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: 'white'
   }
 });
 

@@ -10,8 +10,10 @@ import {
   StatusBar
 } from 'react-native';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'react';
-import { Touchable, Picker, DateTimePicker } from '../../common';
+import {getUserList, createAppointment} from '../../../actions';
+import {Notification} from '../../../helpers';
+import { Touchable, Picker, DateTimePicker, Loader } from '../../common';
+import _ from 'lodash';
 
 class AppointmentCreate extends Component {
   static navigatorStyle = {
@@ -22,8 +24,18 @@ class AppointmentCreate extends Component {
     super(props)
 
     this.state = {
-
+      loading: true
     }
+  }
+
+  componentDidMount() {
+    this.props.getUserList()
+    .then((response) => {
+      this.setState({loading: false})
+    })
+    .catch((error) => {
+      this.setState({loading: false})
+    })
   }
 
   _navigateToDashboard = () => {
@@ -32,6 +44,52 @@ class AppointmentCreate extends Component {
 
   _navigateToPreviousScreen = () => {
     this.props.navigator.pop()
+  }
+
+  _onSubmit = () => {
+    var {title, user_id, start_date, end_date, notes} = this.state;
+
+    var errorMessages = []
+
+    if (!title)
+      errorMessages.push('Title is required')
+
+    if (!user_id)
+      errorMessages.push('Customer is required')
+
+    if (!start_date)
+      errorMessages.push('Start Date is required')
+
+    if (!end_date)
+      errorMessages.push('End Date is required')
+
+    if (!notes)
+      errorMessages.push('Notes are required')
+
+    if (errorMessages.length > 0) {
+      Notification.error(_.join(errorMessages, "\n"))
+
+      return
+    }
+
+    this.setState({ loading: true })
+    var params = {
+      "calendar": {
+        "title": title,
+        "user_id": user_id,
+        "start_date": start_date,
+        "end_date": end_date,
+        "note": notes
+      }
+    }
+
+    this.props.createAppointment(params)
+    .then((response) => {
+      this.setState({loading: false}, this._navigateToPreviousScreen)
+    })
+    .catch((error) => {
+      this.setState({loading: false})
+    })
   }
 
   render() {
@@ -59,55 +117,57 @@ class AppointmentCreate extends Component {
               <Image source={require('../../../../img/icons/cross.png')} />
             </Touchable>
 
-            <Touchable onPress={() => {}}>
+            <Touchable onPress={this._onSubmit}>
               <Image source={require('../../../../img/icons/save.png')} />
             </Touchable>
           </View>
 
           <View style={{ marginVertical: 12, backgroundColor: 'pink' }}>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+              <TextInput
+                placeholder="Title"
+                value={this.state.title}
+                onChangeText={(title) => this.setState({title})}
+                style={styles.textField} />
+            </View>
+            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
               <Picker
                 placeholder="Customer"
                 placeholderTextColor="#BFBFBF"
                 style={styles.picker}
                 textStyle={styles.pickerText}
-                selectedValue={this.state.customer}
-                onValueChange={(customer) => this.setState({customer})}
-                items={[{label: 'customer', value: 'customer'}]}
+                selectedValue={this.state.user_id}
+                onValueChange={(user_id) => this.setState({user_id})}
+                items={_.map(this.props.users, (user) => ({ label: user.first_name + " " + user.last_name, value: user.id }))}
                 />
-            </View>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
-              <TextInput
-                placeholder="Location"
-                value={this.state.location}
-                onChangeText={(location) => this.setState({location})}
-                style={styles.textField} />
             </View>
           </View>
 
           <View style={{ marginTop: 50, marginBottom: 12 }}>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
               <DateTimePicker
-                mode={"time"}
+                mode={"datetime"}
+                placeholderTextColor="#BFBFBF"
                 is24Hour={false}
                 style={styles.picker}
                 placeholder="Starts"
                 textStyle={styles.pickerText}
                 format={'MMM DD, YYYY       h:mma'}
-                value={this.state.checkinTime}
-                onConfirm={(checkinTime) => this.setState({checkinTime})}
+                value={this.state.start_date}
+                onConfirm={(start_date) => this.setState({start_date})}
                 />
             </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
               <DateTimePicker
-                mode={"time"}
+                mode={"datetime"}
+                placeholderTextColor="#BFBFBF"
                 is24Hour={false}
                 style={styles.picker}
                 placeholder="Ends"
                 textStyle={styles.pickerText}
                 format={'MMM DD, YYYY       h:mma'}
-                value={this.state.checkinTime}
-                onConfirm={(checkinTime) => this.setState({checkinTime})}
+                value={this.state.end_date}
+                onConfirm={(end_date) => this.setState({end_date})}
                 />
             </View>
           </View>
@@ -124,6 +184,7 @@ class AppointmentCreate extends Component {
           </View>
 
         </ScrollView>
+        <Loader loading={this.state.loading}/>
       </View>
     );
   }
@@ -171,7 +232,9 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return {}
+  return {
+    users: state.users
+  }
 }
 
-export default connect(mapStateToProps)(AppointmentCreate);
+export default connect(mapStateToProps, {getUserList, createAppointment})(AppointmentCreate);

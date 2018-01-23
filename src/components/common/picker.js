@@ -12,7 +12,7 @@ import {
   Image
 } from 'react-native';
 import _ from 'lodash';
-import { Touchable } from './touchable';
+import { Touchable, TouchableField } from './';
 
 class Picker extends Component {
   constructor(props) {
@@ -58,48 +58,38 @@ class Picker extends Component {
   render() {
     var items = this._renderItems()
     var selectedItem = _.find(this.props.items, (item) => item.value === this.props.selectedValue)
-    var selectedValue = selectedItem ? selectedItem.label : (this.props.placeholder ? this.props.placeholder : '')
-
-    if (Platform.OS === 'android')
-      return (
-        <View style={this.props.style} >
-          <NativePicker
-            selectedValue={this.state.selectedValue}
-            onValueChange={(selectedValue) => this.setState({selectedValue: selectedValue})}
-            >
-            {items}
-          </NativePicker>
-        </View>
-      )
+    var selectedValue = selectedItem ? selectedItem.label : ''
 
     return (
-      <Touchable style={this.props.style} onPress={this.showPicker}>
-        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Text style={[this.props.textStyle, selectedItem ? null : { color: this.props.placeholderTextColor}]}>{selectedValue}</Text>
-          <Image source={require('../../../img/icons/chevron.png')}/>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={this.state.pickerVisible}
-            onRequestClose={this._hidePicker}
-            >
-            <TouchableOpacity onPress={this._hidePicker} style={styles.spaceContainer}></TouchableOpacity>
-            <View style={styles.buttonBar}>
-              <Button title="Cancel" color={'grey'} onPress={this._hidePicker}/>
-              <View style={styles.buttonBarSpace}></View>
-              <Button title={this.props.confirmBtnText ? this.props.confirmBtnText : "Confirm"} onPress={this._confirm}/>
-            </View>
-            <View style={styles.pickerContainer}>
-              <NativePicker
-                selectedValue={this.state.selectedValue}
-                onValueChange={(selectedValue) => this.setState({selectedValue: selectedValue})}
-                >
-                {items}
-              </NativePicker>
-            </View>
-          </Modal>
-        </View>
-      </Touchable>
+      <View>
+        <TouchableField
+          onPress={this.showPicker}
+          placeholder={this.props.placeholder}
+          selectedValue={selectedValue}
+          />
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.pickerVisible}
+          onRequestClose={this._hidePicker}
+          >
+          <TouchableOpacity onPress={this._hidePicker} style={styles.spaceContainer}></TouchableOpacity>
+          <View style={styles.buttonBar}>
+            <Button title="Cancel" color={'grey'} onPress={this._hidePicker}/>
+            <View style={styles.buttonBarSpace}></View>
+            <Button title={this.props.confirmBtnText ? this.props.confirmBtnText : "Confirm"} onPress={this._confirm}/>
+          </View>
+          <View style={styles.pickerContainer}>
+            <NativePicker
+              selectedValue={this.state.selectedValue}
+              onValueChange={(selectedValue) => this.setState({selectedValue: selectedValue})}
+              >
+              {items}
+            </NativePicker>
+          </View>
+        </Modal>
+
+      </View>
     );
   }
 }

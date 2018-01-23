@@ -12,11 +12,15 @@ import COLOR from '../../constants/colors';
 import Touchable from '../common/touchable';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions from '../../actions';
+import {getProfile} from '../../actions';
 
 class Dashboard extends Component {
   static navigatorStyle = {
     navBarHidden: true
+  }
+
+  componentWillMount() {
+    this.props.getProfile()
   }
 
   _navigateToLeadsCreateScreen = () => {
@@ -37,21 +41,39 @@ class Dashboard extends Component {
     })
   }
 
-  _navigateToSettings = () => {
+  _navigateToTasksScreen = () => {
     this.props.navigator.push({
-      screen: 'roof_gravy.settings'
+      screen: "roof_gravy.tasks"
     })
   }
 
-  _navigateToMeasurements = () => {
+  _navigateToPaymentsScreen = () => {
     this.props.navigator.push({
-      screen: 'roof_gravy.measurements'
+      screen: "roof_gravy.payments"
     })
   }
 
-  _navigateToTasks = () => {
+  _navigateToMeasurementsCreateScreen = () => {
     this.props.navigator.push({
-      screen: 'roof_gravy.tasks'
+      screen: "roof_gravy.measurements_create"
+    })
+  }
+
+  _navigateToEstimatesScreen = () => {
+    this.props.navigator.push({
+      screen: "roof_gravy.estimate_create"
+    })
+  }
+
+  _navigateToJobsScreen = () => {
+    this.props.navigator.push({
+      screen: "roof_gravy.jobs"
+    })
+  }
+
+  _navigateToSettingsScreen = () => {
+    this.props.navigator.push({
+      screen: "roof_gravy.settings"
     })
   }
 
@@ -72,24 +94,13 @@ class Dashboard extends Component {
             resizeMode="stretch"
             style={{
               flex: 1,
-              width: undefined
+              width: "100%"
             }}
             source={require('../../../img/dashboard/bg.png')} />
 
           <SafeAreaView style={styles.backgroundContentContainer}>
             <View style={styles.logoContainer}>
-              <View style={{width:40}}/>
               <Image source={require('../../../img/dashboard/logo.png')}/>
-
-              <Touchable onPress={() => {
-                AsyncStorage.clear(() => {
-                  this.props.navigator.resetTo({
-                    screen: 'roof_gravy.login_screen'
-                  })
-                })}
-              }>
-                <Image source={require('../../../img/logout.png')} style={{height:40, width:40}}/>
-              </Touchable>
             </View>
 
             <View style={{height: 15}}></View>
@@ -128,7 +139,7 @@ class Dashboard extends Component {
                     bottom: 20,
                     right: -10
                   }}
-                  onPress={this._navigateToTasks}>
+                  onPress={this._navigateToTasksScreen}>
                   <Image source={require('../../../img/dashboard/checkbox.png')}/>
                 </Touchable>
               </View>
@@ -146,11 +157,15 @@ class Dashboard extends Component {
               <Image source={require('../../../img/dashboard/lead.png')}/>
             </Touchable>
 
-            <Touchable onPress={this._navigateToMeasurements}>
+            <Touchable onPress={this._navigateToMeasurementsCreateScreen}>
               <Image source={require('../../../img/dashboard/measurement.png')}/>
             </Touchable>
 
+<<<<<<< HEAD
             <Touchable onPress={this._navigateToEstimate}>
+=======
+            <Touchable onPress={this._navigateToEstimatesScreen}>
+>>>>>>> 498deff889a15287485d10f185b6a66fe705964e
               <Image source={require('../../../img/dashboard/estimate.png')}/>
             </Touchable>
 
@@ -160,26 +175,17 @@ class Dashboard extends Component {
 
           <View style={styles.bottomButtonRow}>
 
-            <Touchable onPress={() => {}}>
+            <Touchable onPress={this._navigateToPaymentsScreen}>
               <Image source={require('../../../img/dashboard/payment.png')}/>
             </Touchable>
 
-            <Touchable onPress={() => {}}>
+            <Touchable onPress={this._navigateToJobsScreen}>
               <Image source={require('../../../img/dashboard/job.png')}/>
             </Touchable>
 
-            <Touchable onPress={this._navigateToSettings}>
+            <Touchable onPress={this._navigateToSettingsScreen}>
               <Image source={require('../../../img/dashboard/settings.png')}/>
             </Touchable>
-
-            {/* <Touchable onPress={() => {
-              AsyncStorage.clear(() => {
-                this.props.navigator.resetTo({
-                  screen: 'roof_gravy.login_screen'
-                })
-              })
-
-            }}> */}
 
           </View>
         </View>
@@ -206,16 +212,14 @@ const styles = StyleSheet.create({
     left: 0
   },
   logoContainer: {
-    paddingHorizontal:20,
-    alignItems: 'center',
-    flexDirection:'row',
-    justifyContent:'space-between'
+    alignItems: 'center'
   },
   imageContainer: {
     alignItems: 'center'
   },
   circleContainer: {
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 22
   },
   userNameContainer: {
     flex: 1,
@@ -244,10 +248,4 @@ function mapStateToProps(state, ownProps) {
   };
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Actions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, {getProfile})(Dashboard);
