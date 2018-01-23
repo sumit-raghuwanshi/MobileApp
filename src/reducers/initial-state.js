@@ -1,17 +1,11 @@
 import { AsyncStorage } from 'react-native';
 export default {
+  appointments: [],
   user: null,
-  users: []
+  jobs: [],
+  leads: [],
+  messages: [],
+  tasks: [],
+  templates: [],
+  users: [],
 };
-
-export async function load(success) {
-  var user = await AsyncStorage.getItem('currentUser');
-  user = JSON.parse(user)
-
-  var initialState = {
-    user
-  }
-
-  if (success)
-    success(initialState)
-}

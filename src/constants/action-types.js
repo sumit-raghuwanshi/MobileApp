@@ -1,2 +1,29 @@
-export const LOGIN_USER                 = 'LOGIN_USER';
+export const CREATE_LEAD_SUCCESS        = 'CREATE_LEAD_SUCCESS';
 export const GET_USER_LIST_SUCCESS      = 'GET_USER_LIST_SUCCESS';
+export const GET_MESSAGES_SUCCESS       = 'GET_MESSAGES_SUCCESS';
+export const LOGIN_USER                 = 'LOGIN_USER';
+export const LOGOUT_USER                = 'LOGOUT_USER';
+export const SEND_MESSAGE_SUCCESS       = 'SEND_MESSAGE_SUCCESS';
+
+// Account
+export const UPDATE_PROFILE             ='UPDATE_PROFILE';
+export const GET_PROFILE                ='GET_PROFILE';
+
+// APPOINTMENTS
+export const CREATE_APPOINTMENT_SUCCESS = 'CREATE_APPOINTMENT_SUCCESS';
+export const DELETE_APPOINTMENT_SUCCESS = 'DELETE_APPOINTMENT_SUCCESS';
+export const GET_APPOINTMENTS_SUCCESS   = 'GET_APPOINTMENTS_SUCCESS';
+export const UPDATE_APPOINTMENT_SUCCESS = 'UPDATE_APPOINTMENT_SUCCESS';
+
+// Jobs
+export const GET_JOBS_SUCCESS           = 'GET_JOBS_SUCCESS';
+export const UPDATE_JOB                 = 'UPDATE_JOB';
+
+// TASKS
+export const CREATE_TASKS_SUCCESS       = 'CREATE_TASKS_SUCCESS';
+export const DELETE_TASKS_SUCCESS       = 'DELETE_TASKS_SUCCESS';
+export const GET_TASKS_SUCCESS          = 'GET_TASKS_SUCCESS';
+export const UPDATE_TASK_SUCCESS        = 'UPDATE_TASK_SUCCESS';
+
+// Templates
+export const GET_TEMPLATES              = 'GET_TEMPLATES'
