@@ -41,7 +41,7 @@ class DateTimePicker extends Component {
         onPress={this._showDateTimePicker.bind(this)}>
         <View style={styles.pickerContainer}>
           <Text style={this.props.textStyle}>
-            {this.props.value ? moment(Date.parse(this.props.value)).format(this.props.format) : this.props.placeholder ? <Text style={[{color: 'gray'}, this.props.placeholderStyle]}>{this.props.placeholder}</Text> : ''}
+            {this.props.value ? moment(Date.parse(this.props.value)).format(this.props.format) : this.props.placeholder ? <Text style={{color: this.props.placeholderTextColor ? this.props.placeholderTextColor : 'gray'}}>{this.props.placeholder}</Text> : ''}
           </Text>
           <DateTimePickerComponent
             mode={this.props.mode}

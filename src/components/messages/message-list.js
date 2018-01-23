@@ -21,6 +21,7 @@ class MessageList extends Component {
 
     return (
       <ListView
+        enableEmptySections={true}
         style={styles.container}
         dataSource={dataSource}
         renderRow={(item) => (

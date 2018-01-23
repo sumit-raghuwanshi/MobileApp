@@ -6,6 +6,7 @@ import {
   Image
 } from 'react-native';
 import { Touchable } from '../common';
+import moment from 'moment';
 
 class MessageListItem extends Component {
   render() {
@@ -16,12 +17,12 @@ class MessageListItem extends Component {
         onPress={() => this.props.onPress && this.props.onPress(message)}>
         <View style={styles.contentContainer}>
           <View style={styles.textContainer}>
-            <Text style={styles.title}>{"Greet Stewart"}</Text>
-            <Text style={styles.subject}>{"Form"}</Text>
-            <Text style={styles.preview} numberOfLines={2}>{"I added a task for you. Can you give me a call to discuss what we need we should do about it."}</Text>
+            <Text style={styles.title}>{message["sender_name"]}</Text>
+            <Text style={styles.subject}>{message["subject"] ? message["subject"] : "No Subject"}</Text>
+            <Text style={styles.preview} numberOfLines={2}>{message["content"]}</Text>
           </View>
           <View style={{ alignItems: 'flex-end' }}>
-            <Text style={{ color: 'rgba(0, 0, 0, 0.3)', fontSize: 12 }}>1:25pm</Text>
+            <Text style={{ color: 'rgba(0, 0, 0, 0.3)', fontSize: 12 }}>{moment(message["created_at"]).fromNow()}</Text>
             <View style={{flex: 1, justifyContent: 'center'}}>
               <Image source={require('../../../img/icons/chevron.png')}/>
             </View>
