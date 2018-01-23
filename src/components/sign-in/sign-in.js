@@ -33,6 +33,7 @@ class SignIn extends Component {
     this.loginButtonPress = this.loginButtonPress.bind(this);
     this.onEmailChange    = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
+    this.signUpButtonPress = this.signUpButtonPress.bind(this);
   }
 
   onEmailChange(email) {
@@ -66,6 +67,12 @@ class SignIn extends Component {
       this.setState({
         loading: false
       })
+    })
+  }
+
+  signUpButtonPress = () => {
+    this.props.navigator.resetTo({
+      screen: 'roof_gravy.signup'
     })
   }
 
@@ -109,6 +116,10 @@ class SignIn extends Component {
             <View style={{ flex: 1 }}/>
             <TouchableOpacity onPress={this.loginButtonPress} style={styles.button}>
               <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={this.signUpButtonPress} style={styles.button}>
+              <Text style={styles.buttonText}>SignUp</Text>
             </TouchableOpacity>
           </View>
 
