@@ -118,9 +118,9 @@ class SignIn extends Component {
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={this.signUpButtonPress} style={styles.button}>
+            {/* <TouchableOpacity onPress={this.signUpButtonPress} style={styles.button}>
               <Text style={styles.buttonText}>SignUp</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
         </View>
@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 30,
+    marginLeft:5,
     backgroundColor: '#E88A18',
     paddingHorizontal: 28,
     justifyContent: 'center'
