@@ -20,13 +20,16 @@ import Jobs from './jobs/jobs';
 import Job from './job/job';
 import JobCreate from './job-create/job-create';
 import Settings from './settings/settings';
-import SignUp from './sign-up/sign-up.js';
+import ForgotPassword from './sign-in/ForgotPassword'
+//import SignUp from './sign-up/sign-up.js';
 
 import ConfirmationModal from './common/confirmation-modal';
 import { ErrorView } from './common';
 
 export function registerScreens(store, Provider) {
+
   Navigation.registerComponent('roof_gravy.login_screen', () => SignIn, store, Provider);
+  Navigation.registerComponent('roof_gravy.forgot_password', () => ForgotPassword, store, Provider);
   Navigation.registerComponent('roof_gravy.calendar', () => Calendar, store, Provider);
   Navigation.registerComponent('roof_gravy.dashboard', () => Dashboard, store, Provider);
   Navigation.registerComponent('roof_gravy.estimate_create', () => EstimateCreateScreen, store, Provider);
@@ -47,7 +50,7 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.job', () => Job, store, Provider);
   Navigation.registerComponent('roof_gravy.job_create', () => JobCreate, store, Provider);
   Navigation.registerComponent('roof_gravy.settings', () => Settings, store, Provider);
-  Navigation.registerComponent('roof_gravy.signup', () => SignUp, store, Provider);
+  //Navigation.registerComponent('roof_gravy.signup', () => SignUp, store, Provider);
 
   Navigation.registerComponent('roof_gravy.confirmation_modal', () => ConfirmationModal, store, Provider);
   Navigation.registerComponent('roof_gravy.error_view', () => ErrorView, store, Provider);

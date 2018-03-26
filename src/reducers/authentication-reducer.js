@@ -14,6 +14,16 @@ export default function (state = initialState.user, action) {
       
     case types.UPDATE_PROFILE:
       return {...state, ...action.user}
+    
+    //Forgot Password
+    case types.FORGOT_PASSWORD_REQUEST:
+      return { ...state }
+
+    case types.FORGOT_PASSWORD_SUCCESS:
+      return { ...state, ...action.user }
+
+    case types.FORGOT_PASSWORD_ERROR:
+      return { ...state }
 
     default:
       return state;

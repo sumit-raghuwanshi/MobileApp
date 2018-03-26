@@ -7,12 +7,16 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  Dimensions
 } from 'react-native';
 import Loader from '../common/loader';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions';
+
+const width= Dimensions.get('window').width
+const height= Dimensions.get('window').height
 
 class SignIn extends Component {
   static navigatorStyle = {
@@ -34,6 +38,7 @@ class SignIn extends Component {
     this.onEmailChange    = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.signUpButtonPress = this.signUpButtonPress.bind(this);
+    this.onForgotButtonPress = this.onForgotButtonPress.bind(this)
   }
 
   onEmailChange(email) {
@@ -75,6 +80,11 @@ class SignIn extends Component {
       screen: 'roof_gravy.signup'
     })
   }
+  onForgotButtonPress(){
+    this.props.navigator.resetTo({
+      screen: 'roof_gravy.forgot_password'
+    })
+  }
 
   render() {
     const { user: { email, password } } = this.state;
@@ -113,13 +123,16 @@ class SignIn extends Component {
           <View style={{ height: 15 }} />
 
           <View style={styles.buttonContainer}>
-            <View style={{ flex: 1 }}/>
             <TouchableOpacity onPress={this.loginButtonPress} style={styles.button}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={this.signUpButtonPress} style={styles.button}>
               <Text style={styles.buttonText}>SignUp</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={this.onForgotButtonPress} style={styles.button}>
+              <Text style={styles.buttonText}>Forgot Password</Text>
             </TouchableOpacity>
           </View>
 
@@ -145,7 +158,7 @@ const styles = StyleSheet.create({
     height: undefined
   },
   formContainer: {
-    height: 345.6,
+    height: width,
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     paddingHorizontal: 22.05,
     justifyContent: 'center'
@@ -163,13 +176,15 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   },
   buttonContainer: {
-    flexDirection: 'row'
+    flexDirection: 'column',
+  
   },
   button: {
     height: 30,
     backgroundColor: '#E88A18',
     paddingHorizontal: 28,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    margin:5
   },
   buttonText: {
     color: '#FFFFFF',
@@ -180,6 +195,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+    justifyContent: 'center',
   },
   instructions: {
     textAlign: 'center',

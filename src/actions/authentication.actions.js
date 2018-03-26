@@ -71,3 +71,39 @@ export function getProfile() {
     })
   }
 }
+
+//Forgot Password
+export function forgotPasswordSuccess(user) {
+  return {
+    type: types.FORGOT_PASSWORD_SUCCESS,
+    user
+  };
+}
+
+export function forgotPasswordRequest() {
+  return {
+    type: types.FORGOT_PASSWORD_REQUEST,
+  };
+}
+export function forgotPasswordError() {
+  return {
+    type: types.FORGOT_PASSWORD_ERROR,
+  };
+}
+export function forgotPasswordAction(data) {
+  console.log("Button clicked--->" + JSON.stringify(data))
+  return function (dispatch) {
+    return API.fetch({
+      method: 'post',
+      url: `${SERVER_URL}${END_POINTS.FORGOT_PASSWORD}`,
+      data: data,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then((response) => {
+        dispatch(forgotPasswordSuccess(response.data))
+        return response
+      })
+  }
+}

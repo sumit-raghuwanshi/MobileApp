@@ -5,6 +5,10 @@ export const LOGIN_USER                 = 'LOGIN_USER';
 export const LOGOUT_USER                = 'LOGOUT_USER';
 export const SEND_MESSAGE_SUCCESS       = 'SEND_MESSAGE_SUCCESS';
 
+export const FORGOT_PASSWORD_REQUEST = 'FORGOT_PASSWORD_REQUEST'
+export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS'
+export const FORGOT_PASSWORD_ERROR = 'FORGOT_PASSWORD_ERROR'
+
 // Account
 export const UPDATE_PROFILE             ='UPDATE_PROFILE';
 export const GET_PROFILE                ='GET_PROFILE';

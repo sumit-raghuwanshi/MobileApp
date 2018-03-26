@@ -9,5 +9,6 @@ export const END_POINTS = {
   PROFILE: 'api/v1/users/update_my_profile',
   TASKS: 'api/v1/tasks',
   TEMPLATES: 'api/v1/templates',
-  USERS: "api/v1/users"
+  USERS: "api/v1/users",
+  FORGOT_PASSWORD:'api/v1/users/forgot_password'
 }
