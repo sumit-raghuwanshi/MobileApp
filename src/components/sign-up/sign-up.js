@@ -7,14 +7,16 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  ScrollView,
+  Dimensions
 } from 'react-native';
 import Loader from '../common/loader';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions';
 
-class SignIn extends Component {
+class SignUp extends Component {
   static navigatorStyle = {
     navBarHidden: true
   }
@@ -24,16 +26,18 @@ class SignIn extends Component {
 
     this.state = {
       user: {
-        email:    'admin_1@roof-gravy.com',
-        password: '12345678'
+        email:    '',
+        password: '',
+        first_name: '',
+        last_name: '',
+        company_name: ''
       },
       loading: false
     };
 
-    this.loginButtonPress = this.loginButtonPress.bind(this);
     this.onEmailChange    = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
-    this.signUpButtonPress = this.signUpButtonPress.bind(this);
+    this.loginButtonPress = this.loginButtonPress.bind(this);
   }
 
   onEmailChange(email) {
@@ -49,41 +53,21 @@ class SignIn extends Component {
   }
 
   loginButtonPress = () => {
-    this.setState({
-      loading: true
-    });
-
-    const { user } = this.state;
-    var response = this.props.actions.loginUser(user).then((response) => {
-      this.setState({
-        loading: false
-      }, () => {
-        this.props.navigator.resetTo({
-          screen: 'roof_gravy.dashboard'
-        })
-      });
-
-    }).catch((error) => {
-      this.setState({
-        loading: false
-      })
-    })
-  }
-
-  signUpButtonPress = () => {
     this.props.navigator.resetTo({
-      screen: 'roof_gravy.signup'
+      screen: 'roof_gravy.login_screen'
     })
   }
 
   render() {
-    const { user: { email, password } } = this.state;
+    const { user: { first_name, last_name, email, password, company_name } } = this.state;
 
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
 
         <Image resizeMode={"stretch"} style={styles.background} source={require("../../../img/login/login-bg.png")} />
+        <ScrollView style={{height:screenHeight, width:screenWidth}}>
+        <View style={{height:screenHeight, width:screenWidth, justifyContent:'center'}}>
         <View style={styles.formContainer}>
 
           <View style={styles.imageContainer}>
@@ -91,44 +75,79 @@ class SignIn extends Component {
           </View>
 
           <TextInput
-            placeholder="User Name"
+            placeholder="First Name"
+            placeholderTextColor="#4D4D4D"
+            autoCapitalize="none"
+            style={styles.inputField}
+            value={first_name}
+            underlineColorAndroid={"transparent"}
+            onChangeText={this.onChange}/>
+
+          <View style={{ height: 16 }} />
+
+          <TextInput
+            placeholder="Last Name"
+            placeholderTextColor="#4D4D4D"
+            style={styles.inputField}
+            value={last_name}
+            underlineColorAndroid={"transparent"}
+            onChangeText={this.onChange}/>
+
+          <View style={{ height: 16 }} />
+
+          <TextInput
+            placeholder="Email"
             placeholderTextColor="#4D4D4D"
             autoCapitalize="none"
             style={styles.inputField}
             value={email}
             underlineColorAndroid={"transparent"}
-            onChangeText={this.onEmailChange}/>
+            onChangeText={this.onChange}/>
 
           <View style={{ height: 16 }} />
 
           <TextInput
-            secureTextEntry={true}
             placeholder="Password"
+            secureTextEntry={true}
             placeholderTextColor="#4D4D4D"
             style={styles.inputField}
             value={password}
             underlineColorAndroid={"transparent"}
-            onChangeText={this.onPasswordChange}/>
+            onChangeText={this.onChange}/>
+
+          <View style={{ height: 16 }} />
+
+          <TextInput
+            placeholder="Company Name"
+            placeholderTextColor="#4D4D4D"
+            style={styles.inputField}
+            value={company_name}
+            underlineColorAndroid={"transparent"}
+            onChangeText={this.onChange}/>
 
           <View style={{ height: 15 }} />
 
           <View style={styles.buttonContainer}>
             <View style={{ flex: 1 }}/>
+            <TouchableOpacity onPress={this.signupButtonPress} style={styles.button}>
+              <Text style={styles.buttonText}>SignUp</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={this.loginButtonPress} style={styles.button}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
-
-            {/* <TouchableOpacity onPress={this.signUpButtonPress} style={styles.button}>
-              <Text style={styles.buttonText}>SignUp</Text>
-            </TouchableOpacity> */}
           </View>
 
         </View>
+        </View>
+        </ScrollView>
         <Loader loading={this.state.loading}/>
       </View>
     );
   }
 }
+
+const screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
@@ -145,7 +164,7 @@ const styles = StyleSheet.create({
     height: undefined
   },
   formContainer: {
-    height: 345.6,
+    height: 470,
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     paddingHorizontal: 22.05,
     justifyContent: 'center'
@@ -166,8 +185,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   button: {
-    height: 30,
     marginLeft:5,
+    height: 30,
     backgroundColor: '#E88A18',
     paddingHorizontal: 28,
     justifyContent: 'center'
@@ -199,4 +218,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
