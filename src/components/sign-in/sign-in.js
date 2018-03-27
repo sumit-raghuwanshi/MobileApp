@@ -127,9 +127,9 @@ class SignIn extends Component {
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={this.signUpButtonPress} style={styles.button}>
+            {/* <TouchableOpacity onPress={this.signUpButtonPress} style={styles.button}>
               <Text style={styles.buttonText}>SignUp</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity onPress={this.onForgotButtonPress} style={styles.button}>
               <Text style={styles.buttonText}>Forgot Password</Text>

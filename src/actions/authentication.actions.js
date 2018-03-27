@@ -86,6 +86,7 @@ export function forgotPasswordRequest() {
   };
 }
 export function forgotPasswordError() {
+  console.log("Errors")
   return {
     type: types.FORGOT_PASSWORD_ERROR,
   };

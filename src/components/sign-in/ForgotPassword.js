@@ -6,7 +6,7 @@ import {
     Image,
     TextInput,
     TouchableOpacity,
-     
+     StatusBar
 } from 'react-native';
 import Loader from '../common/loader';
 import { bindActionCreators } from 'redux';

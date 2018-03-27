@@ -18,10 +18,12 @@ class API {
     }
 
     return axios(options).catch(error => {
+      console.log("Helllo"+JSON.stringify(error))
+      var message = error.response.data.success !== undefined ? error.response.data.success : error.response.data.error 
       Navigation.showInAppNotification({
         screen: "roof_gravy.error_view",
         passProps: {
-          message: JSON.stringify(error.message)
+          message: message
         }
       })
 
