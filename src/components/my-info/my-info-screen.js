@@ -26,15 +26,18 @@ class MyInfoScreen extends Component {
     super(props)
 
     var {currentUser} = this.props
+   
 
     this.state = {
       firstName: currentUser["first_name"],
       lastName: currentUser["last_name"],
       email: currentUser["email"],
       phone: currentUser["phone"],
-      location: currentUser["location"]
+      location: currentUser["location"],
+      avatar: currentUser["avatar"]
     }
   }
+  
 
   _navigateToDashboard = () => {
     this.props.navigator.popToRoot()
@@ -126,6 +129,7 @@ class MyInfoScreen extends Component {
   }
 
   render() {
+    //console.log("Hello -- > " + JSON.stringify(this.props.currentUser))
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
@@ -165,7 +169,8 @@ class MyInfoScreen extends Component {
                   ?
                     <Image style={{height: 125, width: 125}} resizeMode="cover" source={{uri: this.state.image_attach.uri}}/>
                   :
-                    <Image source={require('../../../img/icons/camera-upload.png')} />
+                    <Image style={{ height: 125, width: 125 }} resizeMode="cover" source={{ uri: this.state.avatar }} />
+                    //<Image source={require('../../../img/icons/camera-upload.png')} />
                 }
               </View>
             </Touchable>
