@@ -90,6 +90,8 @@ class Dashboard extends Component {
 
   render() {
     var user = this.props.user
+    console.log("Dashboard screen --> "+JSON.stringify(user))
+    
 
     return (
       <View style={styles.container}>
@@ -114,12 +116,23 @@ class Dashboard extends Component {
               <View style={styles.circleContainer}>
                 <Image
                   source={require('../../../img/dashboard/circle.png')}/>
-                <Image
-                  style={{
-                    position: 'absolute',
-                    alignSelf: 'center',
-                  }}
-                  source={require('../../../img/dashboard/profile.png')}/>
+                  {user.avatar !== ""?
+                  <Image
+                    style={{
+                      position: 'absolute',
+                      alignSelf: 'center',
+                      height: 100, width: 100,
+                      borderRadius:100,
+                    }}
+                    source={{uri: user.avatar}} />:
+                  <Image
+                    style={{
+                      position: 'absolute',
+                      alignSelf: 'center',
+                    }}
+                    source={require('../../../img/dashboard/profile.png')} />
+                  }
+                
                 <Touchable
                   style={{
                     position: 'absolute',
