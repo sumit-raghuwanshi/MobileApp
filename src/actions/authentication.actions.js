@@ -20,8 +20,10 @@ export function loginUser(user) {
       data: user
     })
     .then(res => {
+      // console.log("Data ---->"+JSON.stringify(res))
       AsyncStorage.setItem('currentUser', JSON.stringify(res.data));
-      return dispatch(loginSuccess(res));
+     dispatch(loginSuccess(res));
+     return res
     })
   };
 }
@@ -66,8 +68,9 @@ export function getProfile() {
       url: `${SERVER_URL}${END_POINTS.USERS}/${getState().user.id}`
     })
     .then((response) => {
-      dispatch(getProfileSuccess(response.data))
-      return response
+      //console.log("Heelooo "+JSON.stringify(response))
+      dispatch(getProfileSuccess(response))
+      //return response
     })
   }
 }
@@ -104,7 +107,45 @@ export function forgotPasswordAction(data) {
     })
       .then((response) => {
         dispatch(forgotPasswordSuccess(response.data))
-        return response
+        //return response
+      })
+  }
+}
+
+//Update Current location
+export function updateCurrentLocationSuccess(user) {
+  return {
+    type: types.UPDATE_CURRENT_LOCATION_SUCCESS,
+    user
+  };
+}
+
+export function updateCurrentLocationRequest() {
+  return {
+    type: types.UPDATE_CURRENT_LOCATION_REQUEST,
+  };
+}
+export function updateCurrentLocationError() {
+  console.log("Errors")
+  return {
+    type: types.UPDATE_CURRENT_LOCATION_ERROR,
+  };
+}
+export function updateCurrentLocationAction(data) {
+  //console.log("Button clicked--->" + JSON.stringify(data) +SERVER_URL+"--"+END_POINTS.UPDATE_CURRENT_LOCATION)
+  return function (dispatch) {
+    return API.fetch({
+      method: 'post',
+      url: `${SERVER_URL}${END_POINTS.UPDATE_CURRENT_LOCATION}`,
+      data: data,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then((response) => {
+        //console.log("RRRRRRRRR "+JSON.stringify(response))
+        dispatch(updateCurrentLocationSuccess(response))
+        //return response
       })
   }
 }

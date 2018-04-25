@@ -8,4 +8,5 @@ export default {
   tasks: [],
   templates: [],
   users: [],
+  updated: false
 };

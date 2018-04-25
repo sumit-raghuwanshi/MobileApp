@@ -59,13 +59,26 @@ class SignIn extends Component {
     });
 
     const { user } = this.state;
-    var response = this.props.actions.loginUser(user).then((response) => {
+    var response = this.props.actions.loginUser(user)
+    .then((response) => {
+      console.log("=====================>"+JSON.stringify(response))
       this.setState({
         loading: false
       }, () => {
-        this.props.navigator.resetTo({
-          screen: 'roof_gravy.dashboard'
-        })
+        var companyLocations = response.data.company_locations
+        if (companyLocations.length === 1) {
+          
+          this.props.navigator.resetTo({
+            screen: 'roof_gravy.dashboard'
+          })
+
+        }else if(companyLocations.length>1){
+          this.props.navigator.resetTo({
+            screen: 'roof_gravy.choose_location'
+          })
+        }
+
+        
       });
 
     }).catch((error) => {

@@ -64,7 +64,7 @@ class Messages extends Component {
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }} onPress={this._navigateToDashboard}>
             <Image source={require('../../../img/icons/home.png')} />
           </Touchable>
-          <View style={{ flex: 1, alignItems: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center', zIndex: 1 , overflow:'visible'}}>
             <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>MESSAGES</Text>
             <Image style={{ marginTop: 10 }} source={require('../../../img/icons/messages.png')}/>
           </View>
@@ -105,8 +105,10 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
+    //marginBottom:10,
     height: 66,
-    zIndex: 1
+    zIndex: 1,
+    overflow:'visible'
   },
   body: {
     flex: 1

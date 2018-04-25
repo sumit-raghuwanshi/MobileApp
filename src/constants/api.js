@@ -10,5 +10,6 @@ export const END_POINTS = {
   TASKS: 'api/v1/tasks',
   TEMPLATES: 'api/v1/templates',
   USERS: "api/v1/users",
-  FORGOT_PASSWORD:'api/v1/users/forgot_password'
+  FORGOT_PASSWORD:'api/v1/users/forgot_password',
+  UPDATE_CURRENT_LOCATION:'api/v1/users/update_current_company_location'
 }

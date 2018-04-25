@@ -21,6 +21,7 @@ import Job from './job/job';
 import JobCreate from './job-create/job-create';
 import Settings from './settings/settings';
 import ForgotPassword from './sign-in/ForgotPassword'
+import ChooseLocation from './location/ChooseLocation'
 //import SignUp from './sign-up/sign-up.js';
 
 import ConfirmationModal from './common/confirmation-modal';
@@ -30,6 +31,8 @@ export function registerScreens(store, Provider) {
 
   Navigation.registerComponent('roof_gravy.login_screen', () => SignIn, store, Provider);
   Navigation.registerComponent('roof_gravy.forgot_password', () => ForgotPassword, store, Provider);
+  Navigation.registerComponent('roof_gravy.choose_location',() => ChooseLocation, store, Provider)
+  
   Navigation.registerComponent('roof_gravy.calendar', () => Calendar, store, Provider);
   Navigation.registerComponent('roof_gravy.dashboard', () => Dashboard, store, Provider);
   Navigation.registerComponent('roof_gravy.estimate_create', () => EstimateCreateScreen, store, Provider);

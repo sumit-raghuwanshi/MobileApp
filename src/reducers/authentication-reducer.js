@@ -25,6 +25,27 @@ export default function (state = initialState.user, action) {
     case types.FORGOT_PASSWORD_ERROR:
       return { ...state }
 
+    //Forgot Password
+    case types.UPDATE_CURRENT_LOCATION_REQUEST:
+      return { 
+        ...state,
+        updated: false
+      }
+
+    case types.UPDATE_CURRENT_LOCATION_SUCCESS:
+      return { 
+        ...state,
+        ...action.user,
+        updated:true
+      }
+
+    case types.UPDATE_CURRENT_LOCATION_ERROR:
+      return {
+        ...state,
+        updated: false
+
+      }
+    
     default:
       return state;
   }

@@ -90,7 +90,7 @@ class Dashboard extends Component {
 
   render() {
     var user = this.props.user
-    console.log("Dashboard screen --> "+JSON.stringify(user))
+    // console.log("Dashboard screen --> "+JSON.stringify(user))
     
 
     return (
@@ -116,7 +116,7 @@ class Dashboard extends Component {
               <View style={styles.circleContainer}>
                 <Image
                   source={require('../../../img/dashboard/circle.png')}/>
-                  {user.avatar !== ""?
+                  {user.avatar !== "" && user.avatar !== null ?
                   <Image
                     style={{
                       position: 'absolute',
