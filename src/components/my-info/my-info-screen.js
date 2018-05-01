@@ -104,9 +104,11 @@ class MyInfoScreen extends Component {
 
     this.props.updateProfile(params)
     .then((response) => {
+      console.log("Success===>",params)
       this.setState({loading: false}, this._navigateToPreviousScreen)
     })
     .catch((error) => {
+      console.log("Failure ==> ",error)
       this.setState({loading: false})
     })
   }
@@ -129,7 +131,7 @@ class MyInfoScreen extends Component {
   }
 
   render() {
-    //console.log("Hello -- > " + JSON.stringify(this.props.currentUser))
+    console.log("Hello -- > " + JSON.stringify(this.props.currentUser))
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
@@ -169,8 +171,9 @@ class MyInfoScreen extends Component {
                   ?
                     <Image style={{height: 125, width: 125}} resizeMode="cover" source={{uri: this.state.image_attach.uri}}/>
                   :
-                    <Image style={{ height: 125, width: 125 }} resizeMode="cover" source={{ uri: this.state.avatar }} />
-                    //<Image source={require('../../../img/icons/camera-upload.png')} />
+                  this.state.avatar !==null?
+                    <Image style={{ height: 125, width: 125 }} resizeMode="cover" source={{ uri: this.state.avatar }} />:
+                    <Image source={require('../../../img/icons/camera-upload.png')} />
                 }
               </View>
             </Touchable>
