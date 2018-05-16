@@ -64,7 +64,7 @@ class Settings extends Component {
         <ScrollView style={styles.body}>
           <View style={styles.topButtonContainer}></View>
 
-          <View>
+          {/* <View>
 
             <View style={{backgroundColor: '#FFFFFF', paddingLeft: 15}}>
               <Picker
@@ -92,7 +92,7 @@ class Settings extends Component {
                 items={[{label: 'Location Settings', value: 'Location Settings'}]}
                 />
             </View>
-          </View>
+          </View> */}
 
           <View style={{marginTop: 12}}>
             <TouchableField

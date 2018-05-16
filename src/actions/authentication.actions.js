@@ -20,9 +20,13 @@ export function loginUser(user) {
       data: user
     })
     .then(res => {
-      // console.log("Data ---->"+JSON.stringify(res))
-      AsyncStorage.setItem('currentUser', JSON.stringify(res.data));
-     dispatch(loginSuccess(res));
+      debugger;
+       console.log("Data ---->"+JSON.stringify(res))
+      if (res.data.role != "master_admin"){
+        AsyncStorage.setItem('currentUser', JSON.stringify(res.data));
+        dispatch(loginSuccess(res));
+      }
+     
      return res
     })
   };
@@ -95,7 +99,7 @@ export function forgotPasswordError() {
   };
 }
 export function forgotPasswordAction(data) {
-  console.log("Button clicked--->" + JSON.stringify(data))
+  // console.log("Button clicked--->" + JSON.stringify(data))
   return function (dispatch) {
     return API.fetch({
       method: 'post',

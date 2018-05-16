@@ -19,6 +19,8 @@ export function getUserList() {
       url: `${SERVER_URL}${USERS}`
     })
     .then((response) => {
+      //debugger;
+      console.log("getting users :" , response.data)
       return dispatch(getUserListSuccess(response.data));
     })
   };

@@ -17,9 +17,9 @@ export function createLead(lead) {
       method: 'post',
       url: `${SERVER_URL}${END_POINTS.LEADS}`,
       data: lead,
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
+      // headers: {
+      //   "Content-Type": "multipart/form-data"
+      // }
     })
     .then(res => {
       dispatch(createLeadSuccess(res.data));

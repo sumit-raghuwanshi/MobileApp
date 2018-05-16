@@ -1403,11 +1403,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.clixlogix;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.RoofGravyMobileTest;
 				PRODUCT_NAME = RoofGravyMobile;
-				PROVISIONING_PROFILE = "bc606220-0d73-4207-8795-0357b654b0df";
-				PROVISIONING_PROFILE_SPECIFIER = ClixlogixDevelopment30Nov2016;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "f2bb690e-e9ce-4298-bbb4-2a4ae62f242c";
+				PROVISIONING_PROFILE_SPECIFIER = RoofGravy_Development;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1431,11 +1431,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.clixlogix;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.RoofGravyMobileTest;
 				PRODUCT_NAME = RoofGravyMobile;
-				PROVISIONING_PROFILE = "bc606220-0d73-4207-8795-0357b654b0df";
-				PROVISIONING_PROFILE_SPECIFIER = ClixlogixDevelopment30Nov2016;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "f2bb690e-e9ce-4298-bbb4-2a4ae62f242c";
+				PROVISIONING_PROFILE_SPECIFIER = RoofGravy_Development;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

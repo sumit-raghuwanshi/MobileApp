@@ -61,22 +61,28 @@ class SignIn extends Component {
     const { user } = this.state;
     var response = this.props.actions.loginUser(user)
     .then((response) => {
-      console.log("=====================>"+JSON.stringify(response))
+      console.log("============1234=========>"+JSON.stringify(response))
       this.setState({
         loading: false
       }, () => {
         var companyLocations = response.data.company_locations
-        if (companyLocations.length === 1) {
+        var role = response.data.role 
+        if (role != "master_admin"){
+          if (companyLocations.length === 1) {
           
-          this.props.navigator.resetTo({
-            screen: 'roof_gravy.dashboard'
-          })
-
-        }else if(companyLocations.length>1){
-          this.props.navigator.resetTo({
-            screen: 'roof_gravy.choose_location'
-          })
+            this.props.navigator.resetTo({
+              screen: 'roof_gravy.dashboard'
+            })
+  
+          }else if(companyLocations.length>1){
+            this.props.navigator.resetTo({
+              screen: 'roof_gravy.choose_location'
+            })
+          }
+        }else{
+          alert("Master admin can't login!")
         }
+        
 
         
       });
@@ -136,7 +142,7 @@ class SignIn extends Component {
           <View style={{ height: 15 }} />
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={this.loginButtonPress} style={styles.button}>
+            <TouchableOpacity onPress={this.loginButtonPress} style={styles.buttonLogin}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 
@@ -144,7 +150,7 @@ class SignIn extends Component {
               <Text style={styles.buttonText}>SignUp</Text>
             </TouchableOpacity> */}
 
-            <TouchableOpacity onPress={this.onForgotButtonPress} style={styles.button}>
+            <TouchableOpacity onPress={this.onForgotButtonPress} style={styles.buttonForgetPassword}>
               <Text style={styles.buttonText}>Forgot Password</Text>
             </TouchableOpacity>
           </View>
@@ -189,15 +195,38 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   },
   buttonContainer: {
-    flexDirection: 'column',
+    flexDirection: 'row',
+    flex: 1
   
   },
-  button: {
+  buttonLogin: {
+    // height: 30,
+    // backgroundColor: '#E88A18',
+    // paddingHorizontal: 28,
+    // justifyContent: 'center',
+    // margin:5,
+
+    flex: 1,
     height: 30,
     backgroundColor: '#E88A18',
-    paddingHorizontal: 28,
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
-    margin:5
+    marginRight: 2
+  }, 
+  buttonForgetPassword: {
+    // height: 30,
+    // backgroundColor: '#E88A18',
+    // paddingHorizontal: 28,
+    // justifyContent: 'center',
+    // margin:5,
+    flex: 1,
+    height: 30,
+    backgroundColor: '#E88A18',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 2
   },
   buttonText: {
     color: '#FFFFFF',
