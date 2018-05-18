@@ -30,6 +30,10 @@ export const UPDATE_APPOINTMENT_SUCCESS = 'UPDATE_APPOINTMENT_SUCCESS';
 export const GET_JOBS_SUCCESS           = 'GET_JOBS_SUCCESS';
 export const UPDATE_JOB                 = 'UPDATE_JOB';
 
+// Leads
+export const GET_LEADS_SUCCESS           = 'GET_LEADS_SUCCESS';
+export const UPDATE_LEAD                 = 'UPDATE_LEAD';
+
 // TASKS
 export const CREATE_TASKS_SUCCESS       = 'CREATE_TASKS_SUCCESS';
 export const DELETE_TASKS_SUCCESS       = 'DELETE_TASKS_SUCCESS';

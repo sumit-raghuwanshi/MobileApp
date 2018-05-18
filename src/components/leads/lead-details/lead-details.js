@@ -17,14 +17,14 @@ import SelectMultiple from 'react-native-select-multiple'
 import { Touchable, Picker, Loader, DateTimePicker } from '../../common';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {createLead, getUserList} from '../../../actions';
+import {createLead, getUserList , getParticularLead} from '../../../actions';
 import {Notification} from '../../../helpers';
 import _ from 'lodash';
 import ImagePicker from 'react-native-image-picker';
 import PopupDialog from 'react-native-popup-dialog';
 //import CustomMultiPicker from "react-native-multiple-select-list";
 
-class LeadCreate extends Component {
+class LeadDetails extends Component {
   static navigatorStyle = {
     navBarHidden: true
   }
@@ -49,8 +49,10 @@ class LeadCreate extends Component {
   }
 
   componentDidMount() {
-    this.props.getUserList()
+    console.log("itemssgsdhdsth", this.props.item.id)
+    this.props.getParticularLead(this.props.item.id)
     .then((response) => {
+        console.log("getting particular item" , response)
       this.setState({
         loading: false
       })
@@ -60,6 +62,9 @@ class LeadCreate extends Component {
         loading: false
       })
     })
+  
+    
+    
   }
 
   validateEmail(emailField){
@@ -245,38 +250,7 @@ class LeadCreate extends Component {
 
     this.setState({loading: true})
 
-    var params = new FormData();
-
-    //{"job":{"first_name":"","last_name":"","company_name":"","cross_reference":"","job_category":"-1","work_type":"-1","trade_type":[],"lead_source":"-1","phone":[],"email_address":[],"location_info_attributes":{"address":"","city":"","state":"","zip":"","country":""},"billing_info_attributes":{"address":"","city":"","state":"","zip":"","country":"","same_as_location":false,"same_as_mailing":false},"mailing_info_attributes":{"address":"","city":"","state":"","zip":"","country":"","same_as_location":false,"same_as_billing":false},"assignee_id":"","priority":"1","notes":"","appointments_attributes":[{"event_title":"","start_date":"","end_date":"","address":"","city":""}]}}
-    // params.append("job[assignee_id]", assignee_id)
-    // params.append("job[contact]", contact)
-    // params.append("job[contact]", company)
-    // params.append("job[phone]", phone)
-    // params.append("job[email]", email)
-    // params.append("job[source]", source)
-    // params.append("job[job_category]", job_category)
-    // params.append("job[work_type]", work_type)
-    // params.append("job[trade_type]", trade_type)
-    // params.append("job[mailing_same_as_location]", true)
-
-    // params.append("job[location_info_attributes][address]", address)
-    // params.append("job[location_info_attributes][city]", city)
-    // params.append("job[location_info_attributes][state]", state)
-    // params.append("job[location_info_attributes][zip]", zip)
-
-    // params.append("job[appointment_attributes][event_title]", title)
-    // params.append("job[appointment_attributes][start_date]", start_date)
-    // params.append("job[appointment_attributes][end_date]", end_date)
-    // params.append("job[appointment_attributes][address]", appointment_address)
-    // params.append("job[appointment_attributes][city]", appointment_city)
-
-
-
-    // params.append("job[attachments_attributes][0][data]", {
-    //   uri: image_attach.uri,
-    //   name: "lead_image.jpg",
-    //   type: "image/jpg"
-    // })
+   
     var job={}
     
     job.first_name = contact
@@ -628,7 +602,6 @@ class LeadCreate extends Component {
 
   hideUnhideBillingAddress(){
 
-
     if (this.state.isBillingSameAsLocation  == false){
       //this.setState({isBillingSameAsLocation: false})
       return(
@@ -870,7 +843,7 @@ class LeadCreate extends Component {
             <Image source={require('../../../../img/icons/home.png')} />
           </Touchable>
           <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>LEAD</Text>
+            <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>LEAD DETAILS</Text>
             <Image style={{ marginTop: 10 }} source={require('../../../../img/leads/leads.png')}/>
           </View>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
@@ -892,21 +865,17 @@ class LeadCreate extends Component {
           <View style={{ flexDirection: 'row', marginBottom: 12 }}>
 
             <View style={{ flex: 1}}>
-              <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
-                <TextInput
-                  placeholder="First Name"
-                  value={this.state.contact}
-                  onChangeText={(contact) => this.setState({contact})}
-                  style={styles.textField} />
+              <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , alignItems : "center" , flexDirection : "row" }}>
+              
+                  <Text style={styles.labelStyle}>Name : </Text>
+                  <Text style={styles.labelGreyStyle}>dfhdfhdzfbd</Text>
+              </View>
+              <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , alignItems : "center" , flexDirection : "row" }}>
+                  <Text style={styles.labelStyle}>Company : </Text>
+                  <Text style={styles.labelGreyStyle}>dfhdfhdzfbd</Text>
               </View>
 
-              <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
-                <TextInput
-                  placeholder="Last Name"
-                  value={this.state.lastName}
-                  onChangeText={(lastName) => this.setState({lastName})}
-                  style={styles.textField} />
-              </View>
+              
 
               <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
                 <TextInput
@@ -1118,6 +1087,21 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, 0.2)'
   },
+  labelStyle: {
+    backgroundColor: '#FFFFFF',
+    fontSize: 17,
+    color: 'rgba(0, 0, 0, 0.73)',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, 0.2)'
+  },
+  labelGreyStyle: {
+    backgroundColor: '#FFFFFF',
+    fontSize: 15,
+    color: 'rgba(192,192,192,1)',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
+    paddingLeft : 10
+  },
   textFieldPhone: {
     height: 44,
     backgroundColor: '#FFFFFF',
@@ -1154,4 +1138,4 @@ function mapStateToProps(state, ownProps) {
   };
 };
 
-export default connect(mapStateToProps, {createLead, getUserList})(LeadCreate);
+export default connect(mapStateToProps, {createLead, getUserList , getParticularLead})(LeadDetails);

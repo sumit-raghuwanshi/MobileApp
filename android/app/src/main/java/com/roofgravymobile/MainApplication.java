@@ -26,6 +26,7 @@ public class MainApplication extends NavigationApplication {
       new ImagePickerPackage(),
       new ReactNativeDocumentPicker(),
       new RNReactNativeDocViewerPackage()
+      
     );
   }
 

@@ -20,7 +20,7 @@ export function loginUser(user) {
       data: user
     })
     .then(res => {
-      debugger;
+      //debugger;
        console.log("Data ---->"+JSON.stringify(res))
       if (res.data.role != "master_admin"){
         AsyncStorage.setItem('currentUser', JSON.stringify(res.data));

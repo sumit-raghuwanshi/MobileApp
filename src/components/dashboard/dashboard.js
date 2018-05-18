@@ -30,7 +30,8 @@ class Dashboard extends Component {
 
   _navigateToLeadsCreateScreen = () => {
     this.props.navigator.push({
-      screen: 'roof_gravy.lead_create'
+      //screen: 'roof_gravy.lead_create'
+      screen: 'roof_gravy.lead_list'
     })
   }
 
