@@ -17,7 +17,7 @@ import SelectMultiple from 'react-native-select-multiple'
 import { Touchable, Picker, Loader, DateTimePicker } from '../../common';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {createLead, getUserList} from '../../../actions';
+import {createLead, getUserList , updateLead} from '../../../actions';
 import {Notification} from '../../../helpers';
 import _ from 'lodash';
 import ImagePicker from 'react-native-image-picker';
@@ -25,7 +25,7 @@ import PopupDialog from 'react-native-popup-dialog';
 import {jobCategory ,leadSource , workType, tradeType } from '../../../constants/leads-option-data'
 //import CustomMultiPicker from "react-native-multiple-select-list";
 
-class LeadCreate extends Component {
+class LeadEdit extends Component {
   static navigatorStyle = {
     navBarHidden: true
   }
@@ -45,12 +45,114 @@ class LeadCreate extends Component {
       numberOfEmail: 1,
       isModalVisible : false,
       tradeStringToShow : "Trade type",
+
+      cross_reference : "",
+      lastName : "",
+      contact : "",
+      company : "",
+      phone : "",
+      phone2 : "",
+      phone3 : "",
+      email : "",
+      email2 : "",
+      email3 : "",
+      address : "",
+      city : "",
+      state : "",
+      zip : "", 
+      source : "", 
+      job_category : "", 
+      work_type : "", 
+      trade_type : "", 
+      assignee_id : "", 
+      title : "", 
+      start_date : "", 
+      end_date : "", 
+      appointment_address : "", 
+      appointment_city : "" ,
+      address_mailing : "",
+      city_mailing : "",
+      state_mailing : "",
+      zip_mailing : "",
+      address_billing : "",
+      city_billing : "",
+      state_billing : "",
+      zip_billing : ""
     }
 
     this._onSubmit = this._onSubmit.bind(this)
   }
 
+  initialiseWithState(){
+
+    //this.setState({selectedLeadTypes : this.props.item.})
+    var numberOfPhones = this.props.item.phone.length
+    var numberOfEmails = this.props.item.email_address.length
+    var tradeTypes = []
+
+    this.props.item.trade_type.map((element,key) =>{
+      return(
+        tradeTypes.push(tradeType[element])
+      )
+    })
+    debugger;
+    console.log("trade types" , tradeTypes)
+
+    var joinedTradeTypes = tradeTypes.join(",")
+    console.log("joined trade types" , joinedTradeTypes)
+    // this.props.item.trade_type.map((element,key) =>{
+    //   return(
+    //     this.props.user.trade_types[element]
+    //   )
+    // }).join(",")
+
+    this.setState({selectedIndexOfTrade : this.props.item.trade_type,
+      numberOfPhoneNumber : this.props.item.phone.length,
+      numberOfEmail : this.props.item.email_address.length,
+      
+      isBillingSameAsLocation : this.props.item.billing_info.same_as_location,
+      isMailingSameAsLocation : this.props.item.mailing_info.same_as_location,
+      
+      cross_reference : this.props.item.cross_reference,
+      lastName : this.props.item.last_name,
+      contact : this.props.item.first_name,
+      company : this.props.item.company_name,
+      phone : numberOfPhones == 1 ? this.props.item.phone[0].number : "",
+      phone2 : numberOfPhones == 2 ? this.props.item.phone[1].number : "",
+      phone3 : numberOfPhones == 3 ? this.props.item.phone[2].number : "",
+      email : numberOfEmails == 1 ? this.props.item.email_address[0].email : "",
+      email2 : numberOfEmails == 2 ? this.props.item.email_address[1].email : "",
+      email3 : numberOfEmails == 3 ? this.props.item.email_address[2].email : "",
+      address : this.props.item.location_info.address,
+      city : this.props.item.location_info.city,
+      state : this.props.item.location_info.state,
+      zip : this.props.item.location_info.zip, 
+      source : this.props.item.lead_source, 
+      job_category : this.props.item.job_category, 
+      work_type : this.props.item.work_type, 
+      selectedIndexOfTrade : this.props.item.trade_type, 
+      assignee_id : this.props.item.assignee_id ? this.props.item.assignee_id.$oid : "", 
+      title : this.props.item.appointments.event_title, 
+      start_date : this.props.item.appointments.start_date, 
+      end_date : this.props.item.appointments.end_date, 
+      appointment_address : this.props.item.appointments.address, 
+      appointment_city : this.props.item.appointments.city,
+      address_mailing : this.props.item.mailing_info.address,
+      city_mailing : this.props.item.mailing_info.city,
+      state_mailing : this.props.item.mailing_info.state,
+      zip_mailing : this.props.item.mailing_info.zip,
+      address_billing : this.props.item.billing_info.address,
+      city_billing : this.props.item.billing_info.address,
+      state_billing : this.props.item.billing_info.address,
+      zip_billing : this.props.item.billing_info.address,
+      selectedLeadTypes : tradeTypes,
+      tradeStringToShow : joinedTradeTypes
+    })
+    
+  }
+
   componentDidMount() {
+    console.log("lead edit" , JSON.stringify(this.props.item))
     this.props.getUserList()
     .then((response) => {
       this.setState({
@@ -62,6 +164,8 @@ class LeadCreate extends Component {
         loading: false
       })
     })
+
+    this.initialiseWithState()
   }
 
   validateEmail(emailField){
@@ -76,27 +180,11 @@ class LeadCreate extends Component {
     // return true;
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return reg.test(emailField) == 0;
-   
-
 }
 
 
   onSelectionsChange = (selectedLeadTypes) => {
-    //// selectedFruits is array of { label, value }
-    // console.log("selected trade types" , selectedLeadTypes)
-
-    // var i;
-    // var arrayIndex = [];
-    // for (i = 0; i < selectedLeadTypes.length; i++) { 
-    //   arrayIndex.push(this.props.user.trade_types.indexOf(selectedLeadTypes[i].value))
-    // }
-    // this.setState({ selectedLeadTypes})
-    // this.setState({ selectedIndexOfTrade : arrayIndex })
-    // console.log("selected indexes " , arrayIndex)
-
-
-
-    /////////////////
+    // selectedFruits is array of { label, value }
     console.log("selected trade types" , selectedLeadTypes)
 
     var i;
@@ -118,8 +206,9 @@ class LeadCreate extends Component {
       selectedIndexOfTrade : arrayIndex ,
       tradeStringToShow : joinedTradeTypes
     })
- 
-    
+    //this.setState({ })
+    console.log("selected indexes " , arrayIndex)
+
   }
   _navigateToDashboard = () => {
     this.props.navigator.popToRoot()
@@ -154,59 +243,59 @@ class LeadCreate extends Component {
 
 
   _onSubmit = () => {
-    var {image_attach,
-      cross_reference,
-      lastName,
-      contact,
-      company,
-      phone,phone2,phone3,
-      email,email2,email3,
-      address,
-      city,
-      state,
-      zip, 
-      source, 
-      job_category, 
-      work_type, 
-      trade_type, 
-      assignee_id, 
-      title, 
-      start_date, 
-      end_date, 
-      appointment_address, 
-      appointment_city ,
-      address_mailing,
-      city_mailing,
-      state_mailing,
-      zip_mailing,
-      address_billing,
-      city_billing,
-      state_billing,
-      zip_billing} = this.state
+    // var {image_attach,
+    //   cross_reference,
+    //   lastName,
+    //   contact,
+    //   company,
+    //   phone,phone2,phone3,
+    //   email,email2,email3,
+    //   address,
+    //   city,
+    //   state,
+    //   zip, 
+    //   source, 
+    //   job_category, 
+    //   work_type, 
+    //   trade_type, 
+    //   assignee_id, 
+    //   title, 
+    //   start_date, 
+    //   end_date, 
+    //   appointment_address, 
+    //   appointment_city ,
+    //   address_mailing,
+    //   city_mailing,
+    //   state_mailing,
+    //   zip_mailing,
+    //   address_billing,
+    //   city_billing,
+    //   state_billing,
+    //   zip_billing} = this.state
 
      var errorMessages = []
-
-     if (!contact)
+    debugger;
+     if (!this.state.contact)
        errorMessages.push('First Name is required')
   
-     if (!lastName)
+     if (!this.state.lastName)
        errorMessages.push('Last Name is required')
 
-     if (!cross_reference)
+     if (!this.state.cross_reference)
        errorMessages.push('Cross reference is required')
 
-     if (!company)
+     if (!this.state.company)
       errorMessages.push('Company is required')
 
-      if (!phone)
+      if (!this.state.phone)
       errorMessages.push('Phone number is required')
 
-     if (!email)
+     if (!this.state.email)
       errorMessages.push('Email is required')
 
-      if (email){
-        if (typeof email != "undefined"){
-          if (!this.validateEmail(email)){
+      if (this.state.email){
+        if (typeof this.state.email != "undefined"){
+          if (!this.validateEmail(this.state.email)){
             console.log("Valid email");
           }else{
             errorMessages.push('Invalid Email');
@@ -214,18 +303,18 @@ class LeadCreate extends Component {
         }
       }
 
-      if (email2){
-        if (typeof email2 != "undefined"){
-          if (!this.validateEmail(email2)){
+      if (this.state.email2){
+        if (typeof this.state.email2 != "undefined"){
+          if (!this.validateEmail(this.state.email2)){
             console.log("Valid email");
           }else{
             errorMessages.push('Invalid Email');
           }
         }
       }
-      if (email3){
-        if (typeof email3 != "undefined"){
-          if (!this.validateEmail(email3)){
+      if (this.state.email3){
+        if (typeof this.state.email3 != "undefined"){
+          if (!this.validateEmail(this.state.email3)){
             console.log("Valid email");
           }else{
             errorMessages.push('Invalid Email');
@@ -237,31 +326,31 @@ class LeadCreate extends Component {
       
       
 
-     if (!address)
+     if (!this.state.address)
        errorMessages.push('Address is required')
 
-     if (!city)
+     if (!this.state.city)
        errorMessages.push('City is required')
 
-     if (!state)
+     if (!this.state.state)
        errorMessages.push('State is required')
 
-     if (!zip)
+     if (!this.state.zip)
        errorMessages.push('Zipcode is required')
 
-     if (typeof source == "undefined")
+     if (typeof this.state.source == "undefined")
        errorMessages.push('Source is required')
 
-     if (typeof job_category == "undefined")
+     if (typeof this.state.job_category == "undefined")
        errorMessages.push('Job Category is required')
 
-     if (typeof work_type == "undefined")
+     if (typeof this.state.work_type == "undefined")
        errorMessages.push('Work Type is required')
 
       // if (typeof trade_type == "undefined")
       //   errorMessages.push('Trade Type is required')
 
-     if (typeof assignee_id == "undefined")
+     if (typeof this.state.assignee_id == "undefined")
        errorMessages.push('Assignee is required')
 
      if (errorMessages.length > 0) {
@@ -305,57 +394,56 @@ class LeadCreate extends Component {
     // })
     var job={}
     
-    job.first_name = contact
-    job.last_name= lastName
+    job.first_name = this.state.contact
+    job.last_name= this.state.lastName
 
-    job.company_name =  company
-    job.cross_reference= cross_reference
+    job.company_name =  this.state.company
+    job.cross_reference= this.state.cross_reference
    
-    job.job_category= job_category
-    job.work_type= work_type
+    job.job_category= this.state.job_category
+    job.work_type= this.state.work_type
     //job.trade_type= [trade_type]
     job.trade_type= this.state.selectedIndexOfTrade
-    job.lead_source = source
+    job.lead_source = this.state.source
  
     if (this.state.numberOfPhoneNumber == 1){
-      job.phone =  [{number:phone , type : "1" , primary:true , ext : ""}]
+      job.phone =  [{number:this.state.phone , type : "1" , primary:true , ext : ""}]
     }else if (this.state.numberOfPhoneNumber == 2){
-      job.phone =  [{number:phone , type : "1" , primary:true , ext : ""} , {number:phone2 , type : "1" , primary:false , ext : ""}]
+      job.phone =  [{number:this.state.phone , type : "1" , primary:true , ext : ""} , {number:this.state.phone2 , type : "1" , primary:false , ext : ""}]
     }else {
-      job.phone =  [{number:phone , type : "1" , primary:true , ext : ""} , {number:phone2 , type : "1" , primary:false , ext : ""} , , {number:phone3 , type : "1" , primary:false , ext : ""}]
+      job.phone =  [{number:this.state.phone , type : "1" , primary:true , ext : ""} , {number:this.state.phone2 , type : "1" , primary:false , ext : ""} , , {number:this.state.phone3 , type : "1" , primary:false , ext : ""}]
     }
 
     if (this.state.numberOfEmail == 1){
-      job.email_address = [{email : email , primary : true}]
+      job.email_address = [{email : this.state.email , primary : true}]
     }else if (this.state.numberOfEmail == 2){
-      job.email_address = [{email : email , primary : true} , {email : email2 , primary : false}]
+      job.email_address = [{email : this.state.email , primary : true} , {email : this.state.email2 , primary : false}]
     }else{
-      job.email_address = [{email : email , primary : true} , {email : email2 , primary : false} , , {email : email3 , primary : false}]
+      job.email_address = [{email : this.state.email , primary : true} , {email : this.state.email2 , primary : false} , , {email : this.state.email3 , primary : false}]
     }
     
-
     var loc_attrib = {
-      address : address,
-      city : city,
-      state : state,
-      zip : zip
+      address : this.state.address,
+      city : this.state.city,
+      state : this.state.state,
+      zip : this.state.zip
     }
     job.location_info_attributes = loc_attrib
 
     var mail_attrib = {
         same_as_location :  this.state.isMailingSameAsLocation,
-        address :  address_mailing,
-        city_mailing : city_mailing,
-        state_mailing :  state_mailing,
-        zip_mailing : zip_mailing,
+        address :  this.state.address_mailing,
+        city_mailing : this.state.city_mailing,
+        state_mailing :  this.state.state_mailing,
+        zip_mailing : this.state.zip_mailing,
     }
 
     var bill_attrib = {
       same_as_location :  this.state.isMailingSameAsLocation,
-      address :  address_billing,
-      city_mailing : city_billing,
-      state_mailing :  state_billing,
-      zip_mailing : zip_billing,
+      address :  this.state.address_billing,
+      city_mailing : this.state.city_billing,
+      state_mailing :  this.state.state_billing,
+      zip_mailing : this.state.zip_billing,
   }
   if (this.state.isMailingSameAsLocation == true){
     job.mailing_info_attributes = mail_attrib
@@ -381,16 +469,14 @@ class LeadCreate extends Component {
   }
   }
   
-    
-
     if (this.state.isAssignedAppointments == true){
-      job.assignee_id = assignee_id
+      job.assignee_id = this.state.assignee_id
 
       var appointment_att = [
         {
-          event_title : title,
-          start_date : start_date,
-          end_date : end_date,
+          event_title : this.state.title,
+          start_date : this.state.start_date,
+          end_date : this.state.end_date,
           address : "",
           city : ""
         }
@@ -413,7 +499,7 @@ class LeadCreate extends Component {
       job.appointments_attributes   = appointment_att
     }
    
-    
+  
     job.priority = "1"
     job.notes = ""
   
@@ -422,8 +508,8 @@ class LeadCreate extends Component {
     
     var data = {"job":job}
     console.log(JSON.stringify(data))
-    this.props.createLead(data)
-    
+    //this.props.createLead(data)
+    this.props.updateLead(this.props.item.id , data)
     .then(response => {
       this.setState({loading: false}, this._navigateToDashboard)
     }).catch(error => {
@@ -896,7 +982,7 @@ class LeadCreate extends Component {
             <Image source={require('../../../../img/icons/home.png')} />
           </Touchable>
           <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>LEAD</Text>
+            <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}> EDIT LEAD</Text>
             <Image style={{ marginTop: 10 }} source={require('../../../../img/leads/leads.png')}/>
           </View>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
@@ -1085,7 +1171,6 @@ class LeadCreate extends Component {
                     }
                     style = {{justifyContent : "center" , alignItems : "flex-start" , height : 44}}
                     >
-                     {/* <Text style={{textAlign : "center" , color: 'rgba(0, 0, 0, 0.73)'}}>Trade type</Text> */}
                      <Text style={{textAlign : "left" , color: '#C7C7CD' , paddingLeft : 15 , fontSize : 17}}  numberOfLines={1}>{this.state.tradeStringToShow}</Text>
                 </TouchableHighlight>
 
@@ -1181,4 +1266,4 @@ function mapStateToProps(state, ownProps) {
   };
 };
 
-export default connect(mapStateToProps, {createLead, getUserList})(LeadCreate);
+export default connect(mapStateToProps, {createLead, getUserList , updateLead})(LeadEdit);

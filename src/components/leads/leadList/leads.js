@@ -30,13 +30,15 @@ class Leads extends Component {
   }
 
   componentWillReceiveProps(){
-    //debugger;
+   
     console.log("getting props for lead list " , this.props);
   }
 
   componentDidMount() {
+   
     this.props.getLeads()
     .then((response) => {
+     
       console.log("Hello data ",response.data.leads)
 
       if (typeof response != "undefined"){
@@ -70,8 +72,9 @@ class Leads extends Component {
   }
 
   render() {
+  
     console.log("==========>",this.props)
-    var dataSource = this.ds.cloneWithRows(this.state.leads)
+    var dataSource = this.ds.cloneWithRows(this.props.leads)
 
     return (
       <View style={styles.container}>

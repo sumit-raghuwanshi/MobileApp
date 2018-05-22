@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 import authenticationReducer from './authentication-reducer';
 import appointmentsReducer from './appointments.reducer';
 import usersReducer from './users.reducer';
-import leadsReducer from './users.reducer';
+import leadsReducer from './leads.reducer';
 import messagesReducer from './messages.reducer';
 import jobsReducer from './jobs.reducer';
 import tasksReducer from './tasks.reducer';

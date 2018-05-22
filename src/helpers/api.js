@@ -10,7 +10,7 @@ class API {
   }
 
   static fetch(options) {
-    debugger;
+  
     console.log("optionssssssss",options);
     options.headers = _.merge(this.headers(), options.headers)
     var appState = AppStore.getState()

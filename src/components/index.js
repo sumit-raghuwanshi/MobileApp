@@ -24,6 +24,7 @@ import ForgotPassword from './sign-in/ForgotPassword';
 import ChooseLocation from './location/ChooseLocation';
 import Leads from './leads/leadList/leads';
 import LeadDetails from './leads/lead-details/lead-details';
+import LeadEdit from './leads/lead-edit/lead-edit'
 //import SignUp from './sign-up/sign-up.js';
 
 import ConfirmationModal from './common/confirmation-modal';
@@ -57,6 +58,7 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.job_create', () => JobCreate, store, Provider);
   Navigation.registerComponent('roof_gravy.settings', () => Settings, store, Provider);
   Navigation.registerComponent('roof_gravy.lead_details', () => LeadDetails, store, Provider);
+  Navigation.registerComponent('roof_gravy.lead_edit' , () => LeadEdit, store , Provider);
   //Navigation.registerComponent('roof_gravy.signup', () => SignUp, store, Provider);
 
   Navigation.registerComponent('roof_gravy.confirmation_modal', () => ConfirmationModal, store, Provider);
