@@ -46,7 +46,6 @@ class LeadCreate extends Component {
       isModalVisible : false,
       tradeStringToShow : "Trade type",
     }
-
     this._onSubmit = this._onSubmit.bind(this)
   }
 
@@ -151,8 +150,6 @@ class LeadCreate extends Component {
       }
     })
   }
-
-
   _onSubmit = () => {
     var {image_attach,
       cross_reference,
@@ -196,7 +193,7 @@ class LeadCreate extends Component {
        errorMessages.push('Cross reference is required')
 
      if (!company)
-      errorMessages.push('Company is required')
+      company = ""
 
       if (!phone)
       errorMessages.push('Phone number is required')
@@ -232,10 +229,6 @@ class LeadCreate extends Component {
           }
         }
       }
-
-     
-      
-      
 
      if (!address)
        errorMessages.push('Address is required')
@@ -295,8 +288,6 @@ class LeadCreate extends Component {
     // params.append("job[appointment_attributes][end_date]", end_date)
     // params.append("job[appointment_attributes][address]", appointment_address)
     // params.append("job[appointment_attributes][city]", appointment_city)
-
-
 
     // params.append("job[attachments_attributes][0][data]", {
     //   uri: image_attach.uri,
@@ -381,8 +372,6 @@ class LeadCreate extends Component {
   }
   }
   
-    
-
     if (this.state.isAssignedAppointments == true){
       job.assignee_id = assignee_id
 
@@ -396,8 +385,6 @@ class LeadCreate extends Component {
         }
       ]
       job.appointments_attributes  =  appointment_att
-
-      
     }else{
       job.assignee_id = ""
 
@@ -416,7 +403,7 @@ class LeadCreate extends Component {
     
     job.priority = "1"
     job.notes = ""
-  
+    
     
     console.log("params", job);
     
@@ -473,23 +460,31 @@ class LeadCreate extends Component {
     console.log("current phone number state :" , this.state.numberOfPhoneNumber)
     if (this.state.numberOfPhoneNumber == 1){
       return (
-        <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row"}}>
-        <TextInput
-          placeholder="Phone (Primary)"
-          value={this.state.phone}
-          keyboardType="numeric"
-          onChangeText={(phone) => this.setState({phone})}
-          style={styles.textFieldPhone} TextInput/>
-          
-          <TouchableHighlight style = {{ backgroundColor : "#2F3848" , height : 40 , width : 60 , justifyContent: "center"}}  onPress={this._addMorePhoneNumberComponent}>  
-              <Text style={styles.buttonText}>ADD</Text>
-          </TouchableHighlight>
+        <View style = {{flexDirection : "column"}}>
+            <View style={styles.labelContainer}>
+                <Text style={styles.labelStyle}>Phone : </Text>
+            </View>
+            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row"}}>
+            <TextInput
+              placeholder="Phone (Primary)"
+              value={this.state.phone}
+              keyboardType="numeric"
+              onChangeText={(phone) => this.setState({phone})}
+              style={styles.textFieldPhone} TextInput/>
+              
+              <TouchableHighlight style = {{ backgroundColor : "#2F3848" , height : 40 , width : 60 , justifyContent: "center"}}  onPress={this._addMorePhoneNumberComponent}>  
+                  <Text style={styles.buttonText}>ADD</Text>
+              </TouchableHighlight>
+          </View>
       </View>
       );
     }
      else if (this.state.numberOfPhoneNumber == 2){
       return (
         <View style = {{flexDirection : "column"}}>
+            <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Phone : </Text>
+                </View>
           <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row"}}>
             <TextInput
               placeholder="Phone (Primary)"
@@ -520,6 +515,9 @@ class LeadCreate extends Component {
      }else{
       return (
         <View style = {{flexDirection : "column"}}>
+          <View style={styles.labelContainer}>
+                  <Text style={styles.labelStyle}>Phone : </Text>
+              </View>
           <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row"}}>
             <TextInput
               placeholder="Phone (Primary)"
@@ -566,22 +564,30 @@ class LeadCreate extends Component {
     console.log("email numbers state" , this.state.numberOfEmail)
     if (this.state.numberOfEmail == 1){
         return(
-          <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" }}>
-              <TextInput
-                placeholder="Email (Primary)"
-                value={this.state.email}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                onChangeText={(email) => this.setState({email})}
-                style={styles.textFieldPhone} />
-                <TouchableHighlight style = {{ backgroundColor : "#2F3848" , height : 40 , width : 60 , justifyContent: "center"}}  onPress={this._addMoreEmailComponent}>  
-                    <Text style={styles.buttonText}>ADD</Text>
-                </TouchableHighlight>
+          <View style = {{flexDirection : "column"}}>
+            <View style={styles.labelContainer}>
+                  <Text style={styles.labelStyle}>Email : </Text>
+              </View>
+            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" }}>
+                <TextInput
+                  placeholder="Email (Primary)"
+                  value={this.state.email}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  onChangeText={(email) => this.setState({email})}
+                  style={styles.textFieldPhone} />
+                  <TouchableHighlight style = {{ backgroundColor : "#2F3848" , height : 40 , width : 60 , justifyContent: "center"}}  onPress={this._addMoreEmailComponent}>  
+                      <Text style={styles.buttonText}>ADD</Text>
+                  </TouchableHighlight>
+              </View>
             </View>
         );
     }else if (this.state.numberOfEmail == 2){
       return(
         <View style = {{flexDirection : "column"}}>
+        <View style={styles.labelContainer}>
+                  <Text style={styles.labelStyle}>Email : </Text>
+              </View>
           <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" }}>
               <TextInput
                 placeholder="Email (Primary)"
@@ -611,6 +617,9 @@ class LeadCreate extends Component {
     }else{
         return(
           <View style = {{flexDirection : "column"}}>
+          <View style={styles.labelContainer}>
+                  <Text style={styles.labelStyle}>Email : </Text>
+              </View>
           <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" }}>
               <TextInput
                 placeholder="Email (Primary)"
@@ -659,6 +668,9 @@ class LeadCreate extends Component {
       //this.setState({isBillingSameAsLocation: false})
       return(
          <View style={{ marginVertical: 12 }}>
+          <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Address : </Text>
+               </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
               <TextInput
                 placeholder="Address"
@@ -667,6 +679,9 @@ class LeadCreate extends Component {
                 style={styles.textField} />
             </View>
 
+             <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>City : </Text>
+               </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
               <TextInput
                 placeholder="City"
@@ -675,6 +690,9 @@ class LeadCreate extends Component {
                 style={styles.textField} />
             </View>
 
+             <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>State : </Text>
+               </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
               <TextInput
                 placeholder="State"
@@ -683,6 +701,9 @@ class LeadCreate extends Component {
                 style={styles.textField} />
             </View>
 
+             <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Zip Code : </Text>
+               </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
               <TextInput
                 placeholder="Zip Code"
@@ -720,7 +741,11 @@ class LeadCreate extends Component {
       //this.setState({isBillingSameAsLocation: false})
       return(
          <View style={{ marginVertical: 12 }}>
+          <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Address : </Text>
+               </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+           
               <TextInput
                 placeholder="Address"
                 value={this.state.address_mailing}
@@ -728,7 +753,11 @@ class LeadCreate extends Component {
                 style={styles.textField} />
             </View>
 
+             <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>City : </Text>
+               </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+           
               <TextInput
                 placeholder="City"
                 value={this.state.city_mailing}
@@ -736,7 +765,12 @@ class LeadCreate extends Component {
                 style={styles.textField} />
             </View>
 
+
+            <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>State : </Text>
+               </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+            
               <TextInput
                 placeholder="State"
                 value={this.state.state_mailing}
@@ -744,14 +778,18 @@ class LeadCreate extends Component {
                 style={styles.textField} />
             </View>
 
+             <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Zip Code : </Text>
+               </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+           
               <TextInput
                 placeholder="Zip Code"
                 value={this.state.zip_mailing}
                 onChangeText={(zip_mailing) => this.setState({zip_mailing})}
                 style={styles.textField} />
             </View>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , paddingTop : 10}}>
+            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , alignItems  :"center"}}>
               <TouchableHighlight onPress={() => this.setState({isMailingSameAsLocation:true})}>
                  
                   <Image style={{paddingTop : 10}} source={require('../../../../img/leads/unchecked.png')} />
@@ -765,7 +803,7 @@ class LeadCreate extends Component {
     }else{
       //this.setState({isBillingSameAsLocation: true})
       return(
-        <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , paddingTop : 10}}> 
+        <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , alignItems  :"center"}}> 
            <TouchableHighlight onPress={() => this.setState({isMailingSameAsLocation:false})} >
               <Image style={{paddingTop : 10}} source={require('../../../../img/leads/checked.png')} />
             </TouchableHighlight>
@@ -809,7 +847,12 @@ class LeadCreate extends Component {
                       </View>
                   </View>
               </View>
+
+              <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Assign To : </Text>
+               </View>
               <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 3 }}>
+              
               <Picker
                 placeholder="Assign To"
                 placeholderTextColor="#BFBFBF"
@@ -820,7 +863,12 @@ class LeadCreate extends Component {
                 items={_.map(this.props.users, (user) => ({ label: user.first_name + " " + user.last_name, value: user.id }))}
                 />
             </View>
+
+            <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Title : </Text>
+               </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+            
               <TextInput
                 placeholder="Title"
                 value={this.state.title}
@@ -828,7 +876,11 @@ class LeadCreate extends Component {
                 style={styles.textField} />
             </View>
 
+            <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Start Date : </Text>
+               </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+            
               <DateTimePicker
                 mode={"datetime"}
                 is24Hour={false}
@@ -840,8 +892,12 @@ class LeadCreate extends Component {
                 onConfirm={(start_date) => this.setState({start_date})}
                 />
             </View>
-
+                      
+            <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>End Date : </Text>
+               </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+            
               <DateTimePicker
                 mode={"datetime"}
                 is24Hour={false}
@@ -918,36 +974,56 @@ class LeadCreate extends Component {
           <View style={{ flexDirection: 'row', marginBottom: 12 }}>
 
             <View style={{ flex: 1}}>
-              <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+              {/* <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
                 <TextInput
                   placeholder="First Name"
                   value={this.state.contact}
                   onChangeText={(contact) => this.setState({contact})}
-                  style={styles.textField} />
-              </View>
+                  style={styles.textField} underlineColorAndroid='transparent'/>
+              </View> */}
 
-              <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+              <View style={styles.labelContainer}>
+                          <Text style={styles.labelStyle}>First Name : </Text>
+               </View>
+               <View style={styles.textInputViewStyle}>
+                <TextInput
+                  placeholder="First Name"
+                  value={this.state.contact}
+                  onChangeText={(contact) => this.setState({contact})}
+                  style={styles.textField} underlineColorAndroid='transparent'/>
+              </View>
+                      
+              <View style={styles.labelContainer}>
+                          <Text style={styles.labelStyle}>Last Name : </Text>
+               </View>
+              <View style={styles.textInputViewStyle}>
                 <TextInput
                   placeholder="Last Name"
                   value={this.state.lastName}
                   onChangeText={(lastName) => this.setState({lastName})}
-                  style={styles.textField} />
+                  style={styles.textField} underlineColorAndroid='transparent'/>
               </View>
 
-              <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+              <View style={styles.labelContainer}>
+                      <Text style={styles.labelStyle}>Company : </Text>
+               </View>
+              <View style={styles.textInputViewStyle}>
                 <TextInput
                   placeholder="Company"
                   value={this.state.company}
                   onChangeText={(company) => this.setState({company})}
-                  style={styles.textField} />
+                  style={styles.textField} underlineColorAndroid='transparent'/>
               </View>
 
-                <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+                <View style={styles.labelContainer}>
+                      <Text style={styles.labelStyle}>Cross Reference : </Text>
+               </View>
+                <View style={styles.textInputViewStyle}>
                 <TextInput
                   placeholder="Cross Reference"
                   value={this.state.cross_reference}
                   onChangeText={(cross_reference) => this.setState({cross_reference})}
-                  style={styles.textField} />
+                  style={styles.textField} underlineColorAndroid='transparent'/>
               </View>
             </View>
           </View>
@@ -958,63 +1034,81 @@ class LeadCreate extends Component {
             {this.emailViews()}
 
           </View>
-
+          
           <View style={{margin: 10}}>
             <Text style={{
               fontSize: 17,
-              color: 'rgba(0, 0, 0, 0.73)'
+              color: 'rgba(0, 0, 0, 0.73)',
+              fontWeight : 'bold',
             }}>Location Address</Text>
         </View>
           <View style={{ marginVertical: 12 }}>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+          <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Address : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="Address"
                 value={this.state.address}
                 onChangeText={(address) => this.setState({address})}
-                style={styles.textField} />
+                style={styles.textField} underlineColorAndroid='transparent'/>
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+            <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>City : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="City"
                 value={this.state.city}
                 onChangeText={(city) => this.setState({city})}
-                style={styles.textField} />
+                style={styles.textField} underlineColorAndroid='transparent'/>
             </View>
-
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+            
+            <View style={styles.labelContainer}>
+                   <Text style={styles.labelStyle}>State : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="State"
                 value={this.state.state}
                 onChangeText={(state) => this.setState({state})}
-                style={styles.textField} />
+                style={styles.textField} underlineColorAndroid='transparent'/>
             </View>
-
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+            
+            <View style={styles.labelContainer}>
+                          <Text style={styles.labelStyle}>Zip Code : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="Zip Code"
                 value={this.state.zip}
                 onChangeText={(zip) => this.setState({zip})}
-                style={styles.textField} />
+                style={styles.textField} underlineColorAndroid='transparent'/>
             </View>
           </View>
 
            <View style={{margin: 10}}>
             <Text style={{
               fontSize: 17,
-              color: 'rgba(0, 0, 0, 0.73)'
+              color: 'rgba(0, 0, 0, 0.73)',
+              fontWeight : 'bold',
             }}>Billing Address</Text>
         </View>
         {this.hideUnhideBillingAddress()} 
         <View style={{margin: 10}}>
             <Text style={{
               fontSize: 17,
-              color: 'rgba(0, 0, 0, 0.73)'
+              color: 'rgba(0, 0, 0, 0.73)',
+              fontWeight : 'bold',
             }}>Mailing Address</Text>
         </View>
         {this.hideUnhideMailingAddress()}
 
           <View style={{ marginVertical: 12 }}>
+            <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Lead Source : </Text>
+                </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
               <Picker
                 placeholder="Lead Source"
@@ -1026,7 +1120,10 @@ class LeadCreate extends Component {
                 items={_.map(this.props.user.source_leads, (source, index) => ({label: source, value: index}))}
                 />
             </View>
-
+            
+            <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Job Category : </Text>
+               </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
               <Picker
                 placeholder="Job Category"
@@ -1038,7 +1135,10 @@ class LeadCreate extends Component {
                 items={_.map(this.props.user.job_categories, (jc, index) => ({label: jc, value: index}))}
                 />
             </View>
-
+            
+            <View style={styles.labelContainer}>
+                          <Text style={styles.labelStyle}>Work Type : </Text>
+               </View>
             <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
               <Picker
                 placeholder="Work Type"
@@ -1051,8 +1151,10 @@ class LeadCreate extends Component {
                 />
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
-
+            <View style={{ height: 69, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+            <View style={{ height: 25, backgroundColor: '#FFFFFF', paddingLeft: 8 , alignItems : "center" , flexDirection : "row"}}>
+                          <Text style={{backgroundColor: '#FFFFFF',fontSize: 15,color: 'rgba(0, 0, 0, 0.73)',fontWeight : 'bold'}}>Trade Types : </Text>
+               </View>
                 <Modal visible = {this.state.isModalVisible} onRequestClose = { () => console.log("test modal")}> 
                   <View style = {{paddingTop : 20}}>
                     <View style= {{justifyContent : "center" , alignItems : "center"}}>
@@ -1106,7 +1208,8 @@ class LeadCreate extends Component {
           <View style={{margin: 10}}>
             <Text style={{
               fontSize: 17,
-              color: 'rgba(0, 0, 0, 0.73)'
+              color: 'rgba(0, 0, 0, 0.73)',
+              fontWeight : 'bold',
             }}>Appointment Details</Text>
           </View>
           {this.appointDetailsViews()}
@@ -1144,6 +1247,7 @@ const styles = StyleSheet.create({
     color: 'rgba(0, 0, 0, 0.73)',
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, 0.2)'
+    //underlineColorAndroid : 'transparent'
   },
   textFieldPhone: {
     height: 44,
@@ -1153,6 +1257,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, 0.2)',
     flex:1
+    //underlineColorAndroid : 'transparent'
   },
   picker: {
     height: 44,
@@ -1171,6 +1276,29 @@ const styles = StyleSheet.create({
     textAlign : "center",
     textAlignVertical : "center"
 
+  },
+  labelContainer:{
+    height: 25, 
+    backgroundColor: '#FFFFFF', 
+    paddingLeft: 15 , 
+    alignItems : "center" , 
+    flexDirection : "row"
+  },
+  labelStyle: {
+    backgroundColor: '#FFFFFF',
+    fontSize: 15,
+    color: 'rgba(0, 0, 0, 0.73)',
+    fontWeight : 'bold',
+    paddingLeft : 5,
+    // borderBottomWidth: 1,
+    // borderBottomColor: 'rgba(0, 0, 0, 0.2)'
+  },
+  textInputViewStyle: {
+    height: 44, 
+    backgroundColor: '#FFFFFF',
+    paddingLeft: 15 ,
+    // borderWidth : 1,
+    // borderColor : 'rgba(0, 0, 0, 0.2)'
   }
 });
 
