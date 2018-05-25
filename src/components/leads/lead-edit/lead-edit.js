@@ -32,6 +32,8 @@ class LeadEdit extends Component {
 
   constructor(props) {
     super(props)
+    this.focusNextField = this.focusNextField.bind(this);
+    this.inputs = {};
 
     this.state = {
       users: [],
@@ -83,6 +85,10 @@ class LeadEdit extends Component {
     this._onSubmit = this._onSubmit.bind(this)
   }
 
+  focusNextField(id) {
+    this.inputs[id].focus();
+  }
+
   initialiseWithState(){
 
     //this.setState({selectedLeadTypes : this.props.item.})
@@ -95,7 +101,7 @@ class LeadEdit extends Component {
         tradeTypes.push(tradeType[element])
       )
     })
-    debugger;
+    //debugger;
     console.log("trade types" , tradeTypes)
 
     var joinedTradeTypes = tradeTypes.join(",")
@@ -133,8 +139,8 @@ class LeadEdit extends Component {
       selectedIndexOfTrade : this.props.item.trade_type, 
       assignee_id : this.props.item.assignee_id ? this.props.item.assignee_id.$oid : "", 
       title : this.props.item.appointments.event_title, 
-      start_date : this.props.item.appointments.start_date, 
-      end_date : this.props.item.appointments.end_date, 
+      start_date : new Date(this.props.item.appointments.start_date), 
+      end_date : new Date(this.props.item.appointments.end_date), 
       appointment_address : this.props.item.appointments.address, 
       appointment_city : this.props.item.appointments.city,
       address_mailing : this.props.item.mailing_info.address,
@@ -274,7 +280,7 @@ class LeadEdit extends Component {
     //   zip_billing} = this.state
 
      var errorMessages = []
-    debugger;
+    //debugger;
      if (!this.state.contact)
        errorMessages.push('First Name is required')
   
@@ -559,37 +565,62 @@ class LeadEdit extends Component {
     console.log("current phone number state :" , this.state.numberOfPhoneNumber)
     if (this.state.numberOfPhoneNumber == 1){
       return (
-        <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row"}}>
-        <TextInput
-          placeholder="Phone (Primary)"
-          value={this.state.phone}
-          keyboardType="numeric"
-          onChangeText={(phone) => this.setState({phone})}
-          style={styles.textFieldPhone} TextInput/>
+        <View style = {{flexDirection : "column"}}>
+        <View style={styles.labelContainer}>
+                <Text style={styles.labelStyle}>Phone : </Text>
+            </View>
+
+            <View style={styles.phoneFieldViewStyle}>
+              <TextInput
+                placeholder="Phone (Primary)"
+                value={this.state.phone}
+                keyboardType="numeric"
+                onChangeText={(phone) => this.setState({phone})}
+                style={styles.textFieldPhone}
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('email');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['phone'] = input;
+                }} />
           
           <TouchableHighlight style = {{ backgroundColor : "#2F3848" , height : 40 , width : 60 , justifyContent: "center"}}  onPress={this._addMorePhoneNumberComponent}>  
               <Text style={styles.buttonText}>ADD</Text>
           </TouchableHighlight>
+          </View>
       </View>
       );
     }
      else if (this.state.numberOfPhoneNumber == 2){
       return (
         <View style = {{flexDirection : "column"}}>
-          <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row"}}>
+         <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Phone : </Text>
+                </View>
+          <View style={styles.phoneFieldViewStyle}>
             <TextInput
               placeholder="Phone (Primary)"
               value={this.state.phone}
               keyboardType="numeric"
               onChangeText={(phone) => this.setState({phone})}
-              style={styles.textFieldPhone} TextInput/>
+              style={styles.textFieldPhone}
+              blurOnSubmit={ false }
+              onSubmitEditing={() => {
+                this.focusNextField('email');
+              }}
+              returnKeyType={ "next" }
+              ref={ input => {
+                this.inputs['phone'] = input;
+              }} TextInput/>
               
               <TouchableHighlight style = {{ backgroundColor : "#2F3848" , height : 40 , width : 60 , justifyContent: "center"}}  onPress={this._addMorePhoneNumberComponent}>  
                   <Text style={styles.buttonText}>ADD</Text>
               </TouchableHighlight>   
         </View>
 
-        <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row"}}>
+        <View style={styles.phoneFieldViewStyle}>
           <TextInput
             placeholder="Phone"
             value={this.state.phone2}
@@ -606,20 +637,31 @@ class LeadEdit extends Component {
      }else{
       return (
         <View style = {{flexDirection : "column"}}>
-          <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row"}}>
+            <View style={styles.labelContainer}>
+                  <Text style={styles.labelStyle}>Phone : </Text>
+              </View>
+          <View style={styles.phoneFieldViewStyle}>
             <TextInput
               placeholder="Phone (Primary)"
               value={this.state.phone}
               keyboardType="numeric"
               onChangeText={(phone) => this.setState({phone})}
-              style={styles.textFieldPhone} TextInput/>
+              style={styles.textFieldPhone} 
+              blurOnSubmit={ false }
+              onSubmitEditing={() => {
+                this.focusNextField('email');
+              }}
+              returnKeyType={ "next" }
+              ref={ input => {
+                this.inputs['phone'] = input;
+              }} TextInput/>
               
               <TouchableHighlight style = {{ backgroundColor : "#2F3848" , height : 40 , width : 60 , justifyContent: "center"}}  onPress={this._addMorePhoneNumberComponent}>  
                   <Text style={styles.buttonText}>ADD</Text>
               </TouchableHighlight>   
         </View>
 
-        <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row"}}>
+        <View style={styles.phoneFieldViewStyle}>
           <TextInput
             placeholder="Phone"
             value={this.state.phone2}
@@ -631,7 +673,7 @@ class LeadEdit extends Component {
             <Image style={{paddingTop : 10 , paddingLeft : 10}} source={require('../../../../img/icons/delete.png')} />
         </TouchableHighlight>
         </View>
-        <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row"}}>
+        <View style={styles.phoneFieldViewStyle}>
           <TextInput
             placeholder="Phone"
             value={this.state.phone3}
@@ -652,35 +694,60 @@ class LeadEdit extends Component {
     console.log("email numbers state" , this.state.numberOfEmail)
     if (this.state.numberOfEmail == 1){
         return(
-          <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" }}>
+          <View style = {{flexDirection : "column"}}>
+            <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Email : </Text>
+                </View>
+              <View style={styles.phoneFieldViewStyle}>
               <TextInput
                 placeholder="Email (Primary)"
                 value={this.state.email}
                 autoCapitalize="none"
                 keyboardType="email-address"
                 onChangeText={(email) => this.setState({email})}
-                style={styles.textFieldPhone} />
+                style={styles.textFieldPhone} 
+                blurOnSubmit={ false }
+                  onSubmitEditing={() => {
+                    this.focusNextField('locAddress');
+                  }}
+                  returnKeyType={ "next" }
+                  ref={ input => {
+                    this.inputs['email'] = input;
+                  }} />
                 <TouchableHighlight style = {{ backgroundColor : "#2F3848" , height : 40 , width : 60 , justifyContent: "center"}}  onPress={this._addMoreEmailComponent}>  
                     <Text style={styles.buttonText}>ADD</Text>
                 </TouchableHighlight>
             </View>
+          </View>
         );
     }else if (this.state.numberOfEmail == 2){
       return(
         <View style = {{flexDirection : "column"}}>
-          <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" }}>
+
+             <View style={styles.labelContainer}>
+                  <Text style={styles.labelStyle}>Email : </Text>
+              </View>
+          <View style={styles.phoneFieldViewStyle}>
               <TextInput
                 placeholder="Email (Primary)"
                 value={this.state.email}
                 autoCapitalize="none"
                 keyboardType="email-address"
                 onChangeText={(email) => this.setState({email})}
-                style={styles.textFieldPhone} />
+                style={styles.textFieldPhone}
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('locAddress');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['email'] = input;
+                }}  />
                 <TouchableHighlight style = {{ backgroundColor : "#2F3848" , height : 40 , width : 60 , justifyContent: "center"}}  onPress={this._addMoreEmailComponent}>  
                     <Text style={styles.buttonText}>ADD</Text>
                 </TouchableHighlight>
             </View>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" }}>
+            <View style={styles.phoneFieldViewStyle}>
               <TextInput
                 placeholder="Email"
                 value={this.state.email2}
@@ -697,19 +764,30 @@ class LeadEdit extends Component {
     }else{
         return(
           <View style = {{flexDirection : "column"}}>
-          <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" }}>
+             <View style={styles.labelContainer}>
+                  <Text style={styles.labelStyle}>Email : </Text>
+              </View>
+          <View style={styles.phoneFieldViewStyle}>
               <TextInput
                 placeholder="Email (Primary)"
                 value={this.state.email}
                 autoCapitalize="none"
                 keyboardType="email-address"
                 onChangeText={(email) => this.setState({email})}
-                style={styles.textFieldPhone} />
+                style={styles.textFieldPhone} 
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('locAddress');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['email'] = input;
+                }}/>
                 <TouchableHighlight style = {{ backgroundColor : "#2F3848" , height : 40 , width : 60 , justifyContent: "center"}}  onPress={this._addMoreEmailComponent}>  
                     <Text style={styles.buttonText}>ADD</Text>
                 </TouchableHighlight>
             </View>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" }}>
+            <View style={styles.phoneFieldViewStyle}>
               <TextInput
                 placeholder="Email"
                 value={this.state.email2}
@@ -721,7 +799,7 @@ class LeadEdit extends Component {
                     <Image style={{paddingTop : 10 , paddingLeft : 10}} source={require('../../../../img/icons/delete.png')} />
                 </TouchableHighlight>
             </View>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" }}>
+            <View style={styles.phoneFieldViewStyle}>
               <TextInput
                 placeholder="Email"
                 value={this.state.email3}
@@ -745,15 +823,21 @@ class LeadEdit extends Component {
       //this.setState({isBillingSameAsLocation: false})
       return(
          <View style={{ marginVertical: 12 }}>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+
+            <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Address : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="Address"
                 value={this.state.address_billing}
                 onChangeText={(address_billing) => this.setState({address_billing})}
                 style={styles.textField} />
             </View>
-
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+            <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>City : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="City"
                 value={this.state.city_billing}
@@ -761,7 +845,10 @@ class LeadEdit extends Component {
                 style={styles.textField} />
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+            <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>State : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="State"
                 value={this.state.state_billing}
@@ -769,7 +856,10 @@ class LeadEdit extends Component {
                 style={styles.textField} />
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+             <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Zip Code : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="Zip Code"
                 value={this.state.zip_billing}
@@ -806,7 +896,10 @@ class LeadEdit extends Component {
       //this.setState({isBillingSameAsLocation: false})
       return(
          <View style={{ marginVertical: 12 }}>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+              <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Address : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="Address"
                 value={this.state.address_mailing}
@@ -814,7 +907,10 @@ class LeadEdit extends Component {
                 style={styles.textField} />
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+              <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>City : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="City"
                 value={this.state.city_mailing}
@@ -822,7 +918,11 @@ class LeadEdit extends Component {
                 style={styles.textField} />
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+
+             <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>State : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="State"
                 value={this.state.state_mailing}
@@ -830,7 +930,10 @@ class LeadEdit extends Component {
                 style={styles.textField} />
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+               <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Zip Code : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="Zip Code"
                 value={this.state.zip_mailing}
@@ -860,6 +963,18 @@ class LeadEdit extends Component {
       );
         
       
+    }
+  }
+
+  setMinDateForStartDate(startDate){
+    if (this.state.end_date != undefined){
+        if (this.state.end_date.getTime() < startDate.getTime()){
+          alert("End date should be greater than Start date.")
+        }else{
+          this.setState({start_date : startDate})
+        }
+    }else{
+      this.setState({start_date : startDate})
     }
   }
 
@@ -895,6 +1010,10 @@ class LeadEdit extends Component {
                       </View>
                   </View>
               </View>
+
+                <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Assign To : </Text>
+               </View>
               <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 3 }}>
               <Picker
                 placeholder="Assign To"
@@ -906,15 +1025,22 @@ class LeadEdit extends Component {
                 items={_.map(this.props.users, (user) => ({ label: user.first_name + " " + user.last_name, value: user.id }))}
                 />
             </View>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+
+             {/* <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Title : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="Title"
                 value={this.state.title}
                 onChangeText={(title) => this.setState({title})}
                 style={styles.textField} />
-            </View>
+            </View> */}
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+                 <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Start Date : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <DateTimePicker
                 mode={"datetime"}
                 is24Hour={false}
@@ -923,11 +1049,15 @@ class LeadEdit extends Component {
                 textStyle={styles.pickerText}
                 format={'MMM DD, YYYY h:mma'}
                 value={this.state.start_date}
-                onConfirm={(start_date) => this.setState({start_date})}
+                onConfirm={(start_date) => this.setMinDateForStartDate(start_date)}
+                minimumDate={new Date()} 
                 />
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+               <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>End Date : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <DateTimePicker
                 mode={"datetime"}
                 is24Hour={false}
@@ -937,6 +1067,7 @@ class LeadEdit extends Component {
                 format={'MMM DD, YYYY h:mma'}
                 value={this.state.end_date}
                 onConfirm={(end_date) => this.setState({end_date})}
+                minimumDate={this.state.start_date ? (this.state.start_date) : new Date()}
                 />
             </View>
           </View>
@@ -1004,36 +1135,81 @@ class LeadEdit extends Component {
           <View style={{ flexDirection: 'row', marginBottom: 12 }}>
 
             <View style={{ flex: 1}}>
-              <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+
+                 <View style={styles.labelContainer}>
+                          <Text style={styles.labelStyle}>First Name : </Text>
+               </View>
+              <View style={styles.textInputViewStyle}>
                 <TextInput
                   placeholder="First Name"
                   value={this.state.contact}
                   onChangeText={(contact) => this.setState({contact})}
-                  style={styles.textField} />
+                  style={styles.textField}
+                  blurOnSubmit={ false }
+                  onSubmitEditing={() => {
+                    this.focusNextField('lastName');
+                  }}
+                  returnKeyType={ "next" }
+                  ref={ input => {
+                    this.inputs['firstName'] = input;
+                  }} />
               </View>
 
-              <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+                 <View style={styles.labelContainer}>
+                          <Text style={styles.labelStyle}>Last Name : </Text>
+               </View>
+              <View style={styles.textInputViewStyle}>
                 <TextInput
                   placeholder="Last Name"
                   value={this.state.lastName}
                   onChangeText={(lastName) => this.setState({lastName})}
-                  style={styles.textField} />
+                  style={styles.textField} 
+                  blurOnSubmit={ false }
+                  onSubmitEditing={() => {
+                    this.focusNextField('company');
+                  }}
+                  returnKeyType={ "next" }
+                  ref={ input => {
+                    this.inputs['lastName'] = input;
+                  }}/>
               </View>
 
-              <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+                  <View style={styles.labelContainer}>
+                      <Text style={styles.labelStyle}>Company : </Text>
+               </View>    
+              <View style={styles.textInputViewStyle}>
                 <TextInput
                   placeholder="Company"
                   value={this.state.company}
                   onChangeText={(company) => this.setState({company})}
-                  style={styles.textField} />
+                  style={styles.textField}
+                  blurOnSubmit={ false }
+                  onSubmitEditing={() => {
+                    this.focusNextField('crossReference');
+                  }}
+                  returnKeyType={ "next" }
+                  ref={ input => {
+                    this.inputs['company'] = input;
+                  }} />
               </View>
 
-                <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+                  <View style={styles.labelContainer}>
+                      <Text style={styles.labelStyle}>Cross Reference : </Text>
+               </View>
+                <View style={styles.textInputViewStyle}>
                 <TextInput
                   placeholder="Cross Reference"
                   value={this.state.cross_reference}
                   onChangeText={(cross_reference) => this.setState({cross_reference})}
-                  style={styles.textField} />
+                  style={styles.textField}
+                  blurOnSubmit={ false }
+                  onSubmitEditing={() => {
+                    this.focusNextField('phone');
+                  }}
+                  returnKeyType={ "next" }
+                  ref={ input => {
+                    this.inputs['crossReference'] = input;
+                  }}/>
               </View>
             </View>
           </View>
@@ -1052,36 +1228,80 @@ class LeadEdit extends Component {
             }}>Location Address</Text>
         </View>
           <View style={{ marginVertical: 12 }}>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+          <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Address : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="Address"
                 value={this.state.address}
                 onChangeText={(address) => this.setState({address})}
-                style={styles.textField} />
+                style={styles.textField} 
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('locCity');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['locAddress'] = input;
+                }} />
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+              <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>City : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="City"
                 value={this.state.city}
                 onChangeText={(city) => this.setState({city})}
-                style={styles.textField} />
+                style={styles.textField}
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('locState');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['locCity'] = input;
+                }}/>
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+               <View style={styles.labelContainer}>
+                   <Text style={styles.labelStyle}>State : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="State"
                 value={this.state.state}
                 onChangeText={(state) => this.setState({state})}
-                style={styles.textField} />
+                style={styles.textField}
+                blurOnSubmit={ false }
+                  onSubmitEditing={() => {
+                    this.focusNextField('locZip');
+                  }}
+                  returnKeyType={ "next" }
+                  ref={ input => {
+                    this.inputs['locState'] = input;
+                  }} />
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+                <View style={styles.labelContainer}>
+                          <Text style={styles.labelStyle}>Zip Code : </Text>
+               </View>
+            <View style={styles.textInputViewStyle}>
               <TextInput
                 placeholder="Zip Code"
                 value={this.state.zip}
                 onChangeText={(zip) => this.setState({zip})}
-                style={styles.textField} />
+                style={styles.textField} 
+                blurOnSubmit={ true }
+                  onSubmitEditing={() => {
+                    //this.state.isBillingSameAsLocation ?  this.state.isMailingSameAsLocation ? Keyboard.dismiss : this.focusNextField('mailingAddress') : this.focusNextField('billingAddress');
+                  }}
+                  returnKeyType={"done"}
+                  ref={ input => {
+                    this.inputs['locZip'] = input;
+                  }}/>
             </View>
           </View>
 
@@ -1101,7 +1321,10 @@ class LeadEdit extends Component {
         {this.hideUnhideMailingAddress()}
 
           <View style={{ marginVertical: 12 }}>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+          <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Lead Source : </Text>
+                </View>
+            <View style={styles.pickerContainer}>
               <Picker
                 placeholder="Lead Source"
                 placeholderTextColor="#BFBFBF"
@@ -1113,7 +1336,10 @@ class LeadEdit extends Component {
                 />
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+               <View style={styles.labelContainer}>
+                    <Text style={styles.labelStyle}>Job Category : </Text>
+               </View>
+            <View style={styles.pickerContainer}>
               <Picker
                 placeholder="Job Category"
                 placeholderTextColor="#BFBFBF"
@@ -1125,7 +1351,10 @@ class LeadEdit extends Component {
                 />
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+               <View style={styles.labelContainer}>
+                          <Text style={styles.labelStyle}>Work Type : </Text>
+               </View>
+            <View style={styles.pickerContainer}>
               <Picker
                 placeholder="Work Type"
                 placeholderTextColor="#BFBFBF"
@@ -1223,28 +1452,60 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   textField: {
+    // height: 44,
+    // backgroundColor: '#FFFFFF',
+    // fontSize: 17,
+    // color: 'rgba(0, 0, 0, 0.73)',
+    // borderBottomWidth: 1,
+    // borderBottomColor: 'rgba(0, 0, 0, 0.2)'
     height: 44,
     backgroundColor: '#FFFFFF',
     fontSize: 17,
     color: 'rgba(0, 0, 0, 0.73)',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.2)'
+    paddingTop : 2,
+    paddingLeft : 2,
+    paddingRight : 2,
+    paddingBottom : 2,
+    borderWidth : 1,
+    borderColor : 'rgba(0, 0, 0, 0.2)'
   },
   textFieldPhone: {
-    height: 44,
+    // height: 44,
+    // backgroundColor: '#FFFFFF',
+    // fontSize: 17,
+    // color: 'rgba(0, 0, 0, 0.73)',
+    // borderBottomWidth: 1,
+    // borderBottomColor: 'rgba(0, 0, 0, 0.2)',
+    // flex:1
+    height: 40,
     backgroundColor: '#FFFFFF',
     fontSize: 17,
     color: 'rgba(0, 0, 0, 0.73)',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
-    flex:1
+    flex:1,
+    paddingTop : 2,
+    paddingLeft : 2,
+    paddingRight : 15,
+    paddingBottom : 2,
+    borderWidth : 1,
+    borderColor : 'rgba(0, 0, 0, 0.2)'
   },
   picker: {
-    height: 44,
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
-    paddingRight: 10
+    // height: 44,
+    // backgroundColor: '#FFFFFF',
+    // borderBottomWidth: 1,
+    // borderBottomColor: 'rgba(0, 0, 0, 0.2)',
+    // paddingRight: 10
+    height: 40,
+      backgroundColor: '#FFFFFF',
+      // borderBottomWidth: 1,
+      // borderBottomColor: 'rgba(0, 0, 0, 0.2)',
+      // paddingTop : 2,
+      // paddingLeft : 2,
+      // paddingRight : 2,
+      // paddingBottom : 2,
+      borderWidth : 1,
+      borderColor : 'rgba(0, 0, 0, 0.2)'
+
   },
   pickerText: {
     fontSize: 17,
@@ -1256,7 +1517,45 @@ const styles = StyleSheet.create({
     textAlign : "center",
     textAlignVertical : "center"
 
-  }
+  },
+  labelContainer:{
+    height: 25, 
+    backgroundColor: '#FFFFFF', 
+    paddingLeft: 15 , 
+    alignItems : "center" , 
+    flexDirection : "row"
+  },
+  labelStyle: {
+    backgroundColor: '#FFFFFF',
+    fontSize: 15,
+    color: 'rgba(0, 0, 0, 0.73)',
+    fontWeight : 'bold',
+    paddingLeft : 5,
+  },
+  textInputViewStyle: {
+    height: 44, 
+    backgroundColor: '#FFFFFF',
+    paddingLeft: 15 ,
+    paddingRight: 15
+  },
+  phoneFieldViewStyle:{
+    height: 44,
+     backgroundColor: '#FFFFFF',
+     paddingLeft: 15 ,
+     flexDirection : "row"
+     
+ },
+ pickerContainer:{
+  height: 44,
+  backgroundColor: '#FFFFFF',
+  paddingLeft: 8,
+  paddingRight: 15,
+  // paddingTop : 2,
+  // paddingBottom : 2,
+  // borderWidth : 1,
+  // borderColor : 'rgba(0, 0, 0, 0.2)'
+  },
+  
 });
 
 function mapStateToProps(state, ownProps) {

@@ -27,7 +27,7 @@ class DateTimePicker extends Component {
   }
 
   _handleDatePicked = (date) => {
-    this.props.onConfirm(date.toString())
+    this.props.onConfirm(date)
     this._hideDateTimePicker();
   };
 
@@ -49,7 +49,8 @@ class DateTimePicker extends Component {
             date={this.props.value ? new Date(this.props.value) : new Date()}
             isVisible={this.state.isDateTimePickerVisible}
             onConfirm={this._handleDatePicked}
-            onCancel={this._hideDateTimePicker}/>
+            onCancel={this._hideDateTimePicker}
+            minimumDate={this.props.minimumDate}/>
         </View>
       </TouchableOpacity>
     );
