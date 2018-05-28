@@ -1323,7 +1323,7 @@ class LeadCreate extends Component {
                 />
             </View>
 
-            <View style={{ backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+            <View style={{ backgroundColor: '#FFFFFF', paddingLeft: 15}}>
             {/* <View style={{ height: 25, backgroundColor: '#FFFFFF', paddingLeft: 8 , alignItems : "center" , flexDirection : "row"}}>
                           <Text style={{backgroundColor: '#FFFFFF',fontSize: 15,color: 'rgba(0, 0, 0, 0.73)',fontWeight : 'bold'}}>Trade Types : </Text>
             </View> */}
@@ -1363,10 +1363,13 @@ class LeadCreate extends Component {
                         )
                       }
                     }
-                    //style = {{justifyContent : "center" , alignItems : "center" , height: 40 , backgroundColor : "#FFFFFF"}}
+                    style = {{height: 40 ,paddingTop : 15,paddingRight:15, backgroundColor : "#FFFFFF"}}
                     >
                       {/* <Text style={{textAlign : "center" , color: 'rgba(0, 0, 0, 0.73)'}}>Trade type</Text>  */}
-                       <Text style={{textAlign : "center" , fontSize : 17}}  numberOfLines={1}>Trade Types</Text>
+                      <View style={{ borderWidth : 1, borderColor : 'rgba(0, 0, 0, 0.2)'}}>
+                          <Text style={{textAlign : "center" , fontSize : 15, fontWeight : 'bold'}}  numberOfLines={1}>Trade Types</Text>
+                      </View>
+                       
                     {/* {this.renderLeadTypes()} */}
                 </TouchableHighlight>
                       {this.state.selectedLeadTypes.map((element,key) =>{
