@@ -364,10 +364,10 @@ class LeadCreate extends Component {
   }else{
     job.mailing_info_attributes = {
       same_as_location :  this.state.isMailingSameAsLocation,
-      address : "",
-      city_mailing : "",
-      state_mailing :  "",
-      zip_mailing : "",
+      address : address_mailing ? address_mailing : "",
+      city_mailing : city_mailing ? city_mailing : "",
+      state_mailing :   state_mailing ? state_mailing : "",
+      zip_mailing : zip_mailing ? zip_mailing : "",
   }
   }
 
@@ -376,10 +376,10 @@ class LeadCreate extends Component {
   }else{
     job.billing_info_attributes = {
       same_as_location :  this.state.isBillingSameAsLocation,
-      address :  "",
-      city_mailing : "",
-      state_mailing :  "",
-      zip_mailing : "",
+      address :  address_billing ? address_billing : "",
+      city_mailing : city_billing ? city_billing : "",
+      state_mailing :  state_billing ? state_billing : "",
+      zip_mailing : zip_billing ? zip_billing : "",
   }
   }
   
