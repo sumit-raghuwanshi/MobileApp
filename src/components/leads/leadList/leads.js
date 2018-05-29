@@ -59,9 +59,29 @@ class Leads extends Component {
 
   _navigateToLeadCreateScreen = () => {
     this.props.navigator.push({
-      screen: "roof_gravy.lead_create"
+      screen: "roof_gravy.lead_create",
+      passProps: {callBack : this.callBack.bind(this)}
     })
   }
+
+  async callBack(){
+    this.props.getLeads()
+    .then((response) => {
+     
+      console.log("Hello data ",response.data.leads)
+
+      if (typeof response != "undefined"){
+        if (typeof response.data.leads != "undefined"){
+          this.setState({leads : response.data.leads})
+        }
+      }
+      this.setState({loading: false})
+    })
+    .catch((error) => {
+      this.setState({loading: false})
+    })
+ }
+
 
   _onItemPress = (item) => {
     console.log("itemssssssssss" ,item )

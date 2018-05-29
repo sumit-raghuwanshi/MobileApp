@@ -196,13 +196,13 @@ class LeadDetails extends Component {
                       <Text style={styles.labelStyle}>Address : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle}  numberOfLines={1}>{this.state.item.billing_info.address ? this.state.item.billing_info.address : 'N/A'}</Text>
+                      <Text style={styles.labelGreyStyle}  >{this.state.item.billing_info.address ? this.state.item.billing_info.address : 'N/A'}</Text>
                 </View>
                 <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>City : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.billing_info.city ? this.state.item.billing_info.city : 'N/A'}</Text>
+                      <Text style={styles.labelGreyStyle}>{this.state.item.billing_info.city ? this.state.item.billing_info.city : 'N/A'}</Text>
                 </View>
                
             </View>
@@ -211,13 +211,13 @@ class LeadDetails extends Component {
                       <Text style={styles.labelStyle}>State : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.billing_info.state ? this.state.item.billing_info.state : 'N/A'}</Text>
+                      <Text style={styles.labelGreyStyle}>{this.state.item.billing_info.state ? this.state.item.billing_info.state : 'N/A'}</Text>
                 </View>
                 <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>Zip : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                    <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.billing_info.zip ? this.state.item.billing_info.zip : 'N/A'}</Text>
+                    <Text style={styles.labelGreyStyle} >{this.state.item.billing_info.zip ? this.state.item.billing_info.zip : 'N/A'}</Text>
                 </View>
             </View>
           </View> : null
@@ -249,13 +249,13 @@ class LeadDetails extends Component {
                       <Text style={styles.labelStyle}>Address : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle}  numberOfLines={1}>{this.state.item.mailing_info.address ? this.state.item.mailing_info.address : 'N/A'}</Text>
+                      <Text style={styles.labelGreyStyle}  >{this.state.item.mailing_info.address ? this.state.item.mailing_info.address : 'N/A'}</Text>
                 </View>
                 <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>City : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.mailing_info.city ? this.state.item.mailing_info.city : 'N/A'}</Text>
+                      <Text style={styles.labelGreyStyle} >{this.state.item.mailing_info.city ? this.state.item.mailing_info.city : 'N/A'}</Text>
                 </View>
                
             </View>
@@ -264,13 +264,13 @@ class LeadDetails extends Component {
                       <Text style={styles.labelStyle}>State : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.mailing_info.state ? this.state.item.mailing_info.state : 'N/A'}</Text>
+                      <Text style={styles.labelGreyStyle}>{this.state.item.mailing_info.state ? this.state.item.mailing_info.state : 'N/A'}</Text>
                 </View>
                 <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>Zip : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                    <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.mailing_info.zip ? this.state.item.mailing_info.zip : 'N/A'}</Text>
+                    <Text style={styles.labelGreyStyle} >{this.state.item.mailing_info.zip ? this.state.item.mailing_info.zip : 'N/A'}</Text>
                 </View>
             </View>
           </View> : null
@@ -284,19 +284,19 @@ class LeadDetails extends Component {
         <View style={{ marginVertical: 12 }}>
         <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , alignItems : "center" , flexDirection : "row" }}>
                 <Text style={styles.labelStyle}>Assigned : </Text>
-                <Text style={styles.labelGreyStyle} numberOfLines={1}> Yes</Text>
+                <Text style={styles.labelGreyStyle}> Yes</Text>
           </View>
           <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , alignItems : "center" , flexDirection : "row" }}>
                 <Text style={styles.labelStyle}>Assign To : </Text>
-                <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.appointments.assignee ? `${this.state.item.appointments.assignee.first_name} ${this.props.item.appointments.assignee.last_name}` : 'N/A'}</Text>
+                <Text style={styles.labelGreyStyle} >{this.state.item.appointments.assignee ? `${this.state.item.appointments.assignee.first_name} ${this.props.item.appointments.assignee.last_name}` : 'N/A'}</Text>
           </View>
           <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , alignItems : "center" , flexDirection : "row" }}>
                 <Text style={styles.labelStyle}>Start Date : </Text>
-                <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.appointments.start_date ? moment.utc(this.state.item.appointments.start_date).local().format('YYYY-MM-DD HH:mm a') : 'N/A'}</Text>
+                <Text style={styles.labelGreyStyle} >{this.state.item.appointments.start_date ? moment.utc(this.state.item.appointments.start_date).local().format('YYYY-MM-DD hh:mm a') : 'N/A'}</Text>
           </View>
           <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , alignItems : "center" , flexDirection : "row" }}>
                 <Text style={styles.labelStyle}>End Date : </Text>
-                <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.appointments.end_date ? moment.utc(this.state.item.appointments.end_date).local().format('YYYY-MM-DD HH:mm a') : 'N/A'}</Text>
+                <Text style={styles.labelGreyStyle}>{this.state.item.appointments.end_date ? moment.utc(this.state.item.appointments.end_date).local().format('YYYY-MM-DD hh:mm a') : 'N/A'}</Text>
           </View>
       </View>
       )
@@ -304,7 +304,7 @@ class LeadDetails extends Component {
       return(
         <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , alignItems : "center" , flexDirection : "row" }}>
         <Text style={styles.labelStyle}>Assigned : </Text>
-        <Text style={styles.labelGreyStyle} numberOfLines={1}> No</Text>
+        <Text style={styles.labelGreyStyle} > No</Text>
   </View>
       )
     }
@@ -349,46 +349,46 @@ class LeadDetails extends Component {
                           <Text style={styles.labelStyle}>First Name : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.first_name ? this.state.item.first_name : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle}>{this.state.item.first_name ? this.state.item.first_name : "N/A"}</Text>
                       </View>
 
                       <View style={styles.labelContainer}>
                           <Text style={styles.labelStyle}>Last Name : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.last_name ? this.state.item.last_name : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle} >{this.state.item.last_name ? this.state.item.last_name : "N/A"}</Text>
                       </View>
                       <View style={styles.labelContainer}>
                           <Text style={styles.labelStyle}>Company : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.company_name ? this.state.item.company_name : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle} >{this.state.item.company_name ? this.state.item.company_name : "N/A"}</Text>
                       </View>
                       <View style={styles.labelContainer}>
                           <Text style={styles.labelStyle}>Cross Reference : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.cross_reference ? this.state.item.cross_reference : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle} >{this.state.item.cross_reference ? this.state.item.cross_reference : "N/A"}</Text>
                       </View>
 
                       <View style={styles.labelContainer}>
                           <Text style={styles.labelStyle}>Lead Source : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.lead_source ? this.props.user.source_leads[this.state.item.lead_source] : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle}>{this.state.item.lead_source ? this.props.user.source_leads[this.state.item.lead_source] : "N/A"}</Text>
                       </View>
 
                       <View style={styles.labelContainer}>
                           <Text style={styles.labelStyle}>Job Category : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.job_category ? this.props.user.job_categories[this.state.item.job_category] : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle} >{this.state.item.job_category ? this.props.user.job_categories[this.state.item.job_category] : "N/A"}</Text>
                       </View>
                       <View style={styles.labelContainer}>
                           <Text style={styles.labelStyle}>Work Type : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.work_type ? this.props.user.work_types[this.state.item.work_type] : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle} >{this.state.item.work_type ? this.props.user.work_types[this.state.item.work_type] : "N/A"}</Text>
                       </View>
                     
                     </View>
@@ -430,7 +430,7 @@ class LeadDetails extends Component {
                                     <Text style={styles.labelChildStyle}>Primary : </Text>
                                 </View>
                                <View style={styles.labelContainer}>
-                                  <Text style={styles.labelGreyStyle} numberOfLines={1}>{element.number ? element.number : "N/A"}</Text>
+                                  <Text style={styles.labelGreyStyle} >{element.number ? element.number : "N/A"}</Text>
                                </View>
                               </View>
                             )
@@ -441,7 +441,7 @@ class LeadDetails extends Component {
                                     <Text style={styles.labelChildStyle}>Secondary : </Text>
                                 </View>
                                <View style={styles.labelContainer}>
-                                  <Text style={styles.labelGreyStyle} numberOfLines={1}>{element.number ? element.number : "N/A"}</Text>
+                                  <Text style={styles.labelGreyStyle}>{element.number ? element.number : "N/A"}</Text>
                                </View>
                               </View>
                             )
@@ -449,7 +449,7 @@ class LeadDetails extends Component {
                             return(
                               <View>
                                <View style={styles.labelContainer}>
-                                  <Text style={styles.labelGreyStyle} numberOfLines={1}>{element.number ? element.number : ""}</Text>
+                                  <Text style={styles.labelGreyStyle} >{element.number ? element.number : ""}</Text>
                                </View>
                               </View>
                             )
@@ -468,7 +468,7 @@ class LeadDetails extends Component {
                                 <Text style={styles.labelChildStyle}>Primary :</Text>
                             </View>
                            <View style={styles.labelContainer}>
-                              <Text style={styles.labelGreyStyle} numberOfLines={1}>{element.email ? element.email : "N/A"}</Text>
+                              <Text style={styles.labelGreyStyle} >{element.email ? element.email : "N/A"}</Text>
                            </View>
                           </View>
                           )
@@ -479,7 +479,7 @@ class LeadDetails extends Component {
                                 <Text style={styles.labelChildStyle}>Secondary :</Text>
                             </View>
                            <View style={styles.labelContainer}>
-                              <Text style={styles.labelGreyStyle} numberOfLines={1}>{element.email ? element.email : "N/A"}</Text>
+                              <Text style={styles.labelGreyStyle}>{element.email ? element.email : "N/A"}</Text>
                            </View>
                           </View>
                           )
@@ -487,7 +487,7 @@ class LeadDetails extends Component {
                         return(
                           <View>
                            <View style={styles.labelContainer}>
-                              <Text style={styles.labelGreyStyle} numberOfLines={1}>{element.email ? element.email : ""}</Text>
+                              <Text style={styles.labelGreyStyle} >{element.email ? element.email : ""}</Text>
                            </View>
                           </View>
                           )
@@ -503,7 +503,7 @@ class LeadDetails extends Component {
                           return(
                               
                               <View style={styles.labelContainer}>
-                                <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.props.user.trade_types[element] ? this.props.user.trade_types[element] : "N/A"}</Text>
+                                <Text style={styles.labelGreyStyle} >{this.props.user.trade_types[element] ? this.props.user.trade_types[element] : "N/A"}</Text>
                             </View>
                           )
                         })}
@@ -526,13 +526,13 @@ class LeadDetails extends Component {
                       <Text style={styles.labelStyle}>Address : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle}  numberOfLines={1}>{this.state.item.location_info.address}</Text>
+                      <Text style={styles.labelGreyStyle} >{this.state.item.location_info.address}</Text>
                 </View>
                 <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>City : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.location_info.city}</Text>
+                      <Text style={styles.labelGreyStyle}>{this.state.item.location_info.city}</Text>
                 </View>
                
             </View>
@@ -541,13 +541,13 @@ class LeadDetails extends Component {
                       <Text style={styles.labelStyle}>State : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.location_info.state}</Text>
+                      <Text style={styles.labelGreyStyle} >{this.state.item.location_info.state}</Text>
                 </View>
                 <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>Zip : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                    <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.state.item.location_info.zip}</Text>
+                    <Text style={styles.labelGreyStyle} >{this.state.item.location_info.zip}</Text>
                 </View>
             </View>
           </View>
@@ -676,7 +676,8 @@ const styles = StyleSheet.create({
   labelGreyStyle: {
     backgroundColor: '#FFFFFF',
     fontSize: 15,
-    color: 'rgba(192,192,192,1)'
+    color: 'rgba(192,192,192,1)',
+    flexWrap: 'wrap'
     // borderBottomWidth: 1,
     // borderBottomColor: 'rgba(0, 0, 0, 0.2)',
  
@@ -709,7 +710,7 @@ const styles = StyleSheet.create({
 
   },
   labelContainer:{
-    height: 25, 
+    // height: 25, 
     backgroundColor: '#FFFFFF', 
     paddingLeft: 15 , 
     alignItems : "center" , 

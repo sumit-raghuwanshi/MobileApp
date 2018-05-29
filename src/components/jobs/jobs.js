@@ -24,6 +24,7 @@ class Jobs extends Component {
   componentDidMount() {
     this.props.getJobs()
     .then((response) => {
+      console.log("jobsssssssss", JSON.stringify(response))
       this.setState({loading: false})
     })
     .catch((error) => {
@@ -42,9 +43,9 @@ class Jobs extends Component {
   }
 
   _onItemPress = (item) => {
-    this.props.navigator.push({
-      screen: "roof_gravy.job"
-    })
+    // this.props.navigator.push({
+    //   screen: "roof_gravy.job"
+    // })
   }
 
   render() {
@@ -68,12 +69,12 @@ class Jobs extends Component {
         <View style={styles.body}>
           <View style={styles.topButtonContainer}>
             <View style={styles.spaceFlex}></View>
-            <Touchable style={styles.newButton} onPress={this._navigateToJobCreateScreen}>
+            {/* <Touchable style={styles.newButton} onPress={this._navigateToJobCreateScreen}>
               <View style={styles.buttonContent}>
                 <Image source={require('../../../img/icons/add.png')}/>
                 <Text style={styles.buttonText}>NEW</Text>
               </View>
-            </Touchable>
+            </Touchable> */}
           </View>
           <JobList
             onItemPress={this._onItemPress}

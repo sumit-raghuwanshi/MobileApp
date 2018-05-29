@@ -20,8 +20,8 @@ class LeadListItem extends Component {
         <View style={styles.contentContainer}>
           <View style={{width: 44, backgroundColor: colors[Math.floor((Math.random() * colors.length))]}}>
           </View>
-          <View style={styles.textContainer} numberOfLines={1}>
-            <Text style={styles.title}>{`${firstName} ${lastName}`}</Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.title} numberOfLines={1}>{`${firstName} ${lastName}`}</Text>
           </View>
           <View style={{ alignItems: 'flex-end', justifyContent: 'center' }}>
             <Image source={require('../../../../img/icons/chevron.png')}/>
