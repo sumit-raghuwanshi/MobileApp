@@ -63,8 +63,6 @@ class JobListItem extends Component {
             
             <Image source={require('../../../img/icons/chevron.png')}/>
             {/* {this.getImageFromStatus} */}
-
-            
           </View>
         </View>
       </Touchable>

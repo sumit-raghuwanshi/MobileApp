@@ -75,31 +75,48 @@ class MyInfoScreen extends Component {
     }
 
     this.setState({loading: true})
-    var params = new FormData()
-    params.append("user[first_name]", firstName)
-    params.append("user[last_name]", lastName)
-    params.append("user[phone]", phone)
-    params.append("user[email]", email)
-    params.append("user[token]" , this.state.token)
+    // var params = new FormData()
+    // params.append("user[first_name]", firstName)
+    // params.append("user[last_name]", lastName)
+    // params.append("user[phone]", phone)
+    // params.append("user[email]", email)
+    // params.append("user[token]" , this.state.token)
 
-    var data = {
-      "first_name" : firstName,
-      "last_name" : lastName,
-      "phone" : phone,
-      "email" : email,
-      "token" : this.state.token,
-      "id" : this.state.id,
-      "initials":null,
-      "employee_id":null,
-      "status":null,
-      "avatar":null,
-      "display_name":null,
-      "openGoogleSync":false
-    }
+    var params = new FormData()
+    params.append("first_name", firstName)
+    params.append("last_name", lastName)
+    params.append("phone", phone)
+    params.append("email", email)
+    params.append("token" , this.state.token)
+    
+    params.append("id" , this.state.id)
+    params.append("initials",null)
+    params.append("employee_id",null)
+    params.append("status",null)
+    //params.append("avatar",null)
+    params.append("display_name",null)
+    params.append("openGoogleSync",false)
+
+    
+
+    // var params = {
+    //   "first_name" : firstName,
+    //   "last_name" : lastName,
+    //   "phone" : phone,
+    //   "email" : email,
+    //   "token" : this.state.token,
+    //   "id" : this.state.id,
+    //   "initials":null,
+    //   "employee_id":null,
+    //   "status":null,
+    //   "avatar":null,
+    //   "display_name":null,
+    //   "openGoogleSync":false
+    // }
     //params.append("user[location]", location)
 
     if (image_attach && image_attach.uri) {
-          params.append("user[avatar_attributes][data]", {
+          params.append("avatar", {
           uri: image_attach.uri,
           name: "profile_picture.jpg",
           type: "image/jpg"
@@ -119,14 +136,15 @@ class MyInfoScreen extends Component {
     //     "phone": phone
     //   }
     // }
-    console.log("edit info paramsssssssss===>",data)
-    this.props.updateProfile(data)
+    console.log("edit info paramsssssssss===>",params)
+
+    this.props.updateProfile(params)
     .then((response) => {
-      console.log("Success===>",data)
+      console.log("Success===>",response)
       this.setState({loading: false}, this._navigateToPreviousScreen)
     })
     .catch((error) => {
-      console.log("Failure ==> ",error)
+      console.log("Failure ==> ",JSON.stringify(error))
       this.setState({loading: false})
     })
   }
