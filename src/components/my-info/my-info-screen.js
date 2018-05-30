@@ -34,7 +34,9 @@ class MyInfoScreen extends Component {
       email: currentUser["email"],
       phone: currentUser["phone"],
       location: currentUser["location"],
-      avatar: currentUser["avatar"]
+      avatar: currentUser["avatar"],
+      token : currentUser["token"],
+      id : currentUser["id"]
     }
   }
   
@@ -63,8 +65,8 @@ class MyInfoScreen extends Component {
     if (!email)
       errorMessages.push('Email is required')
 
-    if (!location)
-      errorMessages.push('Location is required')
+    // if (!location)
+    //   errorMessages.push('Location is required')
 
     if (errorMessages.length > 0) {
       Notification.error(_.join(errorMessages, "\n"))
@@ -78,13 +80,29 @@ class MyInfoScreen extends Component {
     params.append("user[last_name]", lastName)
     params.append("user[phone]", phone)
     params.append("user[email]", email)
-    params.append("user[location]", location)
+    params.append("user[token]" , this.state.token)
+
+    var data = {
+      "first_name" : firstName,
+      "last_name" : lastName,
+      "phone" : phone,
+      "email" : email,
+      "token" : this.state.token,
+      "id" : this.state.id,
+      "initials":null,
+      "employee_id":null,
+      "status":null,
+      "avatar":null,
+      "display_name":null,
+      "openGoogleSync":false
+    }
+    //params.append("user[location]", location)
 
     if (image_attach && image_attach.uri) {
-      params.append("user[avatar_attributes][data]", {
-        uri: image_attach.uri,
-        name: "profile_picture.jpg",
-        type: "image/jpg"
+          params.append("user[avatar_attributes][data]", {
+          uri: image_attach.uri,
+          name: "profile_picture.jpg",
+          type: "image/jpg"
       })
 
       // params.append("user[avatar_attributes][data][uri]", this.state.image_attach.uri)
@@ -101,10 +119,10 @@ class MyInfoScreen extends Component {
     //     "phone": phone
     //   }
     // }
-
-    this.props.updateProfile(params)
+    console.log("edit info paramsssssssss===>",data)
+    this.props.updateProfile(data)
     .then((response) => {
-      console.log("Success===>",params)
+      console.log("Success===>",data)
       this.setState({loading: false}, this._navigateToPreviousScreen)
     })
     .catch((error) => {
@@ -199,10 +217,10 @@ class MyInfoScreen extends Component {
             placeholder="Email"
             value={this.state.email}
             onChangeText={(email) =>  this.setState({email})}/>
-          <TextInput
+          {/* <TextInput
             placeholder="Location"
             value={this.state.location}
-            onChangeText={(location) =>  this.setState({location})}/>
+            onChangeText={(location) =>  this.setState({location})}/> */}
 
         </ScrollView>
         <Loader loading={this.state.loading}/>

@@ -24,8 +24,8 @@ class JobList extends Component {
         enableEmptySections={true}
         style={styles.container}
         dataSource={dataSource}
-        renderRow={(item) => (
-          <JobListItem job={item} onPress={this.props.onItemPress}/>
+        renderRow={(item , sectionID, rowID) => (
+          <JobListItem index={rowID} job={item} onPress={this.props.onItemPress}/>
         )} />
     )
   }
