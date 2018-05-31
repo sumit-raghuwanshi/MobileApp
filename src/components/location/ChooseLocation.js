@@ -49,7 +49,7 @@ class ChooseLocation extends Component {
         this.setState({
             loading:true
         });
-        console.log("Hello "+JSON.stringify(payload))
+        // console.log("Hello "+JSON.stringify(payload))
         this.props.updateCurrentLocationAction(payload)
         // .then((response) => {
         //     console.log("Success of location " + JSON.stringify(response))

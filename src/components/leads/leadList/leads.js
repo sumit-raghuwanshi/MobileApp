@@ -39,7 +39,7 @@ class Leads extends Component {
     this.props.getLeads()
     .then((response) => {
      
-      console.log("Hello data ",response.data.leads)
+      // console.log("Hello data ",response.data.leads)
 
       if (typeof response != "undefined"){
         if (typeof response.data.leads != "undefined"){
@@ -68,7 +68,7 @@ class Leads extends Component {
     this.props.getLeads()
     .then((response) => {
      
-      console.log("Hello data ",response.data.leads)
+      // console.log("Hello data ",response.data.leads)
 
       if (typeof response != "undefined"){
         if (typeof response.data.leads != "undefined"){
