@@ -425,7 +425,7 @@ class JobDetails extends Component {
               <Image source={require('../../../../img/icons/edit.png')} />
             </Touchable>
           </View>
-          <View style={{ flexDirection: 'row', marginBottom: 12 , backgroundColor : "#FFFFFF", height : 60}}>
+          <View style={{ flexDirection: 'row' , backgroundColor : "#FFFFFF", height : 60}}>
                 <View style={{ justifyContent : "center"}}>
                     <Text style={{ backgroundColor: '#FFFFFF',fontSize: 15,color: 'rgba(0, 0, 0, 0.73)',fontWeight : 'bold', paddingLeft:10} }>Pipeline :</Text>
                 </View>
@@ -436,10 +436,80 @@ class JobDetails extends Component {
                     </View>
                 </View>
                 <View style={{ justifyContent : "center" ,alignItems : "center", paddingLeft : 20}}>
-                    <Touchable >
-                        <Text>UPDATE</Text>
-                    </Touchable>
+                    <View style={{height: 25, backgroundColor: '#FFFFFF', paddingLeft: 10 , paddingRight : 10,alignItems : "center" , justifyContent : "center",borderWidth : 1,borderColor : 'rgba(0, 0, 0, 0.2)'}}>
+                        <Touchable onPress = {
+                      () => {
+                        this.setState(
+                          {isModalVisible : true}
+                        )
+                      }
+                    }>
+                            <Text style = {{fontWeight : 'bold'}}>Update</Text>
+                        </Touchable>
+                    </View >
                 </View>
+          </View>
+          <Modal style = {{width: 100 , height:100 , backgroundColor : "transparent"}} visible = {this.state.isModalVisible} onRequestClose = { () => console.log("test modal")}>
+                <Text>Modal is visible</Text>
+                <Touchable onPress = {
+                    () => {
+                        this.setState(
+                            {isModalVisible : false}
+                        )
+                    }
+                }>
+                    <Text>Done</Text>
+                </Touchable>
+           </Modal>
+
+          <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
+                <View style={styles.buttonContainers}>
+                    <Touchable >
+                        <Text style = {{fontWeight : 'bold'}}>Messages</Text>
+                    </Touchable>
+                </View >
+          </View>
+          <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
+                <View style={styles.buttonContainers}>
+                    <Touchable >
+                        <Text style = {{fontWeight : 'bold'}}>Measurements</Text>
+                    </Touchable>
+                </View >
+          </View>
+          <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
+                <View style={styles.buttonContainers}>
+                    <Touchable >
+                        <Text style = {{fontWeight : 'bold'}}>Estimates</Text>
+                    </Touchable>
+                </View >
+          </View>
+          <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
+                <View style={styles.buttonContainers}>
+                    <Touchable >
+                        <Text style = {{fontWeight : 'bold'}}>Worksheets</Text>
+                    </Touchable>
+                </View >
+          </View>
+          <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
+                <View style={styles.buttonContainers}>
+                    <Touchable >
+                        <Text style = {{fontWeight : 'bold'}}>Orders</Text>
+                    </Touchable>
+                </View >
+          </View>
+          <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
+                <View style={styles.buttonContainers}>
+                    <Touchable >
+                        <Text style = {{fontWeight : 'bold'}}>Tasks</Text>
+                    </Touchable>
+                </View >
+          </View>
+          <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
+                <View style={styles.buttonContainers}>
+                    <Touchable >
+                        <Text style = {{fontWeight : 'bold'}}>Photo/Videos</Text>
+                    </Touchable>
+                </View >
           </View>
 
          <View style={{margin: 10}}>
@@ -824,14 +894,16 @@ const styles = StyleSheet.create({
     alignItems : "center" , 
     flexDirection : "row"
   },
-  buttonStyle:{
-    // height: 25, 
+  buttonContainers:{
+    height: 35, 
     backgroundColor: '#FFFFFF', 
-    paddingLeft: 15 , 
+    paddingLeft: 10 , 
+    paddingRight : 10,
     alignItems : "center" , 
-    flexDirection : "row",
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
+    justifyContent : "center",
+    borderWidth : 1,
+    borderColor : 'rgba(0, 0, 0, 0.2)',
+    flex : 1
   }
 });
 
