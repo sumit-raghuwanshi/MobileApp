@@ -45,3 +45,17 @@ export function updateJob(id, job) {
     })
   }
 }
+
+
+export function getParticularJob(id) {
+  return function(dispatch) {
+    return API.fetch({
+      method: 'get',
+      url: `${SERVER_URL}${END_POINTS.JOBS}/${id}`,
+    })
+    .then((response) => {
+      //dispatch(updateLeadSuccess(response.data));
+      return response
+    })
+  }
+}

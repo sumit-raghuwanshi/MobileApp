@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import JobListItem from './job-list-item';
 
-
 class JobList extends Component {
   constructor(props) {
     super(props)

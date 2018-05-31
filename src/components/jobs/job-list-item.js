@@ -21,18 +21,21 @@ class JobListItem extends Component {
       var status = this.props.job.status_cd
       switch (status) {
         case 1 : return(
-          prospect
+          lead
         )
         case 2 : return(
-          approved
+          prospect
         )
         case 3 : return(
-          completed
+          approved
         )
         case 4 : return(
-          invoiced
+          completed
         )
         case 5 : return(
+          invoiced
+        )
+        case 6 : return(
           closed
         )
         default : return(

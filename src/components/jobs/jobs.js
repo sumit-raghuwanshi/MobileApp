@@ -43,9 +43,10 @@ class Jobs extends Component {
   }
 
   _onItemPress = (item) => {
-    // this.props.navigator.push({
-    //   screen: "roof_gravy.job"
-    // })
+    this.props.navigator.push({
+      screen: "roof_gravy.job_details",
+      passProps: { item: item }
+    })
   }
 
   render() {
