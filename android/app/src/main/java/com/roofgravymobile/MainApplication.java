@@ -40,8 +40,12 @@ public class MainApplication extends NavigationApplication {
          return getPackages();
      }
      @Override
-public String getJSMainModuleName() {
-    return "index";
-}
+    public String getJSMainModuleName() {
+        return "index";
+    }
+    @Override
+    public boolean clearHostOnActivityDestroy() {
+        return false;
+    }
      
 }
