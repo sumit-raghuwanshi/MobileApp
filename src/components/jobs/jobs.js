@@ -16,7 +16,6 @@ class Jobs extends Component {
   static navigatorStyle = {
     navBarHidden: true
   }
-
   state = {
     loading: true
   }
@@ -45,9 +44,21 @@ class Jobs extends Component {
   _onItemPress = (item) => {
     this.props.navigator.push({
       screen: "roof_gravy.job_details",
-      passProps: { item: item }
+      passProps: { item: item , callBack : this.callBack.bind(this)}
     })
   }
+
+  async callBack(){
+    this.props.getJobs()
+    .then((response) => {
+      console.log("jobsssssssss", JSON.stringify(response))
+      this.setState({loading: false})
+    })
+    .catch((error) => {
+      this.setState({loading: false})
+    })
+ }
+
 
   render() {
     return (

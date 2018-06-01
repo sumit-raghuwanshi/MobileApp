@@ -17,12 +17,13 @@ import SelectMultiple from 'react-native-select-multiple'
 import { Touchable, Picker, Loader, DateTimePicker } from '../../common';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {createLead, getUserList , getParticularJob} from '../../../actions';
+import {createLead, getUserList , getParticularJob, updateJobStatus} from '../../../actions';
 import {Notification} from '../../../helpers';
 import _ from 'lodash';
 import ImagePicker from 'react-native-image-picker';
-import PopupDialog from 'react-native-popup-dialog';
-import moment from 'moment'
+import PopupDialog , {DialogTitle}from 'react-native-popup-dialog';
+import moment from 'moment';
+
 
 const prospect = require("../../../../img/jobStatus/prospect.png");
 const approved = require("../../../../img/jobStatus/approved.png");
@@ -30,15 +31,16 @@ const completed = require("../../../../img/jobStatus/completed.png");
 const invoiced = require("../../../../img/jobStatus/invoiced.png");
 const closed = require("../../../../img/jobStatus/closed.png");
 const lead = require("../../../../img/jobStatus/leads.png");
+
 //import CustomMultiPicker from "react-native-multiple-select-list";
 //import {prospect,lead, approved,completed,invoiced,closed,lead} from '../../../constants/jobStatusImages';
 
 class JobDetails extends Component {
-  
+  arrayJobStatus = ["Lead", "Prospect" , "Approved" , "Completed" , "Invoiced" , "Closed" , "Cancelled"]
   static navigatorStyle = {
     navBarHidden: true
   }
-
+  
   constructor(props) {
     super(props)
     this.state = {
@@ -53,7 +55,8 @@ class JobDetails extends Component {
       numberOfEmail: 1,
       isModalVisible : false,
       item : {},
-      job_id:''
+      job_id:'',
+      statusJob: 0
     }
 
     this._onSubmit = this._onSubmit.bind(this)
@@ -141,15 +144,18 @@ class JobDetails extends Component {
   componentWillMount(){
     console.log("wiil mount ")
     this.setState({
-      item: this.props.item
+      item: this.props.item,
+      statusJob : this.props.item.status_cd - 1
     })
   }
   componentDidMount(){
     //debugger;
-    
-    console.log("1234567890");
     //console.log("itemssgsdhdsth", this.props)
     //console.log("lead data json ====>" , JSON.stringify(this.props.item))
+    this._getParticularLeads()
+  }
+
+  _getParticularLeads(){
     this.props.getParticularJob(this.props.item.id)
     .then((response) => {
       
@@ -157,7 +163,9 @@ class JobDetails extends Component {
       this.setState({
         loading: false,
         item : response.data,
-        job_id: this.props.item.id
+        job_id: this.props.item.id,
+        statusJob: response.data.status_cd - 1
+        
       })
     })
     .catch(error => {
@@ -183,6 +191,33 @@ class JobDetails extends Component {
    
 
 }
+_updateJobStatus(){
+  this.setState({
+    loading: true
+  })
+  
+
+  var data = {
+    "status" : this.state.statusJob + 1,
+    "date": moment().format('DD/MM/YYYY')
+  }
+  this.props.updateJobStatus(this.state.item.id , data)
+  .then((response) => {
+      
+    // console.log("getting particular item" , response.data)
+   this.setState({
+     loading: false,
+   })
+   this.popupDialog.dismiss()
+   this._getParticularLeads()
+ })
+ .catch(error => {
+   this.setState({
+     loading: false
+   })
+ })
+  
+}
 
 
   onSelectionsChange = (selectedLeadTypes) => {
@@ -205,6 +240,7 @@ class JobDetails extends Component {
   }
 
   _navigateToPreviousScreen = () => {
+    this.props.callBack()
     this.props.navigator.pop()
   }
 
@@ -442,9 +478,9 @@ class JobDetails extends Component {
                     <View style={{height: 25, backgroundColor: '#FFFFFF', paddingLeft: 10 , paddingRight : 10,alignItems : "center" , justifyContent : "center",borderWidth : 1,borderColor : 'rgba(0, 0, 0, 0.2)'}}>
                         <Touchable onPress = {
                       () => {
-                        this.setState(
-                          {isModalVisible : true}
-                        )
+                        
+                          {this.popupDialog.show()}
+                        
                       }
                     }>
                             <Text style = {{fontWeight : 'bold'}}>Update</Text>
@@ -452,7 +488,9 @@ class JobDetails extends Component {
                     </View>
                 </View>
           </View>
-          <Modal style = {{width: 100 , height:100 , backgroundColor : "transparent"}} visible = {this.state.isModalVisible} onRequestClose = { () => console.log("test modal")}>
+
+
+          {/* <Modal style = {{backgroundColor : "transparent"}} visible = {this.state.isModalVisible} onRequestClose = { () => console.log("test modal")}>
                 <Text>Modal is visible</Text>
                 <Touchable onPress = {
                     () => {
@@ -463,7 +501,7 @@ class JobDetails extends Component {
                 }>
                     <Text>Done</Text>
                 </Touchable>
-           </Modal>
+           </Modal> */}
 
           <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
                 <View style={styles.buttonContainers}>
@@ -805,7 +843,40 @@ class JobDetails extends Component {
          
 
         </ScrollView>
-        <Loader loading={this.state.loading}/>
+        
+        <PopupDialog
+            dialogTitle={<DialogTitle title='Update Pipeline Status'/>}
+            ref={(popupDialog) => {this.popupDialog = popupDialog}}
+            height = {150}
+            width = {0.8}
+            //haveOverlay = {false}
+            >
+            
+             <View style={styles.pickerContainer}>
+              <Picker
+                placeholder="Status"
+                placeholderTextColor="#BFBFBF"
+                style={styles.picker}
+                textStyle={styles.pickerText}
+                selectedValue={this.state.statusJob}
+                onValueChange={(statusJob) => this.setState({statusJob : statusJob})}
+                items={_.map(this.arrayJobStatus, (jc, index) => ({label: jc, value: index}))}
+                />
+            </View>
+            <View style = {{paddingTop : 10 , paddingRight : 10 , alignItems : "flex-end"}}>
+                <Touchable onPress = {
+                        () => {
+                          this._updateJobStatus()
+                        }
+                    }
+                    style = {{width: 80, height: 25 , borderWidth : 1 , borderColor :'rgba(0, 0, 0, 0.2)' , justifyContent : "center" , alignItems : "center"}}
+                    >
+                        <Text>Update</Text>
+                    </Touchable>
+            </View>
+
+          </PopupDialog>
+          <Loader loading={this.state.loading}/>
       </View>
     );
   }
@@ -908,7 +979,17 @@ const styles = StyleSheet.create({
     borderWidth : 1,
     borderColor : 'rgba(0, 0, 0, 0.2)',
     flex : 1
-  }
+  },
+  pickerContainer:{
+    height: 44,
+    backgroundColor: '#FFFFFF',
+    paddingLeft: 8,
+    paddingRight: 15,
+    // paddingTop : 2,
+    // paddingBottom : 2,
+    // borderWidth : 1,
+    // borderColor : 'rgba(0, 0, 0, 0.2)'
+    }
 });
 
 function mapStateToProps(state, ownProps) {
@@ -918,4 +999,4 @@ function mapStateToProps(state, ownProps) {
   };
 };
 
-export default connect(mapStateToProps, {createLead, getUserList , getParticularJob})(JobDetails);
+export default connect(mapStateToProps, {createLead, getUserList , getParticularJob , updateJobStatus})(JobDetails);

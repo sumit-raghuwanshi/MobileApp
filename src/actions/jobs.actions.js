@@ -71,3 +71,17 @@ export function getAllMeasurements(job_id) {
       })
   }
 }
+
+export function updateJobStatus(id , data) {
+  return function(dispatch) {
+    return API.fetch({
+      method: 'post',
+      url: `${SERVER_URL}${END_POINTS.JOBS}/${id}/edit_status`,
+      data : data
+    })
+    .then((response) => {
+      //dispatch(updateLeadSuccess(response.data));
+      return response
+    })
+  }
+}
