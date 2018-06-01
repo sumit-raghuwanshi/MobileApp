@@ -43,9 +43,6 @@ public class MainApplication extends NavigationApplication {
     public String getJSMainModuleName() {
         return "index";
     }
-    @Override
-    public boolean clearHostOnActivityDestroy() {
-        return false;
-    }
+
      
 }
