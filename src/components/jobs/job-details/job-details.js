@@ -52,7 +52,8 @@ class JobDetails extends Component {
       numberOfPhoneNumber: 1,
       numberOfEmail: 1,
       isModalVisible : false,
-      item : {}
+      item : {},
+      job_id:''
     }
 
     this._onSubmit = this._onSubmit.bind(this)
@@ -155,12 +156,14 @@ class JobDetails extends Component {
        // console.log("getting particular item" , response.data)
       this.setState({
         loading: false,
-        item : response.data
+        item : response.data,
+        job_id: this.props.item.id
       })
     })
     .catch(error => {
       this.setState({
-        loading: false
+        loading: false,
+        job_id:this.props.item.id
       })
     })
   }
@@ -446,7 +449,7 @@ class JobDetails extends Component {
                     }>
                             <Text style = {{fontWeight : 'bold'}}>Update</Text>
                         </Touchable>
-                    </View >
+                    </View>
                 </View>
           </View>
           <Modal style = {{width: 100 , height:100 , backgroundColor : "transparent"}} visible = {this.state.isModalVisible} onRequestClose = { () => console.log("test modal")}>
@@ -467,49 +470,50 @@ class JobDetails extends Component {
                     <Touchable >
                         <Text style = {{fontWeight : 'bold'}}>Messages</Text>
                     </Touchable>
-                </View >
+                </View>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
                 <View style={styles.buttonContainers}>
-                    <Touchable >
+                <Touchable onPress={() => 
+                this.props.navigator.push({ screen: 'roof_gravy.measurements_list', passProps:{job_id: this.state.job_id}})}>
                         <Text style = {{fontWeight : 'bold'}}>Measurements</Text>
                     </Touchable>
-                </View >
+                </View>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
                 <View style={styles.buttonContainers}>
                     <Touchable >
                         <Text style = {{fontWeight : 'bold'}}>Estimates</Text>
                     </Touchable>
-                </View >
+                </View>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
                 <View style={styles.buttonContainers}>
                     <Touchable >
                         <Text style = {{fontWeight : 'bold'}}>Worksheets</Text>
                     </Touchable>
-                </View >
+                </View>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
                 <View style={styles.buttonContainers}>
                     <Touchable >
                         <Text style = {{fontWeight : 'bold'}}>Orders</Text>
                     </Touchable>
-                </View >
+                </View>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
                 <View style={styles.buttonContainers}>
                     <Touchable >
                         <Text style = {{fontWeight : 'bold'}}>Tasks</Text>
                     </Touchable>
-                </View >
+                </View>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor : "#FFFFFF", height : 40 , justifyContent : "center" , alignItems : "center" , paddingLeft : 10 , paddingRight : 10}}>
                 <View style={styles.buttonContainers}>
                     <Touchable >
                         <Text style = {{fontWeight : 'bold'}}>Photo/Videos</Text>
                     </Touchable>
-                </View >
+                </View>
           </View>
 
          <View style={{margin: 10}}>

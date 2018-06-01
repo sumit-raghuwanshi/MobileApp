@@ -59,3 +59,15 @@ export function getParticularJob(id) {
     })
   }
 }
+export function getAllMeasurements(job_id) {
+  return function (dispatch) {
+    return API.fetch({
+      method: 'get',
+      url: `${SERVER_URL}${END_POINTS.JOBS}/${job_id}/measurements`,
+    })
+      .then((response) => {
+        //dispatch(updateLeadSuccess(response.data));
+        return response
+      })
+  }
+}
