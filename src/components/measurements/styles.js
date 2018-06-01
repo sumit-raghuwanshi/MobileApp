@@ -25,6 +25,12 @@ export default StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: 15,
         paddingHorizontal: 15,
-        justifyContent: 'flex-end'
-    }
+        justifyContent: 'space-between'
+    },
+    header: {
+        flexDirection: 'row',
+        height: 66,
+        backgroundColor: '#354052',
+        zIndex: 1
+      }
 })

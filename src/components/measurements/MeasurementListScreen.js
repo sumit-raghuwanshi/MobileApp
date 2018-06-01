@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { StyleSheet,
+    View,
+    Image,
+    Text,
+    TextInput,
+    SafeAreaView,
+    AsyncStorage,
+    StatusBar,
+    ScrollView, } from 'react-native';
 import { connect } from 'react-redux';
 import {getAllMeasurements} from '../../actions'
 import { Touchable } from '../common'
 import styles from './styles'
 
 class MeasurementListScreen extends Component {
-    // static navigatorStyle = {
-    //     navBarHidden: true
-    // }
+    static navigatorStyle = {
+        navBarHidden: true
+    }
 
     constructor(props) {
         super(props);
@@ -53,7 +61,25 @@ class MeasurementListScreen extends Component {
       })
     return (
       <View style={styles.main_container}>
+      <StatusBar barStyle="light-content"/>
+
+        <SafeAreaView style={styles.header}>
+            <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }} onPress={this._navigateToDashboard}>
+                <Image source={require('../../../img/icons/home.png')} />
+            </Touchable>
+            <View style={{ flex: 1, alignItems: 'center' }}>
+                <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>Measurement</Text>
+                <Image style={{ marginTop: 10 }} source={require('../../../img/icons/measurements.png')}/>
+            </View>
+            <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
+                <View></View>
+            </Touchable>
+        </SafeAreaView>
+        
         <View style={styles.button_container}>
+            <Touchable onPress={() =>this.props.navigator.pop()}>
+                    <Image source={require('../../../img/icons/cross.png')} />
+                </Touchable>
             <Touchable 
                     onPress={() =>
                         this.props.navigator.push({
@@ -62,6 +88,7 @@ class MeasurementListScreen extends Component {
                         })}>
                 <Image source={require('../../../img/icons/add.png')} />
             </Touchable>
+            
         </View>
             {renderMeasureItems}
       </View>
