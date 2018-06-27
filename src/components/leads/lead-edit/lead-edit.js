@@ -39,6 +39,7 @@ class LeadEdit extends Component {
       users: [],
       selectedLeadTypes: [],
       selectedIndexOfTrade : [],
+      selectedArrayofTrade : [],
       loading: true,
       isMailingSameAsLocation: false,
       isBillingSameAsLocation: false,
@@ -111,6 +112,33 @@ class LeadEdit extends Component {
     //     this.props.user.trade_types[element]
     //   )
     // }).join(",")
+    var phn = ""
+    var phn2 = undefined
+    var phn3 = undefined
+    if (this.props.item.phone.length == 1){
+      phn = this.props.item.phone[0].number
+    }else if (this.props.item.phone.length == 2){
+      phn = this.props.item.phone[0].number
+      phn2 = this.props.item.phone[1].number
+    }else if (this.props.item.phone.length == 3){
+      phn = this.props.item.phone[0].number
+      phn2 = this.props.item.phone[1].number
+      phn3 = this.props.item.phone[2].number
+    }
+
+    var emal = ""
+    var emal2 = undefined
+    var emal3 = undefined
+    if (this.props.item.email_address.length == 1){
+      emal = this.props.item.email_address[0].email
+    }else if (this.props.item.email_address.length == 2){
+      emal = this.props.item.email_address[0].email
+      emal2 = this.props.item.email_address[1].email
+    }else if (this.props.item.email_address.length == 3){
+      emal = this.props.item.email_address[0].email
+      emal2 = this.props.item.email_address[1].email
+      emal3 = this.props.item.email_address[2].email
+    }
 
     this.setState({selectedIndexOfTrade : this.props.item.trade_type,
       numberOfPhoneNumber : this.props.item.phone.length,
@@ -123,12 +151,12 @@ class LeadEdit extends Component {
       lastName : this.props.item.last_name,
       contact : this.props.item.first_name,
       company : this.props.item.company_name,
-      phone : numberOfPhones == 1 ? this.props.item.phone[0].number : "",
-      phone2 : numberOfPhones == 2 ? this.props.item.phone[1].number : "",
-      phone3 : numberOfPhones == 3 ? this.props.item.phone[2].number : "",
-      email : numberOfEmails == 1 ? this.props.item.email_address[0].email : "",
-      email2 : numberOfEmails == 2 ? this.props.item.email_address[1].email : "",
-      email3 : numberOfEmails == 3 ? this.props.item.email_address[2].email : "",
+      phone : phn  ? phn : "",
+      phone2 : phn2  ? phn2 : "",
+      phone3 : phn3  ? phn3 : "",
+      email : emal ? emal : "",
+      email2 : emal2  ? emal2 : "",
+      email3 : emal3 ? emal3 : "",
       address : this.props.item.location_info.address,
       city : this.props.item.location_info.city,
       state : this.props.item.location_info.state,
@@ -152,7 +180,8 @@ class LeadEdit extends Component {
       state_billing : this.props.item.billing_info.address,
       zip_billing : this.props.item.billing_info.address,
       selectedLeadTypes : tradeTypes,
-      tradeStringToShow : joinedTradeTypes
+      selectedArrayofTrade : tradeTypes
+
     })
     
   }
@@ -210,7 +239,8 @@ class LeadEdit extends Component {
     }
     this.setState({ selectedLeadTypes,
       selectedIndexOfTrade : arrayIndex ,
-      tradeStringToShow : joinedTradeTypes
+      tradeStringToShow : joinedTradeTypes,
+      selectedArrayofTrade : tradeVals
     })
     //this.setState({ })
     console.log("selected indexes " , arrayIndex)
@@ -221,6 +251,7 @@ class LeadEdit extends Component {
   }
 
   _navigateToPreviousScreen = () => {
+    this.props.callBack()
     this.props.navigator.pop()
   }
 
@@ -327,10 +358,6 @@ class LeadEdit extends Component {
           }
         }
       }
-
-     
-      
-      
 
      if (!this.state.address)
        errorMessages.push('Address is required')
@@ -517,7 +544,7 @@ class LeadEdit extends Component {
     //this.props.createLead(data)
     this.props.updateLead(this.props.item.id , data)
     .then(response => {
-      this.setState({loading: false}, this._navigateToDashboard)
+      this.setState({loading: false}, this._navigateToPreviousScreen)
     }).catch(error => {
       this.setState({loading: false})
     })
@@ -572,6 +599,7 @@ class LeadEdit extends Component {
 
             <View style={styles.phoneFieldViewStyle}>
               <TextInput
+                underlineColorAndroid='transparent'
                 placeholder="Phone (Primary)"
                 value={this.state.phone}
                 keyboardType="numeric"
@@ -601,6 +629,7 @@ class LeadEdit extends Component {
                 </View>
           <View style={styles.phoneFieldViewStyle}>
             <TextInput
+               underlineColorAndroid='transparent'
               placeholder="Phone (Primary)"
               value={this.state.phone}
               keyboardType="numeric"
@@ -622,6 +651,7 @@ class LeadEdit extends Component {
 
         <View style={styles.phoneFieldViewStyle}>
           <TextInput
+          underlineColorAndroid='transparent'         
             placeholder="Phone"
             value={this.state.phone2}
             keyboardType="numeric"
@@ -642,6 +672,7 @@ class LeadEdit extends Component {
               </View>
           <View style={styles.phoneFieldViewStyle}>
             <TextInput
+            underlineColorAndroid='transparent'
               placeholder="Phone (Primary)"
               value={this.state.phone}
               keyboardType="numeric"
@@ -663,6 +694,7 @@ class LeadEdit extends Component {
 
         <View style={styles.phoneFieldViewStyle}>
           <TextInput
+          underlineColorAndroid='transparent'
             placeholder="Phone"
             value={this.state.phone2}
             keyboardType="numeric"
@@ -675,6 +707,7 @@ class LeadEdit extends Component {
         </View>
         <View style={styles.phoneFieldViewStyle}>
           <TextInput
+          underlineColorAndroid='transparent'
             placeholder="Phone"
             value={this.state.phone3}
             keyboardType="numeric"
@@ -700,6 +733,7 @@ class LeadEdit extends Component {
                 </View>
               <View style={styles.phoneFieldViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="Email (Primary)"
                 value={this.state.email}
                 autoCapitalize="none"
@@ -729,6 +763,7 @@ class LeadEdit extends Component {
               </View>
           <View style={styles.phoneFieldViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="Email (Primary)"
                 value={this.state.email}
                 autoCapitalize="none"
@@ -749,6 +784,7 @@ class LeadEdit extends Component {
             </View>
             <View style={styles.phoneFieldViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="Email"
                 value={this.state.email2}
                 autoCapitalize="none"
@@ -769,6 +805,7 @@ class LeadEdit extends Component {
               </View>
           <View style={styles.phoneFieldViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="Email (Primary)"
                 value={this.state.email}
                 autoCapitalize="none"
@@ -789,6 +826,7 @@ class LeadEdit extends Component {
             </View>
             <View style={styles.phoneFieldViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="Email"
                 value={this.state.email2}
                 autoCapitalize="none"
@@ -801,6 +839,7 @@ class LeadEdit extends Component {
             </View>
             <View style={styles.phoneFieldViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="Email"
                 value={this.state.email3}
                 autoCapitalize="none"
@@ -823,26 +862,50 @@ class LeadEdit extends Component {
       //this.setState({isBillingSameAsLocation: false})
       return(
          <View style={{ marginVertical: 12 }}>
+         <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , alignItems  :"center"}}>
+              <TouchableHighlight onPress={() => this.setState({isBillingSameAsLocation:true})}>
+              <Image style={{paddingTop : 10}} source={require('../../../../img/leads/unchecked.png')} />
+              </TouchableHighlight>
+              <Text style={{paddingLeft : 10 ,textAlignVertical : "center" }}>Same as Location address</Text>
+            </View>
 
             <View style={styles.labelContainer}>
                     <Text style={styles.labelStyle}>Address : </Text>
                </View>
             <View style={styles.textInputViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="Address"
                 value={this.state.address_billing}
                 onChangeText={(address_billing) => this.setState({address_billing})}
-                style={styles.textField} />
+                style={styles.textField} 
+                blurOnSubmit={false}
+                onSubmitEditing={() => {
+                  this.focusNextField('BillingCity');
+                }}
+                returnKeyType={"next"}
+                ref={ input => {
+                  this.inputs['BillingAdd'] = input;
+                }}/>
             </View>
             <View style={styles.labelContainer}>
                     <Text style={styles.labelStyle}>City : </Text>
                </View>
             <View style={styles.textInputViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="City"
                 value={this.state.city_billing}
                 onChangeText={(city_billing) => this.setState({city_billing})}
-                style={styles.textField} />
+                style={styles.textField} 
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('BillingState');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['BillingCity'] = input;
+                }}/>
             </View>
 
             <View style={styles.labelContainer}>
@@ -850,10 +913,19 @@ class LeadEdit extends Component {
                </View>
             <View style={styles.textInputViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="State"
                 value={this.state.state_billing}
                 onChangeText={(state_billing) => this.setState({state_billing})}
-                style={styles.textField} />
+                style={styles.textField} 
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('BillingZip');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['BillingState'] = input;
+                }}/>
             </View>
 
              <View style={styles.labelContainer}>
@@ -861,17 +933,21 @@ class LeadEdit extends Component {
                </View>
             <View style={styles.textInputViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="Zip Code"
                 value={this.state.zip_billing}
                 onChangeText={(zip_billing) => this.setState({zip_billing})}
-                style={styles.textField} />
+                style={styles.textField} 
+                blurOnSubmit={ true }
+                  onSubmitEditing={() => {
+                    //this.state.isBillingSameAsLocation ?  this.state.isMailingSameAsLocation ? Keyboard.dismiss : this.focusNextField('mailingAddress') : this.focusNextField('billingAddress');
+                  }}
+                  returnKeyType={"done"}
+                  ref={ input => {
+                    this.inputs['BillingZip'] = input;
+                  }}/>
             </View>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , alignItems  :"center"}}>
-              <TouchableHighlight onPress={() => this.setState({isBillingSameAsLocation:true})}>
-              <Image style={{paddingTop : 10}} source={require('../../../../img/leads/unchecked.png')} />
-              </TouchableHighlight>
-              <Text style={{paddingLeft : 10 ,textAlignVertical : "center" }}>Same as Location address</Text>
-            </View>
+            
           </View> 
       );
     }else{
@@ -896,15 +972,31 @@ class LeadEdit extends Component {
       //this.setState({isBillingSameAsLocation: false})
       return(
          <View style={{ marginVertical: 12 }}>
+          <View style={{height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , alignItems  :"center"}}>
+              <TouchableHighlight onPress={() => this.setState({isMailingSameAsLocation:true})}>
+                 
+                  <Image style={{paddingTop : 10}} source={require('../../../../img/leads/unchecked.png')} />
+              </TouchableHighlight>
+              <Text style={{paddingLeft : 10 , textAlignVertical : "center"}}>Same as Location address</Text>
+            </View>
               <View style={styles.labelContainer}>
                     <Text style={styles.labelStyle}>Address : </Text>
                </View>
             <View style={styles.textInputViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="Address"
                 value={this.state.address_mailing}
                 onChangeText={(address_mailing) => this.setState({address_mailing})}
-                style={styles.textField} />
+                style={styles.textField} 
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('MailingCity');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['MailingAdd'] = input;
+                }}/>
             </View>
 
               <View style={styles.labelContainer}>
@@ -912,10 +1004,19 @@ class LeadEdit extends Component {
                </View>
             <View style={styles.textInputViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="City"
                 value={this.state.city_mailing}
                 onChangeText={(city_mailing) => this.setState({city_mailing})}
-                style={styles.textField} />
+                style={styles.textField} 
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('MailingState');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['MailingCity'] = input;
+                }}/>
             </View>
 
 
@@ -924,10 +1025,19 @@ class LeadEdit extends Component {
                </View>
             <View style={styles.textInputViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="State"
                 value={this.state.state_mailing}
                 onChangeText={(state_mailing) => this.setState({state_mailing})}
-                style={styles.textField} />
+                style={styles.textField}
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('MailingZip');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['MailingState'] = input;
+                }} />
             </View>
 
                <View style={styles.labelContainer}>
@@ -935,26 +1045,27 @@ class LeadEdit extends Component {
                </View>
             <View style={styles.textInputViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="Zip Code"
                 value={this.state.zip_mailing}
                 onChangeText={(zip_mailing) => this.setState({zip_mailing})}
-                style={styles.textField} />
+                style={styles.textField} 
+                style={styles.textField}
+                blurOnSubmit={ true }
+                  onSubmitEditing={() => {
+                    //this.state.isBillingSameAsLocation ?  this.state.isMailingSameAsLocation ? Keyboard.dismiss : this.focusNextField('mailingAddress') : this.focusNextField('billingAddress');
+                  }}
+                  returnKeyType={"done"}
+                  ref={ input => {
+                    this.inputs['MailingZip'] = input;
+                  }} />
             </View>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , paddingTop : 10}}>
-              <TouchableHighlight onPress={() => this.setState({isMailingSameAsLocation:true})}>
-                 
-                  <Image style={{paddingTop : 10}} source={require('../../../../img/leads/unchecked.png')} />
-              </TouchableHighlight>
-              <Text style={{paddingLeft : 10 , textAlignVertical : "center"}}>Same as Location address</Text>
-            </View>
-
-
           </View> 
       );
     }else{
       //this.setState({isBillingSameAsLocation: true})
       return(
-        <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , paddingTop : 10}}> 
+        <View style={{height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , alignItems  :"center"}}> 
            <TouchableHighlight onPress={() => this.setState({isMailingSameAsLocation:false})} >
               <Image style={{paddingTop : 10}} source={require('../../../../img/leads/checked.png')} />
             </TouchableHighlight>
@@ -1100,6 +1211,7 @@ class LeadEdit extends Component {
     }
   }
 
+
   render() {
     console.log("Rendering components");
     var user = this.props.user
@@ -1141,6 +1253,7 @@ class LeadEdit extends Component {
                </View>
               <View style={styles.textInputViewStyle}>
                 <TextInput
+                underlineColorAndroid='transparent'
                   placeholder="First Name"
                   value={this.state.contact}
                   onChangeText={(contact) => this.setState({contact})}
@@ -1160,6 +1273,7 @@ class LeadEdit extends Component {
                </View>
               <View style={styles.textInputViewStyle}>
                 <TextInput
+                underlineColorAndroid='transparent'
                   placeholder="Last Name"
                   value={this.state.lastName}
                   onChangeText={(lastName) => this.setState({lastName})}
@@ -1179,6 +1293,7 @@ class LeadEdit extends Component {
                </View>    
               <View style={styles.textInputViewStyle}>
                 <TextInput
+                underlineColorAndroid='transparent'
                   placeholder="Company"
                   value={this.state.company}
                   onChangeText={(company) => this.setState({company})}
@@ -1198,6 +1313,7 @@ class LeadEdit extends Component {
                </View>
                 <View style={styles.textInputViewStyle}>
                 <TextInput
+                underlineColorAndroid='transparent'
                   placeholder="Cross Reference"
                   value={this.state.cross_reference}
                   onChangeText={(cross_reference) => this.setState({cross_reference})}
@@ -1233,6 +1349,7 @@ class LeadEdit extends Component {
                </View>
             <View style={styles.textInputViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="Address"
                 value={this.state.address}
                 onChangeText={(address) => this.setState({address})}
@@ -1252,6 +1369,7 @@ class LeadEdit extends Component {
                </View>
             <View style={styles.textInputViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="City"
                 value={this.state.city}
                 onChangeText={(city) => this.setState({city})}
@@ -1271,6 +1389,7 @@ class LeadEdit extends Component {
                </View>
             <View style={styles.textInputViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="State"
                 value={this.state.state}
                 onChangeText={(state) => this.setState({state})}
@@ -1290,6 +1409,7 @@ class LeadEdit extends Component {
                </View>
             <View style={styles.textInputViewStyle}>
               <TextInput
+              underlineColorAndroid='transparent'
                 placeholder="Zip Code"
                 value={this.state.zip}
                 onChangeText={(zip) => this.setState({zip})}
@@ -1366,7 +1486,7 @@ class LeadEdit extends Component {
                 />
             </View>
 
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+            <View style={{ backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
 
                 <Modal visible = {this.state.isModalVisible} onRequestClose = { () => console.log("test modal")}> 
                   <View style = {{paddingTop : 20}}>
@@ -1391,19 +1511,33 @@ class LeadEdit extends Component {
                     </TouchableHighlight>
                   </View>
                 </Modal>
-                <TouchableHighlight onPress = {
+                
+
+                 <TouchableHighlight onPress = {
                       () => {
                         this.setState(
                           {isModalVisible : true}
                         )
                       }
                     }
-                    style = {{justifyContent : "center" , alignItems : "flex-start" , height : 44}}
+                    style = {{height: 40 ,paddingTop : 15,paddingRight:15, backgroundColor : "#FFFFFF"}}
                     >
-                     <Text style={{textAlign : "left" , color: '#C7C7CD' , paddingLeft : 15 , fontSize : 17}}  numberOfLines={1}>{this.state.tradeStringToShow}</Text>
+                      {/* <Text style={{textAlign : "center" , color: 'rgba(0, 0, 0, 0.73)'}}>Trade type</Text>  */}
+                      <View style={{ borderWidth : 1, borderColor : 'rgba(0, 0, 0, 0.2)'}}>
+                          <Text style={{textAlign : "center" , fontSize : 15, fontWeight : 'bold'}}  numberOfLines={1}>Trade Types</Text>
+                      </View>
+                       
+                    {/* {this.renderLeadTypes()} */}
                 </TouchableHighlight>
-
-                
+                      {/* {this.renderTradeTypes()} */}
+                      {this.state.selectedArrayofTrade.map((element,key) =>{
+                        console.log("kjsfkjsgfkasfgkasjfgc",element)
+                          return(
+                              <View style={styles.labelContainer}>
+                                <Text style={styles.labelGreyStyle}>{element}</Text>
+                            </View>
+                          )
+                       })}
                   <PopupDialog
                     ref={(popupDialog) => { this.popupDialog = popupDialog; }}
                     >

@@ -26,6 +26,7 @@ import moment from 'moment'
 //import CustomMultiPicker from "react-native-multiple-select-list";
 
 class LeadDetails extends Component {
+  
   static navigatorStyle = {
     navBarHidden: true
   }
@@ -34,6 +35,7 @@ class LeadDetails extends Component {
     super(props)
 
     this.state = {
+
       users: [],
       selectedLeadTypes: [],
       selectedIndexOfTrade : [],
@@ -43,21 +45,33 @@ class LeadDetails extends Component {
       isAssignedAppointments: true,
       numberOfPhoneNumber: 1,
       numberOfEmail: 1,
-      isModalVisible : false
+      isModalVisible : false,
+      item : {}
     }
 
     this._onSubmit = this._onSubmit.bind(this)
   }
 
+  componentWillMount(){
+    console.log("wiil mount ")
+    this.setState({
+      item: this.props.item
+    })
+      
+  }
   componentDidMount() {
     //debugger;
-    console.log("itemssgsdhdsth", this.props)
-    console.log("lead data json ====>" , JSON.stringify(this.props.item))
+    
+    console.log("1234567890");
+    //console.log("itemssgsdhdsth", this.props)
+    //console.log("lead data json ====>" , JSON.stringify(this.props.item))
     this.props.getParticularLead(this.props.item.id)
     .then((response) => {
-        console.log("getting particular item" , response)
+      
+       // console.log("getting particular item" , response.data)
       this.setState({
-        loading: false
+        loading: false,
+        item : response.data
       })
     })
     .catch(error => {
@@ -86,7 +100,7 @@ class LeadDetails extends Component {
 
   onSelectionsChange = (selectedLeadTypes) => {
     // selectedFruits is array of { label, value }
-    console.log("selected trade types" , selectedLeadTypes)
+    //console.log("selected trade types" , selectedLeadTypes)
 
     var i;
     var arrayIndex = [];
@@ -95,7 +109,7 @@ class LeadDetails extends Component {
     }
     this.setState({ selectedLeadTypes})
     this.setState({ selectedIndexOfTrade : arrayIndex })
-    console.log("selected indexes " , arrayIndex)
+    //console.log("selected indexes " , arrayIndex)
 
     
   }
@@ -131,23 +145,42 @@ class LeadDetails extends Component {
   // }
 
   _onSubmit = () => {
-    console.log("move to edit lead screen")
+    //console.log("move to edit lead screen")
     //lead_edit
     this.props.navigator.push({
       screen: 'roof_gravy.lead_edit',
-      passProps: { item: this.props.item }
+      passProps: { item: this.state.item , callBack : this.callBack.bind(this)},
+      
+    })
+  }
+
+   async callBack(){
+     console.log("callback")
+    await  this.props.getParticularLead(this.props.item.id)
+    .then((response) => {
+      
+       // console.log("getting particular item" , response.data)
+      this.setState({
+        loading: false,
+        item : response.data
+      })
+    })
+    .catch(error => {
+      this.setState({
+        loading: false
+      })
     })
   }
 
   _billingAddressView(){
-    if (this.props.item.billing_info.same_as_location == true){
+    if (this.state.item.billing_info.same_as_location == true){
       return(
         <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , justifyContent : "center" , flexDirection : "column" }}>
             <Text style={styles.labelGreyStyle}>Same as Location</Text>
         </View>
       )
       
-    }else if (this.props.item.billing_info.same_as_mailing == true){
+    }else if (this.state.item.billing_info.same_as_mailing == true){
       return(
         <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , justifyContent : "center" , flexDirection : "column" }}>
             <Text style={styles.labelGreyStyle}>Same as Mailing Address</Text>
@@ -156,20 +189,20 @@ class LeadDetails extends Component {
     }else{
       
       return(
-        this.props.item.billing_info != undefined ? 
+        this.state.item.billing_info != undefined ? 
         <View style = {{flexDirection : "row" , backgroundColor : "#FFFFFF" , flex :1}}>
           <View style={{ flex: 1 ,width:'50%' , marginTop : 12}}>
               <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>Address : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle}  numberOfLines={1}>{this.props.item.billing_info.address ? this.props.item.billing_info.address : 'N/A'}</Text>
+                      <Text style={styles.labelGreyStyle}  >{this.state.item.billing_info.address ? this.state.item.billing_info.address : 'N/A'}</Text>
                 </View>
                 <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>City : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.props.item.billing_info.city ? this.props.item.billing_info.city : 'N/A'}</Text>
+                      <Text style={styles.labelGreyStyle}>{this.state.item.billing_info.city ? this.state.item.billing_info.city : 'N/A'}</Text>
                 </View>
                
             </View>
@@ -178,13 +211,13 @@ class LeadDetails extends Component {
                       <Text style={styles.labelStyle}>State : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.props.item.billing_info.state ? this.props.item.billing_info.state : 'N/A'}</Text>
+                      <Text style={styles.labelGreyStyle}>{this.state.item.billing_info.state ? this.state.item.billing_info.state : 'N/A'}</Text>
                 </View>
                 <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>Zip : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                    <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.props.item.billing_info.zip ? this.props.item.billing_info.zip : 'N/A'}</Text>
+                    <Text style={styles.labelGreyStyle} >{this.state.item.billing_info.zip ? this.state.item.billing_info.zip : 'N/A'}</Text>
                 </View>
             </View>
           </View> : null
@@ -193,14 +226,14 @@ class LeadDetails extends Component {
   }
 
   _mailingAddressView(){
-    if (this.props.item.mailing_info.same_as_location == true){
+    if (this.state.item.mailing_info.same_as_location == true){
       return(
         <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , justifyContent : "center" , flexDirection : "column" }}>
             <Text style={styles.labelGreyStyle}>Same as Location</Text>
         </View>
       )
       
-    }else if (this.props.item.mailing_info.same_as_billing == true){
+    }else if (this.state.item.mailing_info.same_as_billing == true){
       return(
         <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , justifyContent : "center" , flexDirection : "column" }}>
             <Text style={styles.labelGreyStyle}>Same as Billing Address</Text>
@@ -209,20 +242,20 @@ class LeadDetails extends Component {
     }else{
       
       return(
-        this.props.item.mailing_info != undefined ? 
+        this.state.item.mailing_info != undefined ? 
         <View style = {{flexDirection : "row" , backgroundColor : "#FFFFFF" , flex :1}}>
           <View style={{ flex: 1 ,width:'50%' , marginTop : 12}}>
               <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>Address : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle}  numberOfLines={1}>{this.props.item.mailing_info.address ? this.props.item.mailing_info.address : 'N/A'}</Text>
+                      <Text style={styles.labelGreyStyle}  >{this.state.item.mailing_info.address ? this.state.item.mailing_info.address : 'N/A'}</Text>
                 </View>
                 <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>City : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.props.item.mailing_info.city ? this.props.item.mailing_info.city : 'N/A'}</Text>
+                      <Text style={styles.labelGreyStyle} >{this.state.item.mailing_info.city ? this.state.item.mailing_info.city : 'N/A'}</Text>
                 </View>
                
             </View>
@@ -231,13 +264,13 @@ class LeadDetails extends Component {
                       <Text style={styles.labelStyle}>State : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.props.item.mailing_info.state ? this.props.item.mailing_info.state : 'N/A'}</Text>
+                      <Text style={styles.labelGreyStyle}>{this.state.item.mailing_info.state ? this.state.item.mailing_info.state : 'N/A'}</Text>
                 </View>
                 <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>Zip : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                    <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.props.item.mailing_info.zip ? this.props.item.mailing_info.zip : 'N/A'}</Text>
+                    <Text style={styles.labelGreyStyle} >{this.state.item.mailing_info.zip ? this.state.item.mailing_info.zip : 'N/A'}</Text>
                 </View>
             </View>
           </View> : null
@@ -246,24 +279,24 @@ class LeadDetails extends Component {
   }
 
   _appointmentsView(){
-    if (this.props.item.assignee_id){
+    if (this.state.item.assignee_id){
       return(
         <View style={{ marginVertical: 12 }}>
         <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , alignItems : "center" , flexDirection : "row" }}>
                 <Text style={styles.labelStyle}>Assigned : </Text>
-                <Text style={styles.labelGreyStyle} numberOfLines={1}> Yes</Text>
+                <Text style={styles.labelGreyStyle}> Yes</Text>
           </View>
           <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , alignItems : "center" , flexDirection : "row" }}>
                 <Text style={styles.labelStyle}>Assign To : </Text>
-                <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.props.item.appointments.assignee ? `${this.props.item.appointments.assignee.first_name} ${this.props.item.appointments.assignee.last_name}` : 'N/A'}</Text>
+                <Text style={styles.labelGreyStyle} >{this.state.item.appointments.assignee ? `${this.state.item.appointments.assignee.first_name} ${this.props.item.appointments.assignee.last_name}` : 'N/A'}</Text>
           </View>
           <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , alignItems : "center" , flexDirection : "row" }}>
                 <Text style={styles.labelStyle}>Start Date : </Text>
-                <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.props.item.appointments.start_date ? moment.utc(this.props.item.appointments.start_date).local().format('YYYY-MM-DD HH:mm a') : 'N/A'}</Text>
+                <Text style={styles.labelGreyStyle} >{this.state.item.appointments.start_date ? moment.utc(this.state.item.appointments.start_date).local().format('YYYY-MM-DD hh:mm a') : 'N/A'}</Text>
           </View>
           <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , alignItems : "center" , flexDirection : "row" }}>
                 <Text style={styles.labelStyle}>End Date : </Text>
-                <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.props.item.appointments.end_date ? moment.utc(this.props.item.appointments.end_date).local().format('YYYY-MM-DD HH:mm a') : 'N/A'}</Text>
+                <Text style={styles.labelGreyStyle}>{this.state.item.appointments.end_date ? moment.utc(this.state.item.appointments.end_date).local().format('YYYY-MM-DD hh:mm a') : 'N/A'}</Text>
           </View>
       </View>
       )
@@ -271,14 +304,14 @@ class LeadDetails extends Component {
       return(
         <View style={{ height: 30, backgroundColor: '#FFFFFF', paddingLeft: 15 , alignItems : "center" , flexDirection : "row" }}>
         <Text style={styles.labelStyle}>Assigned : </Text>
-        <Text style={styles.labelGreyStyle} numberOfLines={1}> No</Text>
+        <Text style={styles.labelGreyStyle} > No</Text>
   </View>
       )
     }
   }
  
   render() {
-    console.log("Rendering components");
+    //("Rendering components");
     var user = this.props.user
 
     return (
@@ -316,46 +349,46 @@ class LeadDetails extends Component {
                           <Text style={styles.labelStyle}>First Name : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle}>{this.props.item.first_name ? this.props.item.first_name : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle}>{this.state.item.first_name ? this.state.item.first_name : "N/A"}</Text>
                       </View>
 
                       <View style={styles.labelContainer}>
                           <Text style={styles.labelStyle}>Last Name : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle}>{this.props.item.last_name ? this.props.item.last_name : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle} >{this.state.item.last_name ? this.state.item.last_name : "N/A"}</Text>
                       </View>
                       <View style={styles.labelContainer}>
                           <Text style={styles.labelStyle}>Company : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle}>{this.props.item.company_name ? this.props.item.company_name : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle} >{this.state.item.company_name ? this.state.item.company_name : "N/A"}</Text>
                       </View>
                       <View style={styles.labelContainer}>
                           <Text style={styles.labelStyle}>Cross Reference : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle}>{this.props.item.cross_reference ? this.props.item.cross_reference : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle} >{this.state.item.cross_reference ? this.state.item.cross_reference : "N/A"}</Text>
                       </View>
 
                       <View style={styles.labelContainer}>
                           <Text style={styles.labelStyle}>Lead Source : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle}>{this.props.item.lead_source ? this.props.user.source_leads[this.props.item.lead_source] : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle}>{this.state.item.lead_source ? this.props.user.source_leads[this.state.item.lead_source] : "N/A"}</Text>
                       </View>
 
                       <View style={styles.labelContainer}>
                           <Text style={styles.labelStyle}>Job Category : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle}>{this.props.item.job_category ? this.props.user.job_categories[this.props.item.job_category] : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle} >{this.state.item.job_category ? this.props.user.job_categories[this.state.item.job_category] : "N/A"}</Text>
                       </View>
                       <View style={styles.labelContainer}>
                           <Text style={styles.labelStyle}>Work Type : </Text>
                       </View>
                       <View style={styles.labelContainer}>
-                          <Text style={styles.labelGreyStyle}>{this.props.item.work_type ? this.props.user.work_types[this.props.item.work_type] : "N/A"}</Text>
+                          <Text style={styles.labelGreyStyle} >{this.state.item.work_type ? this.props.user.work_types[this.state.item.work_type] : "N/A"}</Text>
                       </View>
                     
                     </View>
@@ -388,7 +421,7 @@ class LeadDetails extends Component {
                         <View style={styles.labelContainer}>
                             <Text style={styles.labelStyle}>Phone : </Text>
                         </View>
-                        { this.props.item.phone.map((element,key) => {
+                        { this.state.item.phone.map((element,key) => {
                           console.log("keyyyyyyyyy",key)
                           if (key === 0){
                             return(
@@ -397,7 +430,7 @@ class LeadDetails extends Component {
                                     <Text style={styles.labelChildStyle}>Primary : </Text>
                                 </View>
                                <View style={styles.labelContainer}>
-                                  <Text style={styles.labelGreyStyle}>{element.number ? element.number : "N/A"}</Text>
+                                  <Text style={styles.labelGreyStyle} >{element.number ? element.number : "N/A"}</Text>
                                </View>
                               </View>
                             )
@@ -416,7 +449,7 @@ class LeadDetails extends Component {
                             return(
                               <View>
                                <View style={styles.labelContainer}>
-                                  <Text style={styles.labelGreyStyle}>{element.number ? element.number : ""}</Text>
+                                  <Text style={styles.labelGreyStyle} >{element.number ? element.number : ""}</Text>
                                </View>
                               </View>
                             )
@@ -427,7 +460,7 @@ class LeadDetails extends Component {
                     <View style={styles.labelContainer}>
                             <Text style={styles.labelStyle}>Email : </Text>
                         </View>
-                    { this.props.item.email_address.map((element,key) => {
+                    { this.state.item.email_address.map((element,key) => {
                       if (key === 0){
                         return(
                           <View>
@@ -435,7 +468,7 @@ class LeadDetails extends Component {
                                 <Text style={styles.labelChildStyle}>Primary :</Text>
                             </View>
                            <View style={styles.labelContainer}>
-                              <Text style={styles.labelGreyStyle}>{element.email ? element.email : "N/A"}</Text>
+                              <Text style={styles.labelGreyStyle} >{element.email ? element.email : "N/A"}</Text>
                            </View>
                           </View>
                           )
@@ -454,7 +487,7 @@ class LeadDetails extends Component {
                         return(
                           <View>
                            <View style={styles.labelContainer}>
-                              <Text style={styles.labelGreyStyle}>{element.email ? element.email : ""}</Text>
+                              <Text style={styles.labelGreyStyle} >{element.email ? element.email : ""}</Text>
                            </View>
                           </View>
                           )
@@ -466,11 +499,11 @@ class LeadDetails extends Component {
                             <Text style={styles.labelStyle}>Trade Types : </Text>
                         </View>
 
-                        {this.props.item.trade_type.map((element,key) =>{
+                        {this.state.item.trade_type.map((element,key) =>{
                           return(
                               
                               <View style={styles.labelContainer}>
-                                <Text style={styles.labelGreyStyle}>{this.props.user.trade_types[element] ? this.props.user.trade_types[element] : "N/A"}</Text>
+                                <Text style={styles.labelGreyStyle} >{this.props.user.trade_types[element] ? this.props.user.trade_types[element] : "N/A"}</Text>
                             </View>
                           )
                         })}
@@ -493,13 +526,13 @@ class LeadDetails extends Component {
                       <Text style={styles.labelStyle}>Address : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle}  numberOfLines={1}>{this.props.item.location_info.address}</Text>
+                      <Text style={styles.labelGreyStyle} >{this.state.item.location_info.address}</Text>
                 </View>
                 <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>City : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.props.item.location_info.city}</Text>
+                      <Text style={styles.labelGreyStyle}>{this.state.item.location_info.city}</Text>
                 </View>
                
             </View>
@@ -508,13 +541,13 @@ class LeadDetails extends Component {
                       <Text style={styles.labelStyle}>State : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                      <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.props.item.location_info.state}</Text>
+                      <Text style={styles.labelGreyStyle} >{this.state.item.location_info.state}</Text>
                 </View>
                 <View style={styles.labelContainer}>
                       <Text style={styles.labelStyle}>Zip : </Text>
                 </View>
                 <View style={styles.labelContainer}>
-                    <Text style={styles.labelGreyStyle} numberOfLines={1}>{this.props.item.location_info.zip}</Text>
+                    <Text style={styles.labelGreyStyle} >{this.state.item.location_info.zip}</Text>
                 </View>
             </View>
           </View>
@@ -643,7 +676,8 @@ const styles = StyleSheet.create({
   labelGreyStyle: {
     backgroundColor: '#FFFFFF',
     fontSize: 15,
-    color: 'rgba(192,192,192,1)'
+    color: 'rgba(192,192,192,1)',
+    flexWrap: 'wrap'
     // borderBottomWidth: 1,
     // borderBottomColor: 'rgba(0, 0, 0, 0.2)',
  
@@ -676,7 +710,7 @@ const styles = StyleSheet.create({
 
   },
   labelContainer:{
-    height: 25, 
+    // height: 25, 
     backgroundColor: '#FFFFFF', 
     paddingLeft: 15 , 
     alignItems : "center" , 

@@ -32,14 +32,18 @@ class MeasurementsCreateScreen extends Component {
     var {currentUser} = this.props
 
     this.state = {
-      measurements: []
+      measurements: [],
+      job_id:''
     }
   }
 
   componentDidMount() {
-    this.props.getJobs().then(response => {
+    // this.props.getJobs().then(response => {
 
-    })
+    // })
+    this.setState({
+      job_id: this.props.job_id
+    });
   }
 
   _navigateToDashboard = () => {
@@ -78,28 +82,49 @@ class MeasurementsCreateScreen extends Component {
     this.setState({loading: true})
     var measurementType = this.props.currentUser["measurement_types"][mType]
 
-    var params = {
-      "job": {
-        "measurements_attributes": [{
-          "name": name,
-          "m_type": mType,
-          "items_attributes": _.map(measurementType["values"], (item, index) => ({
+    // var params = {
+    //   "job": {
+    //     "measurements_attributes": [{
+    //       "name": name,
+    //       "m_type": mType,
+    //       "items_attributes": _.map(measurementType["values"], (item, index) => ({
+    //         "item_name": item[0],
+    //         "unit": item[1],
+    //         "value": measurements[index]
+    //       }))
+    //     }]
+    //   }
+    // }
+    var data = {
+      measurements:
+        {
+          notes: '',
+          name: name,
+          m_type: m_type,
+          // job_id: this.state.job_id, 
+          items_attributes: _.map(measurementType["values"], (item, index) => ({
             "item_name": item[0],
             "unit": item[1],
             "value": measurements[index]
           }))
-        }]
-      }
+        }
     }
-
-
-    this.props.updateJob(jobId, params)
+    this.props.createNewMeasurementAction(this.state.job_id, data)
     .then((response) => {
       this.setState({loading: false}, this._navigateToPreviousScreen)
     })
     .catch((error) => {
       this.setState({loading: false})
     })
+
+
+    // this.props.updateJob(jobId, params)
+    // .then((response) => {
+    //   this.setState({loading: false}, this._navigateToPreviousScreen)
+    // })
+    // .catch((error) => {
+    //   this.setState({loading: false})
+    // })
   }
 
   _onMeasurementTypeChange = (mType) => {
@@ -182,14 +207,14 @@ class MeasurementsCreateScreen extends Component {
             </View>
           </View>
 
-          <Picker
+          {/* <Picker
             placeholder="Select Job"
             selectedValue={this.state.jobId}
             onValueChange={(jobId) => this.setState({jobId})}
             items={_.map(this.props.jobs, (job) => ({label: job.contact ? job.contact : "N/A", value: job.id }))}
             />
 
-          <View style={{height: 30}}/>
+          <View style={{height: 30}}/> */}
 
           <Picker
             placeholder="Measurement Type"

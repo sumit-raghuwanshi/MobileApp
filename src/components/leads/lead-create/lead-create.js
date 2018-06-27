@@ -135,6 +135,7 @@ class LeadCreate extends Component {
   }
 
   _navigateToPreviousScreen = () => {
+    this.props.callBack()
     this.props.navigator.pop()
   }
 
@@ -363,10 +364,10 @@ class LeadCreate extends Component {
   }else{
     job.mailing_info_attributes = {
       same_as_location :  this.state.isMailingSameAsLocation,
-      address : "",
-      city_mailing : "",
-      state_mailing :  "",
-      zip_mailing : "",
+      address : address_mailing ? address_mailing : "",
+      city_mailing : city_mailing ? city_mailing : "",
+      state_mailing :   state_mailing ? state_mailing : "",
+      zip_mailing : zip_mailing ? zip_mailing : "",
   }
   }
 
@@ -375,10 +376,10 @@ class LeadCreate extends Component {
   }else{
     job.billing_info_attributes = {
       same_as_location :  this.state.isBillingSameAsLocation,
-      address :  "",
-      city_mailing : "",
-      state_mailing :  "",
-      zip_mailing : "",
+      address :  address_billing ? address_billing : "",
+      city_mailing : city_billing ? city_billing : "",
+      state_mailing :  state_billing ? state_billing : "",
+      zip_mailing : zip_billing ? zip_billing : "",
   }
   }
   
@@ -422,7 +423,7 @@ class LeadCreate extends Component {
     this.props.createLead(data)
     
     .then(response => {
-      this.setState({loading: false}, this._navigateToDashboard)
+      this.setState({loading: false}, this._navigateToPreviousScreen)
     }).catch(error => {
       this.setState({loading: false})
     })
@@ -726,6 +727,12 @@ class LeadCreate extends Component {
       //this.setState({isBillingSameAsLocation: false})
       return(
          <View style={{ marginVertical: 12 }}>
+         <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , alignItems  :"center"}}>
+              <TouchableHighlight onPress={() => this.setState({isBillingSameAsLocation:true})}>
+              <Image style={{paddingTop : 10}} source={require('../../../../img/leads/unchecked.png')} />
+              </TouchableHighlight>
+              <Text style={{paddingLeft : 10 ,textAlignVertical : "center" }}>Same as Location address</Text>
+            </View>
           <View style={styles.labelContainer}>
                     <Text style={styles.labelStyle}>Address : </Text>
                </View>
@@ -734,7 +741,15 @@ class LeadCreate extends Component {
                 placeholder="Address"
                 value={this.state.address_billing}
                 onChangeText={(address_billing) => this.setState({address_billing})}
-                style={styles.textField} />
+                style={styles.textField}
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('BillingCity');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['BillingAdd'] = input;
+                }} />
             </View>
 
              <View style={styles.labelContainer}>
@@ -745,7 +760,15 @@ class LeadCreate extends Component {
                 placeholder="City"
                 value={this.state.city_billing}
                 onChangeText={(city_billing) => this.setState({city_billing})}
-                style={styles.textField} />
+                style={styles.textField}
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('BillingState');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['BillingCity'] = input;
+                }} />
             </View>
 
              <View style={styles.labelContainer}>
@@ -756,7 +779,15 @@ class LeadCreate extends Component {
                 placeholder="State"
                 value={this.state.state_billing}
                 onChangeText={(state_billing) => this.setState({state_billing})}
-                style={styles.textField} />
+                style={styles.textField} 
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('BillingZip');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['BillingState'] = input;
+                }} />
             </View>
 
              <View style={styles.labelContainer}>
@@ -767,13 +798,15 @@ class LeadCreate extends Component {
                 placeholder="Zip Code"
                 value={this.state.zip_billing}
                 onChangeText={(zip_billing) => this.setState({zip_billing})}
-                style={styles.textField} />
-            </View>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , alignItems  :"center"}}>
-              <TouchableHighlight onPress={() => this.setState({isBillingSameAsLocation:true})}>
-              <Image style={{paddingTop : 10}} source={require('../../../../img/leads/unchecked.png')} />
-              </TouchableHighlight>
-              <Text style={{paddingLeft : 10 ,textAlignVertical : "center" }}>Same as Location address</Text>
+                style={styles.textField} 
+                blurOnSubmit={ true }
+                  onSubmitEditing={() => {
+                    //this.state.isBillingSameAsLocation ?  this.state.isMailingSameAsLocation ? Keyboard.dismiss : this.focusNextField('mailingAddress') : this.focusNextField('billingAddress');
+                  }}
+                  returnKeyType={"done"}
+                  ref={ input => {
+                    this.inputs['BillingZip'] = input;
+                  }}/>
             </View>
           </View> 
       );
@@ -799,6 +832,13 @@ class LeadCreate extends Component {
       //this.setState({isBillingSameAsLocation: false})
       return(
          <View style={{ marginVertical: 12 }}>
+         <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , alignItems  :"center"}}>
+              <TouchableHighlight onPress={() => this.setState({isMailingSameAsLocation:true})}>
+                 
+                  <Image style={{paddingTop : 10}} source={require('../../../../img/leads/unchecked.png')} />
+              </TouchableHighlight>
+              <Text style={{paddingLeft : 10 , textAlignVertical : "center"}}>Same as Location address</Text>
+            </View>
           <View style={styles.labelContainer}>
                     <Text style={styles.labelStyle}>Address : </Text>
                </View>
@@ -808,7 +848,15 @@ class LeadCreate extends Component {
                 placeholder="Address"
                 value={this.state.address_mailing}
                 onChangeText={(address_mailing) => this.setState({address_mailing})}
-                style={styles.textField} />
+                style={styles.textField}
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('MailingCity');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['MailingAdd'] = input;
+                }} />
             </View>
 
              <View style={styles.labelContainer}>
@@ -820,7 +868,15 @@ class LeadCreate extends Component {
                 placeholder="City"
                 value={this.state.city_mailing}
                 onChangeText={(city_mailing) => this.setState({city_mailing})}
-                style={styles.textField} />
+                style={styles.textField} 
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('MailingState');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['MailingCity'] = input;
+                }}/>
             </View>
 
 
@@ -833,7 +889,15 @@ class LeadCreate extends Component {
                 placeholder="State"
                 value={this.state.state_mailing}
                 onChangeText={(state_mailing) => this.setState({state_mailing})}
-                style={styles.textField} />
+                style={styles.textField} 
+                blurOnSubmit={ false }
+                onSubmitEditing={() => {
+                  this.focusNextField('MailingZip');
+                }}
+                returnKeyType={ "next" }
+                ref={ input => {
+                  this.inputs['MailingState'] = input;
+                }}/>
             </View>
 
              <View style={styles.labelContainer}>
@@ -845,15 +909,17 @@ class LeadCreate extends Component {
                 placeholder="Zip Code"
                 value={this.state.zip_mailing}
                 onChangeText={(zip_mailing) => this.setState({zip_mailing})}
-                style={styles.textField} />
+                style={styles.textField}
+                blurOnSubmit={ true }
+                  onSubmitEditing={() => {
+                    //this.state.isBillingSameAsLocation ?  this.state.isMailingSameAsLocation ? Keyboard.dismiss : this.focusNextField('mailingAddress') : this.focusNextField('billingAddress');
+                  }}
+                  returnKeyType={"done"}
+                  ref={ input => {
+                    this.inputs['MailingZip'] = input;
+                  }} />
             </View>
-            <View style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 , flexDirection : "row" , alignItems  :"center"}}>
-              <TouchableHighlight onPress={() => this.setState({isMailingSameAsLocation:true})}>
-                 
-                  <Image style={{paddingTop : 10}} source={require('../../../../img/leads/unchecked.png')} />
-              </TouchableHighlight>
-              <Text style={{paddingLeft : 10 , textAlignVertical : "center"}}>Same as Location address</Text>
-            </View>
+            
 
 
           </View> 
@@ -1323,7 +1389,7 @@ class LeadCreate extends Component {
                 />
             </View>
 
-            <View style={{ backgroundColor: '#FFFFFF', paddingLeft: 15 }}>
+            <View style={{ backgroundColor: '#FFFFFF', paddingLeft: 15}}>
             {/* <View style={{ height: 25, backgroundColor: '#FFFFFF', paddingLeft: 8 , alignItems : "center" , flexDirection : "row"}}>
                           <Text style={{backgroundColor: '#FFFFFF',fontSize: 15,color: 'rgba(0, 0, 0, 0.73)',fontWeight : 'bold'}}>Trade Types : </Text>
             </View> */}
@@ -1363,10 +1429,13 @@ class LeadCreate extends Component {
                         )
                       }
                     }
-                    //style = {{justifyContent : "center" , alignItems : "center" , height: 40 , backgroundColor : "#FFFFFF"}}
+                    style = {{height: 40 ,paddingTop : 15,paddingRight:15, backgroundColor : "#FFFFFF"}}
                     >
                       {/* <Text style={{textAlign : "center" , color: 'rgba(0, 0, 0, 0.73)'}}>Trade type</Text>  */}
-                       <Text style={{textAlign : "center" , fontSize : 17}}  numberOfLines={1}>Trade Types</Text>
+                      <View style={{ borderWidth : 1, borderColor : 'rgba(0, 0, 0, 0.2)'}}>
+                          <Text style={{textAlign : "center" , fontSize : 15, fontWeight : 'bold'}}  numberOfLines={1}>Trade Types</Text>
+                      </View>
+                       
                     {/* {this.renderLeadTypes()} */}
                 </TouchableHighlight>
                       {this.state.selectedLeadTypes.map((element,key) =>{

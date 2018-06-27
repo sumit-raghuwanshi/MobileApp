@@ -24,7 +24,9 @@ import ForgotPassword from './sign-in/ForgotPassword';
 import ChooseLocation from './location/ChooseLocation';
 import Leads from './leads/leadList/leads';
 import LeadDetails from './leads/lead-details/lead-details';
-import LeadEdit from './leads/lead-edit/lead-edit'
+import LeadEdit from './leads/lead-edit/lead-edit';
+import JobDetails from './jobs/job-details/job-details'
+import MeasurementListScreen from './measurements/MeasurementListScreen'
 //import SignUp from './sign-up/sign-up.js';
 
 import ConfirmationModal from './common/confirmation-modal';
@@ -44,6 +46,8 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.lead_create', () => LeadCreate, store, Provider);
   Navigation.registerComponent('roof_gravy.lead_list', () => Leads, store, Provider);
   Navigation.registerComponent('roof_gravy.appointment_create', () => AppointmentCreate, store, Provider);
+  
+  Navigation.registerComponent('roof_gravy.measurements_list', () => MeasurementListScreen, store, Provider);
   Navigation.registerComponent('roof_gravy.measurements_create', () => MeasurementsCreateScreen, store, Provider);
   Navigation.registerComponent('roof_gravy.messages', () => Messages, store, Provider);
   Navigation.registerComponent('roof_gravy.message', () => Message, store, Provider);
@@ -60,6 +64,7 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.lead_details', () => LeadDetails, store, Provider);
   Navigation.registerComponent('roof_gravy.lead_edit' , () => LeadEdit, store , Provider);
   //Navigation.registerComponent('roof_gravy.signup', () => SignUp, store, Provider);
+  Navigation.registerComponent('roof_gravy.job_details' , () => JobDetails , store , Provider);
 
   Navigation.registerComponent('roof_gravy.confirmation_modal', () => ConfirmationModal, store, Provider);
   Navigation.registerComponent('roof_gravy.error_view', () => ErrorView, store, Provider);

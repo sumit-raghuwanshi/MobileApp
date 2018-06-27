@@ -45,3 +45,43 @@ export function updateJob(id, job) {
     })
   }
 }
+
+
+export function getParticularJob(id) {
+  return function(dispatch) {
+    return API.fetch({
+      method: 'get',
+      url: `${SERVER_URL}${END_POINTS.JOBS}/${id}`,
+    })
+    .then((response) => {
+      //dispatch(updateLeadSuccess(response.data));
+      return response
+    })
+  }
+}
+export function getAllMeasurements(job_id) {
+  return function (dispatch) {
+    return API.fetch({
+      method: 'get',
+      url: `${SERVER_URL}${END_POINTS.JOBS}/${job_id}/measurements`,
+    })
+      .then((response) => {
+        //dispatch(updateLeadSuccess(response.data));
+        return response
+      })
+  }
+}
+
+export function updateJobStatus(id , data) {
+  return function(dispatch) {
+    return API.fetch({
+      method: 'post',
+      url: `${SERVER_URL}${END_POINTS.JOBS}/${id}/edit_status`,
+      data : data
+    })
+    .then((response) => {
+      //dispatch(updateLeadSuccess(response.data));
+      return response
+    })
+  }
+}

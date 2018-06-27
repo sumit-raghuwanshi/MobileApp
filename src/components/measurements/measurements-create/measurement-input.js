@@ -9,19 +9,35 @@ import {
 class MeasurementInput extends Component {
   render() {
     return (
+      // <View style={styles.container}>
+      //   <View style={styles.inputContainer}>
+      //     <View style={styles.labelContainer}>
+      //       <Text numberOfLines={1} style={styles.label}>{this.props.label}</Text>
+      //     </View>
+      //     <NativeTextInput
+      //       {...this.props}
+      //       style={styles.textInputField}
+      //       />
+      //   </View>
+      //   <View style={styles.unitContainer}>
+      //     <Text style={styles.label}>{this.props.unit}</Text>
+      //   </View>
+      // </View>
+
       <View style={styles.container}>
         <View style={styles.inputContainer}>
           <View style={styles.labelContainer}>
-            <Text numberOfLines={1} style={styles.label}>{this.props.label}</Text>
+            <Text numberOfLines={1} style={styles.label}>{`${this.props.label} ${this.props.unit}`}</Text>
           </View>
           <NativeTextInput
             {...this.props}
             style={styles.textInputField}
+            underlineColorAndroid = "transparent"
             />
         </View>
-        <View style={styles.unitContainer}>
+        {/* <View style={styles.unitContainer}>
           <Text style={styles.label}>{this.props.unit}</Text>
-        </View>
+        </View> */}
       </View>
     )
   }
@@ -29,29 +45,41 @@ class MeasurementInput extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 44,
+    height: 70,
     flexDirection: 'row'
   },
   inputContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     flex: 1,
     backgroundColor: '#FFFFFF',
-    paddingLeft: 15
+    paddingLeft: 15,
+    paddingRight : 15,
+    paddingBottom:5,
+    paddingTop: 3
   },
   labelContainer: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems : 'flex-start',
+    paddingLeft: 5
   },
   label: {
     fontSize: 17,
     color: 'rgba(0, 0, 0, 0.73)',
+    fontWeight : 'bold'
+    
   },
   textInputField: {
-    flex: 1,
+   
     paddingRight: 10,
     fontSize: 17,
     color: 'rgba(0, 0, 0, 0.73)',
-    textAlign: 'right'
+    textAlign: 'right',
+    borderWidth : 1,
+    borderColor : 'rgba(0, 0, 0, 0.73)',
+    paddingTop : 3,
+    paddingBottom : 3
+    
   },
   unitContainer: {
     width: 50,
