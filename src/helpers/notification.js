@@ -9,6 +9,14 @@ class Notification{
       }
     })
   }
+  static alertView(message) {
+    Navigation.showInAppNotification({
+      screen: "roof_gravy.alert_view",
+      passProps: {
+        message
+      }
+    })
+  }
 }
 
 export { Notification }

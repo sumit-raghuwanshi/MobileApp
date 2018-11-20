@@ -8,12 +8,14 @@ import {
   TextInput,
   TouchableOpacity,
   StatusBar,
-  Dimensions
+  Dimensions,
+  NetInfo
 } from 'react-native';
 import Loader from '../common/loader';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions';
+import {Notification} from  '../../helpers';
 
 const width= Dimensions.get('window').width
 const height= Dimensions.get('window').height
@@ -28,12 +30,11 @@ class SignIn extends Component {
 
     this.state = {
       user: {
-        email:    'admin_1@roof-gravy.com',
+        email:   'satyampawar007@gmail.com',
         password: '12345678'
       },
       loading: false
     };
-
     this.loginButtonPress = this.loginButtonPress.bind(this);
     this.onEmailChange    = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
@@ -54,44 +55,54 @@ class SignIn extends Component {
   }
 
   loginButtonPress = () => {
-    this.setState({
-      loading: true
-    });
 
-    const { user } = this.state;
-    var response = this.props.actions.loginUser(user)
-    .then((response) => {
-      console.log("============1234=========>"+JSON.stringify(response))
-      this.setState({
-        loading: false
-      }, () => {
-        var companyLocations = response.data.company_locations
-        var role = response.data.role 
-        if (role != "master_admin"){
-          if (companyLocations.length === 1) {
-          
-            this.props.navigator.resetTo({
-              screen: 'roof_gravy.dashboard'
-            })
-  
-          }else if(companyLocations.length>1){
-            this.props.navigator.resetTo({
-              screen: 'roof_gravy.choose_location'
-            })
+    NetInfo.isConnected.fetch().then(isConnected => {
+      if(isConnected){
+        this.setState({
+          loading: true
+        });
+
+      const { user } = this.state;
+      var response = this.props.actions.loginUser(user)
+      .then((response) => {
+        console.log("============1234=========>"+JSON.stringify(response))
+        this.setState({
+          loading: false
+        }, () => {
+          var companyLocations = response.data.company_locations
+          var role = response.data.role 
+          if (role != "master_admin"){
+            if(role == "Customer"){
+              this.props.navigator.resetTo({
+                screen: 'roof_gravy.customer_dashboard'
+              })
+            }else{
+            if (companyLocations.length === 1) {
+              this.props.navigator.resetTo({
+                screen: 'roof_gravy.dashboard'
+              })
+    
+            }else if(companyLocations.length>1){
+              this.props.navigator.resetTo({
+                screen: 'roof_gravy.choose_location'
+              })
+            }}
+          }else{
+            alert("Master admin can't login!")
           }
-        }else{
-          alert("Master admin can't login!")
-        }
-        
-
-        
-      });
-
-    }).catch((error) => {
-      this.setState({
-        loading: false
-      })
-    })
+        });
+        }).catch((error) => {
+          this.setState({
+            loading: false
+          })
+        })
+      }else{
+        this.props.navigator.resetTo({
+          screen: 'roof_gravy.login_screen'
+        })
+        Notification.error("Check Your Internet Connection")
+      }
+    });
   }
 
   signUpButtonPress = () => {

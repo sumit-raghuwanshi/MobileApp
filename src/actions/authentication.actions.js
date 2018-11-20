@@ -80,10 +80,9 @@ export function getProfile() {
 }
 
 //Forgot Password
-export function forgotPasswordSuccess(user) {
+export function forgotPasswordSuccess() {
   return {
     type: types.FORGOT_PASSWORD_SUCCESS,
-    user
   };
 }
 
@@ -110,7 +109,7 @@ export function forgotPasswordAction(data) {
       }
     })
       .then((response) => {
-        dispatch(forgotPasswordSuccess(response.data))
+        dispatch(forgotPasswordSuccess())
         //return response
       })
   }

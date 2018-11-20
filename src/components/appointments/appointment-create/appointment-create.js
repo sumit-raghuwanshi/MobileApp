@@ -101,9 +101,9 @@ class AppointmentCreate extends Component {
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }} onPress={this._navigateToDashboard}>
             <Image source={require('../../../../img/icons/home.png')} />
           </Touchable>
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>APPOINTMENT</Text>
-            <Image style={{ marginTop: 10 }} source={require('../../../../img/icons/calendar.png')}/>
+          <View style={styles.safeAreaView}>
+            <Image style={styles.safeAreaImage} source={require('../../../../img/icons/calendar.png')}/>
+            <Text style={styles.safeAreaText}>APPOINTMENT</Text>
           </View>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
             <View></View>
@@ -228,7 +228,25 @@ const styles = StyleSheet.create({
     color: 'rgba(0, 0, 0, 0.73)',
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, 0.2)'
-  }
+  },
+  safeAreaView:{
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center' 
+  },
+  safeAreaImage: {
+    marginTop: 3,
+    marginLeft: 110,
+    width: 35,
+    height: 35
+  },
+  safeAreaText: {
+    marginLeft: 5,
+    marginTop: 3,
+    fontSize: 16,
+    color: '#FFFFFF',
+    fontWeight: '600'
+  } 
 });
 
 function mapStateToProps(state) {

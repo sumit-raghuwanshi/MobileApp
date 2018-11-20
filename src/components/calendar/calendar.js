@@ -23,6 +23,7 @@ class CalendarScreen extends Component {
     super(props);
     this.state = {};
     this._onDayPress = this._onDayPress.bind(this);
+    this._appointmentSection = this._appointmentSection.bind(this)
 
     this.state = {
       loading: true
@@ -55,6 +56,25 @@ class CalendarScreen extends Component {
     });
   }
 
+
+
+  _appointmentSection(){
+
+    if(this.props !== "Customer")
+      return(
+        <View style={{paddingVertical: 15, alignItems: 'center'}}>
+            <Touchable onPress={this._navigateToAppointmentCreate}>
+              <View style={{ alignItems: 'center' }}>
+                <Image source={require('../../../img/icons/add.png')}/>
+                <Text style={{ fontSize: 12, fontWeight: '500', color: '#999999', marginTop: 5 }}>NEW APPOINTMENT</Text>
+              </View>
+            </Touchable>
+          </View>
+        )
+    else
+      return ""
+  }
+
   render() {
     var markedDates = {}
 
@@ -68,9 +88,9 @@ class CalendarScreen extends Component {
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }} onPress={this._navigateToDashboard}>
             <Image source={require('../../../img/icons/home.png')} />
           </Touchable>
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>CALENDAR</Text>
-            <Image style={{ marginTop: 10 }} source={require('../../../img/icons/calendar.png')}/>
+          <View style={styles.safeAreaView}>
+            <Image style={styles.safeAreaImage} source={require('../../../img/icons/calendar.png')}/>
+            <Text style={styles.safeAreaText}>CALENDAR</Text>
           </View>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
             <View></View>
@@ -102,14 +122,7 @@ class CalendarScreen extends Component {
             }}
           />
         </ScrollView>
-        <View style={{paddingVertical: 15, alignItems: 'center'}}>
-          <Touchable onPress={this._navigateToAppointmentCreate}>
-            <View style={{ alignItems: 'center' }}>
-              <Image source={require('../../../img/icons/add.png')}/>
-              <Text style={{ fontSize: 12, fontWeight: '500', color: '#999999', marginTop: 5 }}>NEW APPOINTMENT</Text>
-            </View>
-          </Touchable>
-        </View>
+        {this._appointmentSection()}
 
         <Loader loading={this.state.loading}/>
       </View>
@@ -130,7 +143,25 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1
-  }
+  },
+  safeAreaView:{
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center' 
+  },
+  safeAreaImage: {
+    marginTop: 3,
+    marginLeft: 110,
+    width: 35,
+    height: 35
+  },
+  safeAreaText: {
+    marginLeft: 3,
+    marginTop: 10,
+    fontSize: 16,
+    color: '#FFFFFF',
+    fontWeight: '600'
+  } 
 });
 
 function mapStateToProps(state) {

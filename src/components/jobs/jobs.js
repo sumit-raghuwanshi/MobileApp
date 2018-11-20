@@ -10,7 +10,7 @@ import {
 import { Touchable, Loader } from '../common';
 import JobList from './job-list';
 import {connect} from 'react-redux';
-import {getJobs} from '../../actions';
+import {getJobs, getCustomerJobs } from '../../actions';
 
 class Jobs extends Component {
   static navigatorStyle = {
@@ -21,14 +21,15 @@ class Jobs extends Component {
   }
 
   componentDidMount() {
-    this.props.getJobs()
-    .then((response) => {
-      console.log("jobsssssssss", JSON.stringify(response))
+    (this.props.user.role !== "Customer" ? this.props.getJobs() : this.props.getCustomerJobs()).then((response) => {
       this.setState({loading: false})
     })
     .catch((error) => {
       this.setState({loading: false})
     })
+   
+
+
   }
 
   _navigateToDashboard = () => {
@@ -42,10 +43,13 @@ class Jobs extends Component {
   }
 
   _onItemPress = (item) => {
+    this.setState({loading: true})
+    var screen_value = (this.props.user.role == "Customer") ? "roof_gravy.customer_job_details" : "roof_gravy.job_details"
     this.props.navigator.push({
-      screen: "roof_gravy.job_details",
+      screen: screen_value,
       passProps: { item: item , callBack : this.callBack.bind(this)}
     })
+
   }
 
   async callBack(){
@@ -64,14 +68,13 @@ class Jobs extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
-
         <SafeAreaView style={styles.header}>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }} onPress={this._navigateToDashboard}>
             <Image source={require('../../../img/icons/home.png')} />
           </Touchable>
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>JOBS</Text>
-            <Image style={{ marginTop: 10 }} source={require('../../../img/icons/jobs.png')}/>
+          <View style={styles.safeAreaView}>
+            <Image style={styles.safeAreaImage} source={require('../../../img/icons/jobs.png')}/>
+            <Text style={styles.safeAreaText}>JOBS</Text>
           </View>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
             <View></View>
@@ -90,7 +93,7 @@ class Jobs extends Component {
           </View>
           <JobList
             onItemPress={this._onItemPress}
-            jobs={this.props.jobs}
+            jobs={this.props.jobs || this.props.companyjobs}
             />
         </View>
         <Loader loading={this.state.loading}/>
@@ -102,6 +105,7 @@ class Jobs extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 0,
     backgroundColor: 'rgba(194, 185, 165, 0.31)'
   },
   header: {
@@ -111,11 +115,12 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   body: {
-    flex: 1
+    flex: 1,
+    marginTop: 0
   },
   topButtonContainer: {
     flexDirection: 'row',
-    height: 80,
+    height: 30,
     paddingHorizontal: 25
   },
   newButton: {
@@ -132,13 +137,33 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#999999',
     marginTop: 5
-  }
+  },
+  safeAreaView:{
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center' 
+  },
+  safeAreaImage: {
+    marginTop: 3,
+    marginLeft: 100,
+    width: 35,
+    height: 35
+  },
+
+  safeAreaText: {
+    marginLeft: 3,
+    marginTop: 10,
+    fontSize: 16,
+    color: '#FFFFFF',
+    fontWeight: '600'
+  } 
 });
 
 function mapStateToProps(state) {
   return {
-    jobs: state.jobs
+    jobs: state.jobs,
+    user: state.user
   }
 }
 
-export default connect(mapStateToProps, {getJobs})(Jobs)
+export default connect(mapStateToProps, {getJobs, getCustomerJobs})(Jobs)

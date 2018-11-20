@@ -11,7 +11,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import { Touchable, Picker, TouchableField } from '../common';
-
+import { ConfirmDialog } from 'react-native-simple-dialogs';
 class Settings extends Component {
   static navigatorStyle = {
     navBarHidden: true
@@ -21,7 +21,7 @@ class Settings extends Component {
     super(props)
 
     this.state = {
-
+      dialogVisible: false
     }
   }
 
@@ -52,9 +52,9 @@ class Settings extends Component {
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }} onPress={this._navigateToDashboard}>
             <Image source={require('../../../img/icons/home.png')} />
           </Touchable>
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>Settings</Text>
-            <Image style={{ marginTop: 10 }} source={require('../../../img/icons/settings.png')}/>
+          <View style={styles.safeAreaView}>
+            <Image style={styles.safeAreaImage} source={require('../../../img/icons/settings.png')}/>
+            <Text style={styles.safeAreaText}>Settings</Text>
           </View>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
             <View></View>
@@ -100,22 +100,38 @@ class Settings extends Component {
               selectedValue="Edit My Info"
               />
           </View>
-
           <View style={{marginTop: 12}}>
-            <Touchable
+           <Touchable
               style={{ height: 44, backgroundColor: '#FFFFFF', paddingLeft: 15 }}
               onPress={() => {
-                AsyncStorage.clear(() => {
-                  this.props.navigator.resetTo({
-                    screen: 'roof_gravy.login_screen'
-                  })
-                })
+               this.setState({dialogVisible: !this.state.dialogVisible})
               }}>
               <View style={{ flex: 1, justifyContent: 'center', borderBottomWidth: 1, borderBottomColor: 'rgba(0, 0, 0, 0.2)'}}>
                 <Text style={styles.textField}>{'Logout'}</Text>
               </View>
             </Touchable>
+          </View>
 
+          <View style={{marginTop: 12}}>
+             <ConfirmDialog
+              title="Confirm Dialog"
+              message="Are you sure about that?"
+              visible={this.state.dialogVisible}
+              onTouchOutside={() => this.setState({dialogVisible: false})}
+               negativeButton={{
+                  title: "NO",
+                  onPress: () => {this.setState({dialogVisible: false})} 
+              }}
+              positiveButton={{
+                title: "Yes",
+                onPress: () => {
+                    AsyncStorage.clear(() => {
+                      this.props.navigator.resetTo({
+                        screen: 'roof_gravy.login_screen'
+                      })
+                    })
+                }
+              }} />
           </View>
 
         </ScrollView>
@@ -127,6 +143,7 @@ class Settings extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+     marginTop: 0,
     backgroundColor: 'rgba(194, 185, 165, 0.31)'
   },
   header: {
@@ -136,11 +153,12 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   body: {
-    flex: 1
+    flex: 1,
+    marginTop: 0
   },
   topButtonContainer: {
     flexDirection: 'row',
-    height: 80,
+    height: 30,
     paddingLeft: 25,
     paddingRight: 10,
     paddingTop: 20,
@@ -161,7 +179,25 @@ const styles = StyleSheet.create({
   pickerText: {
     fontSize: 17,
     color: 'rgba(0, 0, 0, 0.73)'
-  }
+  },
+  safeAreaView:{
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center' 
+  },
+  safeAreaImage: {
+    marginTop: 3,
+    marginLeft: 110,
+    width: 35,
+    height: 35
+  },
+  safeAreaText: {
+    marginLeft: 5,
+    marginTop: 3,
+    fontSize: 16,
+    color: '#FFFFFF',
+    fontWeight: '600'
+  } 
 });
 
 export default Settings

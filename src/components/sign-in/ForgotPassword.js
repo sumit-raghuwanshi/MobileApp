@@ -12,6 +12,7 @@ import Loader from '../common/loader';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions';
+import {Notification} from  '../../helpers';
 
 class ForgotPassword extends Component {
     static navigatorStyle = {
@@ -64,6 +65,7 @@ class ForgotPassword extends Component {
                     this.props.navigator.resetTo({
                         screen: 'roof_gravy.login_screen'
                     })
+                    Notification.alertView("Reset password link has been sent.")
                 });
             }).catch((error) => {
                 console.log("Error "+ JSON.stringify(error))

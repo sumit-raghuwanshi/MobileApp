@@ -17,7 +17,6 @@ class JobList extends Component {
 
   render() {
     var dataSource = this.ds.cloneWithRows(this.props.jobs)
-
     return (
       <ListView
         enableEmptySections={true}

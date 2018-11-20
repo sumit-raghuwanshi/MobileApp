@@ -53,17 +53,15 @@ class MyInfoScreen extends Component {
     var {firstName, lastName, email, phone, location, image_attach} = this.state
     var errorMessages = []
 
-    if (!firstName)
-      errorMessages.push('First Name is required')
+    if (firstName.trim().length > 10 || firstName.trim().length < 1)
+      errorMessages.push('First Name is required or should be less than 10 character')
 
-    if (!lastName)
-      errorMessages.push('Last Name is required')
-
-    if (!phone)
-      errorMessages.push('Phone is required')
-
-    if (!email)
-      errorMessages.push('Email is required')
+    if (lastName.trim().length > 10 || lastName.trim().length < 1)
+      errorMessages.push('Last Name is required or should be less than 10 character')
+    if(isNaN(phone.trim()))
+      errorMessages.push('Phone number should be valid')
+    if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.trim())))
+      errorMessages.push('Email should be valid')
 
     // if (!location)
     //   errorMessages.push('Location is required')
@@ -76,9 +74,9 @@ class MyInfoScreen extends Component {
 
     this.setState({loading: true})
     var params = new FormData()
-    params.append("user[first_name]", firstName)
-    params.append("user[last_name]", lastName)
-    params.append("user[phone]", phone)
+    params.append("user[first_name]", firstName.trim())
+    params.append("user[last_name]", lastName.trim())
+    params.append("user[phone]", phone.trim())
     params.append("user[email]", email)
     params.append("user[token]" , this.state.token)
 
@@ -152,17 +150,35 @@ class MyInfoScreen extends Component {
     var options = {
       title: 'Take Picture'
     }
+    this.setState({loading: true})
 
-    ImagePicker.launchCamera(options, (response)  => {
-      if (response.error) {
-        alert(response.error)
-      }
-      else if (!response.didCancel) {
+    ImagePicker.showImagePicker(options, (response) => {
+      if (response.didCancel) {
+         this.setState({loading: false})
+      } else if (response.error) {
+        alert('ImagePicker Error: ', response.error);
+        this.setState({loading: false})
+      } else if (response.customButton) {
+        alert('User tapped custom button: ', response.customButton);
+        this.setState({loading: false})
+      }else if (!response.didCancel) {
         this.setState({
-          image_attach: response
+          image_attach: response,
+          loading: false
         })
       }
-    })
+    });
+
+    // ImagePicker.launchCamera(options, (response)  => {
+    //  alert(JSON.stringify(response))
+    //   if (response.error) {
+    //   }
+    //   else if (!response.didCancel) {
+    //     this.setState({
+    //       image_attach: response
+    //     })
+    //   }
+    // })
   }
 
   render() {
@@ -175,9 +191,9 @@ class MyInfoScreen extends Component {
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }} onPress={this._navigateToDashboard}>
             <Image source={require('../../../img/icons/home.png')} />
           </Touchable>
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={{ fontSize: 16, color: '#FFFFFF', fontWeight: '600' }}>My Info</Text>
-            <Image style={{ marginTop: 10 }} source={require('../../../img/icons/settings.png')}/>
+          <View style={styles.safeAreaView}>
+            <Image style={styles.safeAreaImage} source={require('../../../img/icons/settings.png')}/>
+            <Text style={styles.safeAreaText}>My Info</Text>
           </View>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
             <View></View>
@@ -283,7 +299,25 @@ const styles = StyleSheet.create({
   pickerText: {
     fontSize: 17,
     color: 'rgba(0, 0, 0, 0.73)'
-  }
+  },
+  safeAreaView:{
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center' 
+  },
+  safeAreaImage: {
+    marginTop: 3,
+    marginLeft: 110,
+    width: 35,
+    height: 35
+  },
+  safeAreaText: {
+    marginLeft: 5,
+    marginTop: 3,
+    fontSize: 16,
+    color: '#FFFFFF',
+    fontWeight: '600'
+  } 
 });
 
 function mapStateToProps(state) {

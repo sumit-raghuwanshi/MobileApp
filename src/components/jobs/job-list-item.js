@@ -64,7 +64,7 @@ class JobListItem extends Component {
           </View>
           <View style={{ alignItems: 'flex-end', justifyContent: 'center' }}>
             
-            <Image source={require('../../../img/icons/chevron.png')}/>
+            <Image source={require('../../../img/icons/arrow-right.png')}/>
             {/* {this.getImageFromStatus} */}
           </View>
         </View>

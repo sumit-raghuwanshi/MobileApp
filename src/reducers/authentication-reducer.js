@@ -20,7 +20,7 @@ export default function (state = initialState.user, action) {
       return { ...state }
 
     case types.FORGOT_PASSWORD_SUCCESS:
-      return { ...state, ...action.user }
+      return { ...state }
 
     case types.FORGOT_PASSWORD_ERROR:
       return { ...state }

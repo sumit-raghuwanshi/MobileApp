@@ -17,7 +17,7 @@ class API {
 
     if (appState.user) {
       options.headers["ACCESS_TOKEN"] = appState.user.token
-      options.headers["LOCATION_TOKEN"] = appState.user.company_locations[0].token
+      options.headers["LOCATION_TOKEN"] = (appState.user.company_locations === undefined ? null : appState.user.company_locations[0].token)
     }
 
     return axios(options).catch(error => {

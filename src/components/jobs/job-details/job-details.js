@@ -56,10 +56,12 @@ class JobDetails extends Component {
       isModalVisible : false,
       item : {},
       job_id:'',
-      statusJob: 0
+      statusJob: 0,
+      active_estimate: {}
     }
 
     this._onSubmit = this._onSubmit.bind(this)
+    this._Estimate =  this._Estimate.bind(this)
   }
 
   getImageFromStatus(){
@@ -164,6 +166,7 @@ class JobDetails extends Component {
         loading: false,
         item : response.data,
         job_id: this.props.item.id,
+        active_estimate : response.data.active_estimate,
         statusJob: response.data.status_cd - 1
         
       })
@@ -175,6 +178,26 @@ class JobDetails extends Component {
       })
     })
   }
+
+  async callBack(){
+     console.log("callback")
+    await  this.props.getParticularLead(this.props.item.id)
+    .then((response) => {
+      
+       // console.log("getting particular item" , response.data)
+      this.setState({
+        loading: false,
+        item : response.data,
+        active_estimate: response.data.active_estimate
+      })
+    })
+    .catch(error => {
+      this.setState({
+        loading: false
+      })
+    })
+  }
+
 
   validateEmail(emailField){
     // var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -294,6 +317,17 @@ _updateJobStatus(){
       })
     })
   }
+
+
+
+  _Estimate = () => {
+    const job_id = this.state.item.id
+    this.props.navigator.push({
+      screen: "roof_gravy.estimate_view",
+      passProps: { item: this.state.active_estimate ,job_id: job_id, callBack : this.callBack.bind(this)}
+    })
+  }
+
 
   _billingAddressView(){
     if (this.state.item.billing_info.same_as_location == true){

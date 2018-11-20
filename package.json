@@ -10,9 +10,12 @@
     "axios": "^0.17.1",
     "lodash": "^4.17.4",
     "moment": "^2.22.1",
+    "payment": "^2.3.0",
     "react": "16.3.1",
+    "react-actioncable-provider": "^1.0.3",
     "react-moment": "^0.7.0",
     "react-native": "0.55.4",
+    "react-native-actioncable": "0.0.3",
     "react-native-calendars": "^1.11.0",
     "react-native-doc-viewer": "^2.6.8",
     "react-native-document-picker": "^2.1.0",
@@ -21,8 +24,11 @@
     "react-native-modal-datetime-picker": "^4.13.0",
     "react-native-multiple-select-list": "^1.0.4",
     "react-native-navigation": "^1.1.464",
+    "react-native-orientation": "^3.1.3",
     "react-native-popup-dialog": "^0.11.46",
     "react-native-select-multiple": "^1.2.0",
+    "react-native-simple-dialogs": "^1.0.0",
+    "react-native-stripe-api": "^0.1.0",
     "react-native-vector-icons": "^4.6.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
@@ -37,5 +43,8 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "resolutions": {
+    "@babel/runtime": "7.0.0-beta.46"
   }
 }

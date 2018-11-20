@@ -26,12 +26,22 @@ import Leads from './leads/leadList/leads';
 import LeadDetails from './leads/lead-details/lead-details';
 import LeadEdit from './leads/lead-edit/lead-edit';
 import JobDetails from './jobs/job-details/job-details'
+import CustomerJobDetails from './jobs/job-details/customer-job-details'
 import MeasurementListScreen from './measurements/MeasurementListScreen'
+
+import JobPayment from './jobs/job-details/job-payment'
+import EstimateIndex from './estimates/estimate-index'
+import EstimateView from './estimates/estimate-view'
+import JobInvoice from './jobs/job-details/job-invoice'
+import CustomerDashboard from './customer/customer_dashboard'
+
+import CustomerChat from './chat/customer-chat'
+import BigCalendarScreen from './calendar/big-calendar'
 //import SignUp from './sign-up/sign-up.js';
 
 import ConfirmationModal from './common/confirmation-modal';
 import { ErrorView } from './common';
-
+import {AlertView} from './common'
 export function registerScreens(store, Provider) {
 
   Navigation.registerComponent('roof_gravy.login_screen', () => SignIn, store, Provider);
@@ -67,5 +77,26 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('roof_gravy.job_details' , () => JobDetails , store , Provider);
 
   Navigation.registerComponent('roof_gravy.confirmation_modal', () => ConfirmationModal, store, Provider);
+
+  Navigation.registerComponent('roof_gravy.customer_dashboard', () => CustomerDashboard, store, Provider);
+  Navigation.registerComponent('roof_gravy.customer_job_details', () => CustomerJobDetails, store, Provider);
+  
+  Navigation.registerComponent('roof_gravy.estimates', () => EstimateIndex, store, Provider);
+  Navigation.registerComponent('roof_gravy.estimate_view', () => EstimateView, store, Provider);
+  
+  Navigation.registerComponent("roof_gravy.job_invoice_view", () => JobInvoice, store, Provider);
+
+  Navigation.registerComponent("roof_gravy.customer_chat_view", () => CustomerChat, store, Provider);
+ 
+
+  Navigation.registerComponent('roof_gravy.big-calendar-screen', () => BigCalendarScreen, store, Provider);
+
+  Navigation.registerComponent('roof_gravy.job_payments', () => JobPayment, store, Provider);
+
+
   Navigation.registerComponent('roof_gravy.error_view', () => ErrorView, store, Provider);
+  Navigation.registerComponent('roof_gravy.alert_view', () => AlertView, store, Provider);
+  
+ 
+
 }

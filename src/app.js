@@ -15,6 +15,8 @@ import configureStore from './store/configure-store';
 import { registerScreens } from './components';
 import KeyboardManager from 'react-native-keyboard-manager'
 import { persistStore } from 'redux-persist';
+import _ from 'lodash'
+
 
 if (Platform.OS == 'ios') {
   KeyboardManager.setToolbarPreviousNextButtonEnable(true);
@@ -25,21 +27,34 @@ const store = configureStore()
 global.AppStore = store
 registerScreens(store, Provider)
 
+
 let persistor = persistStore(store, null, () => {
   var initialState = store.getState()
-
-  if (initialState.user)
-    Navigation.startSingleScreenApp({
-      screen: {
-        screen: 'roof_gravy.dashboard',
-        title: 'Welcome',
-        navigatorStyle: {},
-        navigatorButtons: {}
-      },
-      passProps: {},
-      animationType: 'slide-down'
-    });
-  else
+  if (!(_.isEmpty(initialState.user))){
+    if (initialState.user.role == "Customer"){
+      Navigation.startSingleScreenApp({
+        screen: {
+          screen: 'roof_gravy.customer_dashboard',
+          title: 'Welcome',
+          navigatorStyle: {},
+          navigatorButtons: {}
+        },
+        passProps: {},
+        animationType: 'slide-down'
+      });
+    }else{
+      Navigation.startSingleScreenApp({
+        screen: {
+          screen: 'roof_gravy.dashboard',
+          title: 'Welcome',
+          navigatorStyle: {},
+          navigatorButtons: {}
+        },
+        passProps: {},
+        animationType: 'slide-down'
+      });
+    }
+  }else{
     Navigation.startSingleScreenApp({
       screen: {
         screen: 'roof_gravy.login_screen',
@@ -50,4 +65,5 @@ let persistor = persistStore(store, null, () => {
       passProps: {},
       animationType: 'slide-down'
     });
+  }
 })
