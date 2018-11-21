@@ -72,7 +72,7 @@ class CustomerChat extends Component {
   }
 
   async callBack(){
-    await this.props.getParticularUser(this.props.user_id)
+    await this.props.getParticularUser(this.props.user_id,this.props.job)
     .then((response) => {
       this.setState({
         loading: false,
@@ -97,7 +97,8 @@ class CustomerChat extends Component {
 
 
   _getParticularUser(){
-    this.props.getParticularUser(this.props.user_id)
+
+    this.props.getParticularUser(this.props.user_id, this.props.job)
     .then((response) => {
       // console.log("getting particular item" , response.data)
       this.setState({
@@ -124,8 +125,11 @@ class CustomerChat extends Component {
 
  
   _navigateToPreviousScreen = () => {
-    this.props.callBack()
-    this.props.navigator.pop()
+    var screen_value = "roof_gravy.customer_job_details"
+      this.props.navigator.push({
+        screen: screen_value,
+        passProps: { item: this.props.job , callBack : this.callBack.bind(this)}
+    })
   }
 
   _capitalizeString = (value) => {
@@ -135,11 +139,12 @@ class CustomerChat extends Component {
 
 
   sendMessage(){
+    let user  = this.state.user ||  this.props.user
     var data = {
-        message:this.state.typing,
-        conversation_id:this.state.user.conversation._id.$oid,
+        message:this.state.typing.trim(),
+        conversation_id: user.conversation._id.$oid,
         user_id:this.state.current_user_id,
-        recipient_id: this.state.user.id,
+        recipient_id: user.id,
         sender_id:this.state.current_user_id
     }
     if(this.state.typing.trim().length > 0){

@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import {getAllEventAction} from '../../actions';
 import { Touchable, Picker, DateTimePicker, Loader } from '../common';
 import {Calendar, Agenda} from 'react-native-calendars';
-
+import _ from 'lodash'
 
 class BigCalendarScreen extends Component {
   static navigatorStyle = {
@@ -105,6 +105,9 @@ class BigCalendarScreen extends Component {
 
 
 
+
+
+
   renderItem(item) {
     return (
       <View style={[styles.item, {height: item.height, backgroundColor: 'white'}]}>
@@ -114,15 +117,20 @@ class BigCalendarScreen extends Component {
     );
   }
 
-  renderEmptyDate() {
-    alert('empty')
+ renderEmptyDate() {
     return (
-      <View style={styles.emptyDate}><Text>This is empty date!</Text></View>
+      <View style={styles.emptyDate}><Text>No appointment!!</Text></View>
     );
   }
 
+
   rowHasChanged(r1, r2) {
     return r1.name !== r2.name;
+  }
+
+  timeToDDString(time) {
+    const date = new Date(time);
+    return date.toISOString().split('T')[0];
   }
 
   timeToString(date) {
@@ -138,6 +146,18 @@ class BigCalendarScreen extends Component {
 	}
 
   loadItems(day) {
+      for (let i = -15; i < 85; i++) {
+        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+        const strTime = this.timeToDDString(time);
+        if (!this.state.items[strTime]) {
+          this.state.items[strTime] = [];
+          const numItems = Math.floor(Math.random() * 5);
+          for (let j = 0; j < numItems; j++) {
+            this.state.items[strTime] = (this.state.items[strTime] ? this.state.items[strTime] : [])
+          }
+        }
+      }
+    this.state.items[day.dateString] =  _.isEmpty(this.state.items[day.dateString]) ? [] : this.state.items[day.dateString] 
     this.setState({
      items: this.state.items
     });
@@ -170,7 +190,7 @@ class BigCalendarScreen extends Component {
           // considered that the date in question is not yet loaded
           items={this.state.items}
           loadItemsForMonth={this.loadItems.bind(this)}
-       
+
           // callback that gets called on day press
           renderItem={this.renderItem.bind(this)}
           renderEmptyDate={this.renderEmptyDate.bind(this)}
@@ -178,9 +198,6 @@ class BigCalendarScreen extends Component {
           selected={new Date().toJSON().slice(0,10)}
           markedDates={this.state.markedItems}
           style={[styles.calendar, {height: 530}]}
-
-
-          // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
           markingType={'period'}
         />
         </ScrollView>

@@ -91,7 +91,13 @@ class EstimateView extends Component {
     this.props.navigator.popToRoot()
   }
   _navigateToPreviousScreen = () => {
-    this.props.navigator.pop()
+    // this.props.navigator.pop()
+    alert(this.props.user.role)
+    var screen_value = (this.props.user.role == "Customer" || 'undefined') ? "roof_gravy.customer_job_details" : "roof_gravy.job_details"
+      this.props.navigator.push({
+        screen: screen_value,
+        passProps: { item: this.props.job , callBack : this.callBack.bind(this)}
+    })
   }
 
   _discountType = (discount) => {

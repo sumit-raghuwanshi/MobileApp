@@ -36,7 +36,8 @@ class MyInfoScreen extends Component {
       location: currentUser["location"],
       avatar: currentUser["avatar"],
       token : currentUser["token"],
-      id : currentUser["id"]
+      id : currentUser["id"],
+      flag: true
     }
   }
   
@@ -58,7 +59,7 @@ class MyInfoScreen extends Component {
 
     if (lastName.trim().length > 10 || lastName.trim().length < 1)
       errorMessages.push('Last Name is required or should be less than 10 character')
-    if(isNaN(phone.trim()))
+    if(isNaN(phone.trim()) && phone.trim().length > 10)
       errorMessages.push('Phone number should be valid')
     if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.trim())))
       errorMessages.push('Email should be valid')
@@ -150,24 +151,26 @@ class MyInfoScreen extends Component {
     var options = {
       title: 'Take Picture'
     }
-    this.setState({loading: true})
-
-    ImagePicker.showImagePicker(options, (response) => {
-      if (response.didCancel) {
-         this.setState({loading: false})
-      } else if (response.error) {
-        alert('ImagePicker Error: ', response.error);
-        this.setState({loading: false})
-      } else if (response.customButton) {
-        alert('User tapped custom button: ', response.customButton);
-        this.setState({loading: false})
-      }else if (!response.didCancel) {
-        this.setState({
-          image_attach: response,
-          loading: false
-        })
-      }
-    });
+    if(this.state.flag){
+      this.setState({loading: true,flag: false})
+      ImagePicker.showImagePicker(options, (response) => {
+        if (response.didCancel) {
+           this.setState({loading: false, flag: true})
+        } else if (response.error) {
+          alert('ImagePicker Error: ', response.error);
+          this.setState({loading: false, flag: true})
+        } else if (response.customButton) {
+          alert('User tapped custom button: ', response.customButton);
+          this.setState({loading: false})
+        }else if (!response.didCancel) {
+          this.setState({
+            image_attach: response,
+            loading: false,
+            flag: true
+          })
+        }
+      });
+    }
 
     // ImagePicker.launchCamera(options, (response)  => {
     //  alert(JSON.stringify(response))
@@ -202,7 +205,7 @@ class MyInfoScreen extends Component {
 
         <ScrollView style={styles.body} contentContainerStyle={{paddingBottom: 20}}>
           <View style={styles.topButtonContainer}>
-            <View style={{ flex: 1 }}>
+            <View>
               <Touchable onPress={this._navigateToPreviousScreen}>
                 <Image source={require('../../../img/icons/cross.png')}/>
               </Touchable>

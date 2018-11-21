@@ -57,7 +57,8 @@ class CustomerJobDetails extends Component {
       item : {},
       job_id:'',
       statusJob: 0,
-      active_estimate: {}
+      active_estimate: {},
+      flag: true,
     }
 
     this._Estimate = this._Estimate.bind(this)
@@ -145,8 +146,9 @@ class CustomerJobDetails extends Component {
       } 
   }
 
+
   componentWillMount(){
-    console.log("wiil mount ")
+   
     this.setState({
       item: this.props.item,
       statusJob : this.props.item.status_cd - 1
@@ -223,7 +225,11 @@ _updateJobStatus(){
  })
   
 }
+  
 
+   flagState =() => {
+     this.setState({flag: false})
+   }
 
   onSelectionsChange = (selectedLeadTypes) => {
     // selectedFruits is array of { label, value }
@@ -244,34 +250,45 @@ _updateJobStatus(){
     this.props.navigator.popToRoot()
   }
 
+
   _navigateToInvoiceScreen = () => {
+    if(this.state.flag){
+      this.flagState()
     if(_.isEmpty(this.state.active_estimate)){
+      
       Notification.error('Estimate should be active')
+
     }else{
       const job_id = this.state.item.id
       this.props.navigator.push({
         screen: "roof_gravy.job_invoice_view",
-        passProps: { estimate: this.state.active_estimate ,job_id: job_id, callBack : this.callBack.bind(this)}
+        passProps: { estimate: this.state.active_estimate ,job_id: job_id,  job: this.state.item,callBack : this.callBack.bind(this)}
       })
     }
-   
+   }
   }
 
 
   _navigateToChatScreen = () => {
-    const assignee_id = this.state.item.assignee_id.$oid
-    this.props.navigator.push({
-      screen: "roof_gravy.customer_chat_view",
-      passProps: {user_id: assignee_id, callBack : this.callBack.bind(this)}
-    })
+    if(this.state.flag){
+      const assignee_id = this.state.item.assignee_id.$oid
+      this.flagState()
+      this.props.navigator.push({
+        screen: "roof_gravy.customer_chat_view",
+        passProps: {user_id: assignee_id, job: this.state.item, callBack : this.callBack.bind(this)}
+      })
+    }
   }
 
   _navigateToPaymentsScreen(){
-    const job_id = this.state.item.id
-    this.props.navigator.push({
-      screen: "roof_gravy.job_payments",
-      passProps: { job_id: job_id, callBack : this.callBack.bind(this)}
-    })
+    if(this.state.flag){
+      const job_id = this.state.item.id
+      this.flagState();
+      this.props.navigator.push({
+        screen: "roof_gravy.job_payments",
+        passProps: { job_id: job_id, job: this.state.item, callBack : this.callBack.bind(this)}
+      })
+    }
   }
 
 
@@ -284,14 +301,22 @@ _updateJobStatus(){
   // }
 
   _navigateToPreviousScreen = () => {
-    this.props.callBack()
-    this.props.navigator.pop()
+    if(this.state.flag){
+      this.flagState()
+      this.props.callBack()
+      this.props.navigator.push({
+        screen: "roof_gravy.jobs"
+      })
+    }
   }
 
   _navigateToAppointmentCreate = () => {
-    this.props.navigator.push({
-      screen: 'roof_gravy.appointment_create'
-    })
+    if(this.state.flag){
+      this.flagState()
+      this.props.navigator.push({
+        screen: 'roof_gravy.appointment_create'
+      })
+    }
   }
 
   // _cameraPressHandler = () => {
@@ -348,14 +373,18 @@ _updateJobStatus(){
 
 
   _Estimate = () => {
-    const job_id = this.state.item.id
-    if(_.isEmpty(this.state.active_estimate)){
-      Notification.error('Estimate should be active')
-    }else{
-      this.props.navigator.push({
-        screen: "roof_gravy.estimate_view",
-        passProps: { item: this.state.active_estimate ,job_id: job_id, callBack : this.callBack.bind(this)}
-      })
+    if(this.state.flag){
+      const job_id = this.state.item.id
+      this.flagState()
+      if(_.isEmpty(this.state.active_estimate)){
+        Notification.error('Estimate should be active')
+      }else{
+
+        this.props.navigator.push({
+          screen: "roof_gravy.estimate_view",
+          passProps: { item: this.state.active_estimate ,job_id: job_id, job: this.state.item, callBack : this.callBack.bind(this)}
+        })
+      }
     }
    
   }

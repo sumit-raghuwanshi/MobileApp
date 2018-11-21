@@ -1,12 +1,12 @@
-//export const SERVER_URL = "https://gravy-api-ror.herokuapp.com/";
+export const SERVER_URL = "https://gravy-api-ror.herokuapp.com/";
 
 //export const SERVER_URL = "http://2ba059be.ngrok.io/";
 
 
-export const SERVER_URL = "http://71ede4b4.ngrok.io/";
+//export const SERVER_URL = "http://66a107fe.ngrok.io/";
 
-//export const WS_CABLE_URL = "wss://gravy-api-ror.herokuapp.com";
-export const WS_CABLE_URL = "wss://71ede4b4.ngrok.io"
+export const WS_CABLE_URL = "wss://gravy-api-ror.herokuapp.com";
+//export const WS_CABLE_URL = "wss://66a107fe.ngrok.io"
 
 export const LOGIN      = "api/v1/users/login";
 export const USERS      = "api/v1/users";

@@ -83,8 +83,11 @@ class JobInvoice extends Component {
 
 
   _navigateToPreviousScreen = () => {
-    this.props.callBack()
-    this.props.navigator.pop()
+      var screen_value = (this.props.user.role == "Customer" || 'undefined') ? "roof_gravy.customer_job_details" : "roof_gravy.job_details"
+            this.props.navigator.push({
+              screen: screen_value,
+              passProps: { item: this.props.job , callBack : this.callBack.bind(this)}
+          })
   }
 
 

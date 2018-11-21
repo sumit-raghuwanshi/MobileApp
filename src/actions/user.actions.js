@@ -62,11 +62,11 @@ export function getParticularUserSuccess(data) {
 
 
 
-export function getParticularUser(user_id) {
+export function getParticularUser(user_id,job) {
   return function (dispatch) {
     return API.fetch({
       method: 'get',
-      url: `${SERVER_URL}/api/v1/users/${user_id}/get_user`
+      url: `${SERVER_URL}/api/v1/users/${user_id}/get_user?job_id=${job.id}`
     })
     .then((response) => {
 

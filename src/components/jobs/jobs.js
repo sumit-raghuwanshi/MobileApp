@@ -17,7 +17,8 @@ class Jobs extends Component {
     navBarHidden: true
   }
   state = {
-    loading: true
+    loading: true,
+    flag: true
   }
 
   componentDidMount() {
@@ -43,12 +44,14 @@ class Jobs extends Component {
   }
 
   _onItemPress = (item) => {
-    this.setState({loading: true})
-    var screen_value = (this.props.user.role == "Customer") ? "roof_gravy.customer_job_details" : "roof_gravy.job_details"
-    this.props.navigator.push({
-      screen: screen_value,
-      passProps: { item: item , callBack : this.callBack.bind(this)}
-    })
+    if(this.state.flag){
+      this.setState({loading: true, flag: false})
+      var screen_value = (this.props.user.role == "Customer") ? "roof_gravy.customer_job_details" : "roof_gravy.job_details"
+      this.props.navigator.push({
+        screen: screen_value,
+        passProps: { item: item , callBack : this.callBack.bind(this)}
+      })
+    }
 
   }
 

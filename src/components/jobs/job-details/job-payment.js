@@ -46,9 +46,14 @@ class JobPayment extends Component {
   }
 
   _navigateToPreviousScreen = () => {
-    this.props.callBack()
-    this.props.navigator.pop()
+    var screen_value = (this.props.user.role == "Customer") ? "roof_gravy.customer_job_details" : "roof_gravy.job_details"
+      this.props.navigator.push({
+        screen: screen_value,
+        passProps: { item: this.props.job , callBack : this.callBack.bind(this)}
+    })
   }
+
+  
   _navigateToDashboard = () => {
     this.props.navigator.popToRoot()
   }
@@ -131,8 +136,8 @@ class JobPayment extends Component {
             <Image source={require('../../../../img/icons/home.png')} />
           </Touchable>
           <View style={styles.safeAreaView}>
-            <Image style={styles.safeAreaImage} source={require('../../../../img/icons/estimate.png')}/>
-            <Text style={styles.safeAreaText}>Estimate</Text>
+            <Image style={styles.safeAreaImage} source={require('../../../../img/icons/payments.png')}/>
+            <Text style={styles.safeAreaText}>Payments</Text>
           </View>
           <Touchable style={{ width: 50, alignItems: 'center', justifyContent: 'center' }}>
             <View></View>
