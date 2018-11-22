@@ -6,7 +6,8 @@ import {
   Text,
   SafeAreaView,
   AsyncStorage,
-  StatusBar
+  StatusBar,
+  BackHandler
 } from 'react-native';
 import COLOR from '../../constants/colors';
 import Touchable from '../common/touchable';
@@ -38,16 +39,14 @@ class CustomerDashboard extends Component {
     this.props.getProfile()
   }
 
+  componentDidMount(){
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+  }
 
+  handleBackPress = () => {
+    hasNavigated = false
+  }
 
- 
-  // _navigateToCalendarScreen = () => {
-  //   this.props.navigator.push({
-  //     screen: "roof_gravy.calendar"
-  //   })
-  // }
-
- 
   _navigateToJobsScreen = () => {
     this.props.navigator.push({
       screen: "roof_gravy.jobs"

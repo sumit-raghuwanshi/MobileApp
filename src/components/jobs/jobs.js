@@ -5,7 +5,8 @@ import {
   Text,
   SafeAreaView,
   StatusBar,
-  Image
+  Image,
+  BackHandler
 } from 'react-native';
 import { Touchable, Loader } from '../common';
 import JobList from './job-list';
@@ -22,16 +23,25 @@ class Jobs extends Component {
   }
 
   componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+
     (this.props.user.role !== "Customer" ? this.props.getJobs() : this.props.getCustomerJobs()).then((response) => {
       this.setState({loading: false})
     })
     .catch((error) => {
       this.setState({loading: false})
     })
-   
-
-
   }
+
+  handleBackPress = () => {
+    (this.props.user.role !== "Customer" ? this.props.getJobs() : this.props.getCustomerJobs()).then((response) => {
+      this.setState({loading: false, flag: true})
+    })
+    .catch((error) => {
+      this.setState({loading: false,flag: true})
+    })
+  }
+
 
   _navigateToDashboard = () => {
     this.props.navigator.popToRoot()

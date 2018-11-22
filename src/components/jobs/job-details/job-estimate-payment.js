@@ -21,8 +21,7 @@ import {getParticularInvoice} from '../../../actions';
 import Payment from 'payment'
 import Stripe from 'react-native-stripe-api';
 import {makePaymentAction} from '../../../actions';
-
-
+import { Dimensions } from 'react-native'
 
 class JobEstimatePayment extends Component {
   static navigatorStyle = {
@@ -113,7 +112,7 @@ class JobEstimatePayment extends Component {
       var yy = today.getFullYear()%100;
       var inputmm = this.state.exp_date.split('/')[0]
       var inputyy = (this.state.exp_date.split('/')[1] || 0)
-      if(!(parseInt(inputyy) >= yy && parseInt(inputmm) >= mm)){
+      if(!(parseInt(inputyy) == yy ? parseInt(inputmm) >= mm : (parseInt(inputyy) > yy) )){
         this.setState({exp_error: true});
       }else{
         this.setState({exp_error: false, make_pay_error: false});
@@ -228,6 +227,7 @@ class JobEstimatePayment extends Component {
 
 
   render() {
+
     const props = this.props.props
     return (
       <View style={{marginTop: 22}}>
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
   },
 
   modalInner: {
-    width: 400,
+    width: Dimensions.get('window').width - 10,
     height: 350,
     justifyContent: 'center',
     backgroundColor: 'white',
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   },
 
   modalPayment: {
-    width: 400,
+    width: Dimensions.get('window').width - 10,
     height: 350,
     justifyContent: 'center',
     alignItems: 'center',
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
   },
   textField: {
     height: 44,
-    width: 380,
+    width: Dimensions.get('window').width - 40,
     backgroundColor: '#FFFFFF',
     fontSize: 17,
     color: 'rgba(0, 0, 0, 0.73)',
